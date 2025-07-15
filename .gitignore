@@ -1,0 +1,52 @@
+# Node dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Vite cache
+.vite/
+.cache/
+
+# Environment variables
+.env
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+Icon?
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint / Stylelint / Prettier
+.eslintcache
+.stylelintcache
+.prettiercache
+
+# REPL / package manager / test caches
+.node_repl_history
+.pnpm-store/
+.npm/
+.jest/
+
+# Storybook (if used)
+.out/
+.storybook-out/
+
+# Firebase
+.firebase/
+
+# Coverage reports
+coverage/
