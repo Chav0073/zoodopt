@@ -1,14 +1,12 @@
-# Node dependencies
+# =========================
+# Frontend (Node + Vite)
+# =========================
 node_modules/
-
-# Build output
 dist/
-
-# Vite cache
 .vite/
 .cache/
 
-# Environment variables
+# Vite environment
 .env
 .env.*.local
 
@@ -30,7 +28,7 @@ Icon?
 # TypeScript
 *.tsbuildinfo
 
-# ESLint / Stylelint / Prettier
+# Linting/Formatting
 .eslintcache
 .stylelintcache
 .prettiercache
@@ -41,12 +39,30 @@ Icon?
 .npm/
 .jest/
 
-# Storybook (if used)
+# Storybook
 .out/
 .storybook-out/
 
 # Firebase
 .firebase/
 
-# Coverage reports
+# Coverage
 coverage/
+
+# =========================
+# Backend (.NET Core)
+# =========================
+bin/
+obj/
+*.db
+*.user
+*.suo
+
+# Do NOT ignore Migrations (we want to commit EF migrations)
+# Migrations/ ← keep this tracked
+
+# app settings
+appsettings.*.json
+
+# System-wide files
+.env*
