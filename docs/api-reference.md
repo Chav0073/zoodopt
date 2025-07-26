@@ -48,7 +48,14 @@
 - Description: Add a new pet listing (shelter staff only)
 - Auth Required: Yes
 - Request Body:
-  - `name`, `type`, `ageGroup`, `description`, `imageUrl`, `shelterId`
+  - `name`: string
+  - `type`: string
+  - `ageGroup`: string
+  - `description`: string
+  - `imageFileName`: string — name of uploaded image file (e.g., `fluffy01.jpg`)
+  - `shelterId`: integer
+
+> 📝 **Note**: The `imageFileName` is not a full URL. Construct full image path as `/images/{imageFileName}`.
 
 ---
 
