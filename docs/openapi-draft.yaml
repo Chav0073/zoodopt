@@ -58,6 +58,12 @@ paths:
       responses:
         "200":
           description: List of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
 
     post:
       summary: Create a new pet listing (shelter staff only)
@@ -157,7 +163,7 @@ components:
         - type
         - ageGroup
         - description
-        - imageUrl
+        - imageFileName
       properties:
         name:
           type: string
@@ -167,8 +173,28 @@ components:
           type: string
         description:
           type: string
-        imageUrl:
+        imageFileName:
           type: string
+          description: Name of the uploaded image file (e.g., "bella.jpg"). Combine with /images/{imageFileName} to access.
+        shelterId:
+          type: integer
+
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        ageGroup:
+          type: string
+        description:
+          type: string
+        imageFileName:
+          type: string
+          description: Name of the stored image file (e.g., "bella.jpg"). Combine with /images/{imageFileName} to access.
         shelterId:
           type: integer
 
