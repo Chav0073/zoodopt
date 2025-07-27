@@ -1,7 +1,5 @@
 import React from "react";
 
-import { currentUser } from "../data/mockup_data";
-
-const UserContext = React.createContext(currentUser);
+let UserContext = React.createContext(null);
 
 export default UserContext;
