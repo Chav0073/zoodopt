@@ -1,6 +1,11 @@
+import { Outlet } from "react-router-dom";
+
 const AdminPage = () => {
     return <>
-        <p>This is admin page!</p>
+        <h1>
+            Admin Dashboard 
+        </h1>
+        <Outlet />
     </>
 }
 
