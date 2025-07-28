@@ -11,7 +11,7 @@ const SheltersCarouselSm = ({ shelters }) => {
     <div className="container-fluid mt-5">
       <Carousel indicators={false}>
         {shelters.map((shelter, index) => (
-          <Carousel.Item key={index} style={{ height: 400 }}>
+          <Carousel.Item key={index} style={{ height: 500 }}>
             <Stack
               direction="horizontal"
               className="h-100 justify-content-center align-items-center"
