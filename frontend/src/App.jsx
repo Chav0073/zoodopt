@@ -10,6 +10,7 @@ import ManageUsers from "./pages/ManageUsers/ManageUsers";
 import { useState } from "react";
 import PetsContext from "../context/PetsContext";
 import SheltersContext from "../context/SheltersContext";
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
 
