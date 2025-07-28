@@ -1,5 +1,7 @@
+import ManageSheltersCarousel from "../../components/AdminSheltersCarousel/ManageSheltersCarousel";
+
 const ManageShelters = () => {
-    return <p>This is manage shelters page</p>
+    return <ManageSheltersCarousel/>
 }
 
 export default ManageShelters;
