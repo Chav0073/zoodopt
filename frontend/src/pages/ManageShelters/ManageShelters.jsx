@@ -1,4 +1,4 @@
-import ManageSheltersCarousel from "../../components/AdminSheltersCarousel/ManageSheltersCarousel";
+import ManageSheltersCarousel from "../../components/ManageSheltersCarousel/ManageSheltersCarousel";
 
 const ManageShelters = () => {
     return <ManageSheltersCarousel/>
