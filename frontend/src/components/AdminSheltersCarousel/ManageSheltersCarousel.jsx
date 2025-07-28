@@ -4,15 +4,18 @@ import {
 import { useContext } from "react";
 import SheltersContext from "../../../context/SheltersContext";
 import chunkArray from "../../helpers/chunkArray";
+import { useWindowSize } from '@uidotdev/usehooks';
 
 const ManageSheltersCarousel = () => {
     const shelters = useContext(SheltersContext);
+    const size = useWindowSize();
 
     const shelterChunks = chunkArray(shelters, 3); // 3 per page
 
     return (
         <div>
             <h1 className="text-center fw-bold my-2">Shelters</h1>
+            <p>{size.width}</p>
             <div className="bg-dark bg-opacity-25 container-fluid">
                 <Carousel>
                     {shelterChunks.map((chunk, index) => (
