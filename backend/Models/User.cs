@@ -7,13 +7,13 @@ namespace backend.Models
         public int Id { get; set; }
 
         [Required]
-        public required string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
-        public required string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = string.Empty;
 
         [Required]
-        public required string Role { get; set; } // Public, ShelterStaff, Admin
+        public string Role { get; set; } = string.Empty; // Public, ShelterStaff, Admin
 
         public int? ShelterId { get; set; }
         public Shelter? Shelter { get; set; }
