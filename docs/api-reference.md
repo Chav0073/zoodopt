@@ -1,26 +1,29 @@
 ### API Endpoint Table
 
-| Endpoint             | Method | Auth | Purpose                          |
-| -------------------- | ------ | ---- | -------------------------------- |
-| /auth/register       | POST   | No   | Register a user (public/staff)   |
-| /auth/login          | POST   | No   | Authenticate and get token       |
-| /pets                | GET    | No   | List all pets (with filters)     |
-| /pets                | POST   | Yes  | Add new pet (shelter staff only) |
-| /applications        | GET    | Yes  | View apps for pets (staff)       |
-| /applications        | POST   | Yes  | Submit adoption app (public)     |
-| /applications/mine   | GET    | Yes  | User’s submitted applications    |
-| /shelters (optional) | GET    | No   | List all shelters (public)       |
+| Endpoint           | Method | Auth | Purpose                              |
+| ------------------ | ------ | ---- | ------------------------------------ |
+| /auth/register     | POST   | No   | Register a user (public/staff/admin) |
+| /auth/login        | POST   | No   | Authenticate and get token           |
+| /auth/logout       | POST   | No   | "Logout" (client removes token)      |
+| /users/me          | GET    | Yes  | Get current user's profile           |
+| /pets              | GET    | No   | List all pets (with filters)         |
+| /pets              | POST   | Yes  | Add new pet (shelter staff only)     |
+| /applications      | GET    | Yes  | View apps for pets (staff)           |
+| /applications      | POST   | Yes  | Submit adoption app (public)         |
+| /applications/mine | GET    | Yes  | User’s submitted applications        |
+| /shelters          | GET    | No   | List all shelters (public)           |
 
 ### API Endpoint Reference (Simplified)
 
 #### `/auth/register` — `POST`
 
-- Description: Register as a public user or shelter staff
+- Description: Register as a public user, shelter staff, or admin
 - Auth Required: No
 - Request Body:
-  - `email`: string
-  - `password`: string
+  - `email`: string (valid email required)
+  - `password`: string (min 8 chars, at least one uppercase, one lowercase, and one digit)
   - `role`: enum [Public, ShelterStaff, Admin]
+  - `shelterId`: integer (required if registering as ShelterStaff)
 
 ---
 
@@ -40,6 +43,25 @@
 - Auth Required: No
 - Query Parameters (optional):
   - `type`, `ageGroup`, `shelterId`
+
+---
+
+#### `/auth/logout` — `POST`
+
+- Description: Logout user (client must remove the JWT token)
+- Auth Required: No
+- Request Body: None
+
+---
+
+#### `/users/me` — `GET`
+
+- Description: Get the profile of the currently authenticated user
+- Auth Required: Yes (Bearer token)
+- Response:
+  - `id`: integer
+  - `email`: string
+  - `role`: string
 
 ---
 
