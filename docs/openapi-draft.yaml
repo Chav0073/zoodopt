@@ -11,7 +11,7 @@ servers:
 paths:
   /auth/register:
     post:
-      summary: Register a new user
+      summary: Register a new user (Public, ShelterStaff, or Admin)
       requestBody:
         required: true
         content:
@@ -38,6 +38,28 @@ paths:
           description: Login successful
         "401":
           description: Invalid credentials
+
+  /auth/logout:
+    post:
+      summary: "Logout user (client should remove JWT token)"
+      responses:
+        "200":
+          description: Logout successful
+
+  /users/me:
+    get:
+      summary: Get profile of the currently authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Returns user info (id, email, role)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "401":
+          description: Unauthorized
 
   /pets:
     get:
@@ -117,7 +139,7 @@ paths:
 
   /shelters:
     get:
-      summary: List all shelters (optional)
+      summary: List all shelters
       responses:
         "200":
           description: List of shelters
@@ -139,11 +161,18 @@ components:
       properties:
         email:
           type: string
+          format: email
         password:
           type: string
+          minLength: 8
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$"
+          description: Must be at least 8 characters and contain uppercase, lowercase, and a digit
         role:
           type: string
           enum: [Public, ShelterStaff, Admin]
+        shelterId:
+          type: integer
+          description: Required if registering as ShelterStaff
 
     UserLogin:
       type: object
@@ -154,6 +183,16 @@ components:
         email:
           type: string
         password:
+          type: string
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        role:
           type: string
 
     PetCreate:
@@ -194,7 +233,6 @@ components:
           type: string
         imageFileName:
           type: string
-          description: Name of the stored image file (e.g., "bella.jpg"). Combine with /images/{imageFileName} to access.
         shelterId:
           type: integer
 
