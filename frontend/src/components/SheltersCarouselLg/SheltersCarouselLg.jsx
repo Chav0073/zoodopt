@@ -8,7 +8,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
-const SheltersCarouselMd = ({ shelters }) => {
+const SheltersCarouselLg = ({ shelters }) => {
     const [index, setIndex] = useState(0);
 
     const handlePrev = () => {
@@ -75,4 +75,4 @@ const SheltersCarouselMd = ({ shelters }) => {
     );
 };
 
-export default SheltersCarouselMd;
+export default SheltersCarouselLg;

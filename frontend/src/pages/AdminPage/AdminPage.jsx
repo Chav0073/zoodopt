@@ -4,6 +4,7 @@ import UserContext from "../../../context/UserContext";
 import PetsContext from "../../../context/PetsContext";
 import SheltersContext from "../../../context/SheltersContext";
 import AccessDenied from "../../components/AccessDenied/AccessDenied";
+import SheltersCarousel from "../../components/SheltersCarousel/SheltersCarousel";
 
 const AdminPage = () => {
     const user = useContext(UserContext);
@@ -22,10 +23,10 @@ const AdminPage = () => {
     return (
         <div className="container py-5">
             <div className="bg-white rounded shadow-sm p-4 mb-4 d-flex align-items-center">
-                <h1 className="mb-0 fw-bold text-primary flex-grow-1">Dashboard</h1>
+                <h1 className="mb-0 fw-bold text-primary flex-grow-1">Admin Dashboard</h1>
             </div>
-            <div className="bg-light rounded p-4">
-                <Outlet />
+            <div className="bg-light rounded p-4 pb-5">
+                <SheltersCarousel />
             </div>
         </div>
     );
