@@ -8,7 +8,7 @@ info:
     email: support@zoodopt.com
 
 servers:
-  - url: http://localhost:5217
+  - url: http://localhost:5000
     description: Local development server
 
 components:
@@ -128,10 +128,11 @@ components:
           maxLength: 1000
           nullable: true
           example: "Friendly and playful cat"
-        imageFile:
+        imageFileName:
           type: string
-          format: binary
-          description: "Image file for the pet (jpg, jpeg, png, gif, webp, max 5MB)"
+          maxLength: 255
+          nullable: true
+          example: "fluffy01.jpg"
         shelterId:
           type: integer
           example: 1
@@ -161,10 +162,11 @@ components:
           maxLength: 1000
           nullable: true
           example: "Updated description"
-        imageFile:
+        imageFileName:
           type: string
-          format: binary
-          description: "New image file for the pet (replaces existing image if provided)"
+          maxLength: 255
+          nullable: true
+          example: "fluffy02.jpg"
 
     PetResponseDto:
       type: object
@@ -183,11 +185,6 @@ components:
         imageFileName:
           type: string
           nullable: true
-        imageUrl:
-          type: string
-          nullable: true
-          description: "URL to access the pet's image"
-          example: "/images/fluffy.jpg"
         shelterId:
           type: integer
         shelterName:
@@ -436,7 +433,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               $ref: "#/components/schemas/PetCreateDto"
       responses:
@@ -509,7 +506,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               $ref: "#/components/schemas/PetUpdateDto"
       responses:

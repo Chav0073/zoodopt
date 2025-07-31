@@ -8,6 +8,7 @@ namespace backend.DTOs.Pets
         public string AgeGroup { get; set; } = string.Empty;
         public string? Description { get; set; }
         public string? ImageFileName { get; set; }
+        public string? ImageUrl { get; set; }
         public int ShelterId { get; set; }
         public string? ShelterName { get; set; }
     }

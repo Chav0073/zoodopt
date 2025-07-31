@@ -2,33 +2,32 @@
 
 ### API Endpoint Table
 
-| Endpoint                   | Method | Auth | Purpose                                    |
-| -------------------------- | ------ | ---- | ------------------------------------------ |
-| /auth/register             | POST   | No   | Register a user (public/staff/admin)       |
-| /auth/login                | POST   | No   | Authenticate and get token                 |
-| /auth/logout               | POST   | No   | "Logout" (client removes token)            |
-| /users/me                  | GET    | Yes  | Get current user's profile                 |
-| /pets                      | GET    | No   | List all pets (with filters)               |
-| /pets/{id}                 | GET    | No   | Get specific pet details                   |
-| /pets                      | POST   | Yes  | Add new pet (shelter staff/admin)          |
-| /pets/{id}                 | PUT    | Yes  | Update pet (shelter staff/admin)           |
-| /pets/{id}                 | DELETE | Yes  | Delete pet (shelter staff/admin)           |
-| /applications              | GET    | Yes  | View apps for shelter's pets (staff/admin) |
-| /applications/{id}         | GET    | Yes  | Get specific application details           |
-| /applications              | POST   | Yes  | Submit adoption app (any authenticated)    |
-| /applications/{id}/message | PUT    | Yes  | Update application message (applicant)     |
-| /applications/{id}/status  | PUT    | Yes  | Update app status (staff/admin)            |
-| /applications/{id}         | DELETE | Yes  | Delete application (applicant/admin)       |
-| /shelters                  | GET    | No   | List all shelters (public)                 |
-| /shelters/{id}             | GET    | No   | Get specific shelter details               |
-| /shelters                  | POST   | Yes  | Create shelter (admin only)                |
-| /shelters/{id}             | PUT    | Yes  | Update shelter (admin only)                |
-| /shelters/{id}             | DELETE | Yes  | Delete shelter (admin only)                |
+| Endpoint                    | Method | Auth | Purpose                                     |
+| --------------------------- | ------ | ---- | ------------------------------------------- |
+| /auth/register              | POST   | No   | Register a user (public/staff/admin)       |
+| /auth/login                 | POST   | No   | Authenticate and get token                  |
+| /auth/logout                | POST   | No   | "Logout" (client removes token)            |
+| /users/me                   | GET    | Yes  | Get current user's profile                  |
+| /pets                       | GET    | No   | List all pets (with filters)               |
+| /pets/{id}                  | GET    | No   | Get specific pet details                    |
+| /pets                       | POST   | Yes  | Add new pet (shelter staff/admin)          |
+| /pets/{id}                  | PUT    | Yes  | Update pet (shelter staff/admin)           |
+| /pets/{id}                  | DELETE | Yes  | Delete pet (shelter staff/admin)           |
+| /applications               | GET    | Yes  | View apps for shelter's pets (staff/admin) |
+| /applications/{id}          | GET    | Yes  | Get specific application details           |
+| /applications               | POST   | Yes  | Submit adoption app (any authenticated)     |
+| /applications/{id}/message  | PUT    | Yes  | Update application message (applicant)      |
+| /applications/{id}/status   | PUT    | Yes  | Update app status (staff/admin)            |
+| /applications/{id}          | DELETE | Yes  | Delete application (applicant/admin)       |
+| /shelters                   | GET    | No   | List all shelters (public)                 |
+| /shelters/{id}              | GET    | No   | Get specific shelter details               |
+| /shelters                   | POST   | Yes  | Create shelter (admin only)                |
+| /shelters/{id}              | PUT    | Yes  | Update shelter (admin only)                |
+| /shelters/{id}              | DELETE | Yes  | Delete shelter (admin only)                |
 
 ## Authentication
 
 All endpoints marked with "Auth: Yes" require a Bearer token in the Authorization header:
-
 ```
 Authorization: Bearer <your-jwt-token>
 ```
@@ -36,7 +35,6 @@ Authorization: Bearer <your-jwt-token>
 ## Error Response Format
 
 All errors follow a consistent format:
-
 ```json
 {
   "error": "Error message description",
@@ -45,7 +43,6 @@ All errors follow a consistent format:
 ```
 
 Common HTTP status codes:
-
 - `400` - Bad Request (validation errors)
 - `401` - Unauthorized (missing or invalid token)
 - `403` - Forbidden (insufficient permissions)
@@ -149,18 +146,18 @@ Common HTTP status codes:
 
 - **Description**: Add a new pet listing (shelter staff and admin only)
 - **Auth Required**: Yes (ShelterStaff or Admin)
-- **Content Type**: `multipart/form-data`
-- **Request Body** (form data):
-  ```
-  name: "Fluffy" (required)
-  type: "Cat" (required)
-  ageGroup: "Adult" (required)
-  description: "Friendly and playful cat" (optional)
-  imageFile: [image file] (optional - jpg, jpeg, png, gif, webp, max 5MB)
-  shelterId: 1 (required)
+- **Request Body**:
+  ```json
+  {
+    "name": "Fluffy",
+    "type": "Cat",
+    "ageGroup": "Adult",
+    "description": "Friendly and playful cat",
+    "imageFileName": "fluffy01.jpg",
+    "shelterId": 1
+  }
   ```
 - **Note**: Shelter staff can only create pets for their own shelter
-- **Image Storage**: Images are stored in `/wwwroot/images/` and accessible via `/images/{filename}`
 
 ---
 
@@ -168,19 +165,17 @@ Common HTTP status codes:
 
 - **Description**: Update an existing pet
 - **Auth Required**: Yes (ShelterStaff or Admin)
-- **Content Type**: `multipart/form-data`
-- **Request Body** (form data):
+- **Request Body**:
+  ```json
+  {
+    "name": "Fluffy Updated",
+    "type": "Cat",
+    "ageGroup": "Senior",
+    "description": "Updated description",
+    "imageFileName": "fluffy02.jpg"
+  }
   ```
-  name: "Fluffy Updated" (required)
-  type: "Cat" (required)
-  ageGroup: "Senior" (required)
-  description: "Updated description" (optional)
-  imageFile: [image file] (optional - replaces existing image)
-  ```
-- **Note**: 
-  - Shelter staff can only update pets from their own shelter
-  - If a new image is uploaded, the old image is automatically deleted
-  - Images are validated for type and size (max 5MB)
+- **Note**: Shelter staff can only update pets from their own shelter
 
 ---
 
@@ -321,7 +316,6 @@ Common HTTP status codes:
 ## Data Transfer Objects (DTOs)
 
 ### Pet Response
-
 ```json
 {
   "id": 1,
@@ -330,14 +324,12 @@ Common HTTP status codes:
   "ageGroup": "Adult",
   "description": "Friendly cat",
   "imageFileName": "fluffy.jpg",
-  "imageUrl": "/images/fluffy.jpg",
   "shelterId": 1,
   "shelterName": "Happy Paws Shelter"
 }
 ```
 
 ### Application Response
-
 ```json
 {
   "id": 1,
@@ -351,7 +343,6 @@ Common HTTP status codes:
 ```
 
 ### Shelter Response
-
 ```json
 {
   "id": 1,
@@ -362,7 +353,6 @@ Common HTTP status codes:
 ```
 
 ### User Profile Response
-
 ```json
 {
   "id": 1,
