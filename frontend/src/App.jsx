@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
-import { currentUser, mockPets, mockShelters } from "../data/mockup_data";
+import { currentUser, mockPets, mockShelters, mockUsers } from "../data/mockup_data";
 import UserContext from "../context/UserContext";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ManagePets from "./pages/ManagePets/ManagePets";
@@ -11,10 +11,12 @@ import PetsContext from "../context/PetsContext";
 import SheltersContext from "../context/SheltersContext";
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+import UsersContext from "../context/UsersContext";
 
 function App() {
 
   const [user, setUser] = useState(currentUser);
+  const [users, setUsers] = useState(mockUsers);
   const [pets, setPets] = useState(mockPets);
   const [shelters, setShelters] = useState(mockShelters);
 
@@ -23,18 +25,20 @@ function App() {
     <UserContext.Provider value={currentUser}>
       <PetsContext.Provider value={pets}>
         <SheltersContext.Provider value={shelters}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout/>}>
-                <Route index element={<HomePage />} />
-                <Route path="admin" element={<AdminPage/>}>
-                  {/* <Route path="shelters" element={<ManageShelters/>} />
-                  <Route path="pets" element={<ManagePets/>} />
-                  <Route path="users" element={<ManageUsers/>} /> */}
+          <UsersContext.Provider value={users}>
+              <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout/>}>
+                  <Route index element={<HomePage />} />
+                  <Route path="admin" element={<AdminPage/>}>
+                    {/* <Route path="shelters" element={<ManageShelters/>} />
+                    <Route path="pets" element={<ManagePets/>} />
+                    <Route path="users" element={<ManageUsers/>} /> */}
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </BrowserRouter>
+              </Routes>
+            </BrowserRouter>
+          </UsersContext.Provider>
       </SheltersContext.Provider>
        </PetsContext.Provider>
     </UserContext.Provider>

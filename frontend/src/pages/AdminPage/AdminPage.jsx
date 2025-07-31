@@ -6,13 +6,16 @@ import SheltersContext from "../../../context/SheltersContext";
 import AccessDenied from "../../components/AccessDenied/AccessDenied";
 import SheltersCarousel from "../../components/SheltersCarousel/SheltersCarousel";
 import PetsCarousel from "../../components/PetsCarousel/PetsCarousel";
+import UsersContext from "../../../context/UsersContext";
+import UsersCarousel from "../../components/UsersCarousel/UsersCarousel";
 
 const AdminPage = () => {
     const user = useContext(UserContext);
     // const user = null;
     const pets = useContext(PetsContext);
     const shelters = useContext(SheltersContext);
-
+    const users = useContext(UsersContext);
+    
     if(user == null){
         return <p className="text-center mt-5 fs-4 text-secondary">Please, sign in.</p>
     }
@@ -32,9 +35,9 @@ const AdminPage = () => {
             <div className="bg-light rounded p-4 pb-5">
                 <PetsCarousel />
             </div>
-            {/* <div className="bg-light rounded p-4 pb-5">
-                <SheltersCarousel />
-            </div> */}
+            <div className="bg-light rounded p-4 pb-5">
+                <UsersCarousel />
+            </div>
         </div>
     );
 }
