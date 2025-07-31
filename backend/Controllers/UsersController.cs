@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.DTOs.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,28 +8,34 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("users")]
-public class UsersController : ControllerBase
+public class UsersController : BaseController
 {
-    private readonly ApplicationDbContext _context;
-
-    public UsersController(ApplicationDbContext context)
+    public UsersController(ApplicationDbContext context) : base(context)
     {
-        _context = context;
     }
 
     [Authorize]
     [HttpGet("me")]
     public async Task<IActionResult> GetProfile()
     {
-        var email = User.Identity?.Name;
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if (user == null) return NotFound();
+        var user = await GetCurrentUserAsync();
+        if (user == null)
+            return StandardError(401, "User not authenticated.");
 
-        return Ok(new
+        // Include shelter information if user is shelter staff
+        var userWithShelter = await _context.Users
+            .Include(u => u.Shelter)
+            .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+        var profile = new UserProfileDto
         {
-            user.Id,
-            user.Email,
-            user.Role
-        });
+            Id = userWithShelter!.Id,
+            Email = userWithShelter.Email,
+            Role = userWithShelter.Role,
+            ShelterId = userWithShelter.ShelterId,
+            ShelterName = userWithShelter.Shelter?.Name
+        };
+
+        return Ok(profile);
     }
 }
