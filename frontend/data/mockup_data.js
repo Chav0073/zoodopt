@@ -3,6 +3,55 @@ const currentUser = {
     "role": 'admin'
 };
 
+const mockUsers = [
+  {
+    id: 1,
+    name: "Filip Popendyk",
+    email: "filip@admin.ca",
+    role: "Admin"
+  },
+  {
+    id: 2,
+    name: "Sarah Jenkins",
+    email: "sarah@happytails.ca",
+    role: "ShelterStaff",
+    shelterId: 101
+  },
+  {
+    id: 3,
+    name: "David Liu",
+    email: "david@whiskerhaven.org",
+    role: "ShelterStaff",
+    shelterId: 102
+  },
+  {
+    id: 4,
+    name: "Amara Desai",
+    email: "amara.public@gmail.com",
+    role: "Public"
+  },
+  {
+    id: 5,
+    name: "James Robertson",
+    email: "james.public@hotmail.com",
+    role: "Public"
+  },
+  {
+    id: 6,
+    name: "Emily Chen",
+    email: "emily@northernpaw.ca",
+    role: "ShelterStaff",
+    shelterId: 103
+  },
+  {
+    id: 7,
+    name: "Liam Novak",
+    email: "liam@bunnyborough.ca",
+    role: "ShelterStaff",
+    shelterId: 104
+  }
+];
+
 const mockPets = [
   {
     id: 1,
@@ -155,5 +204,6 @@ const mockShelters = [
 export {
     currentUser,
     mockPets,
-    mockShelters
+    mockShelters,
+    mockUsers
 };
