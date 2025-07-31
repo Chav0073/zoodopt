@@ -1,6 +1,7 @@
 using backend.Data;
 using backend.Models;
 using backend.DTOs.Pets;
+using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,15 @@ namespace backend.Controllers;
 [Route("pets")]
 public class PetsController : BaseController
 {
-    public PetsController(ApplicationDbContext context) : base(context)
+    private readonly IImageService _imageService;
+
+    public PetsController(ApplicationDbContext context, IImageService imageService) : base(context)
     {
+        _imageService = imageService;
     }
 
     // Helper to shape output
-    private static PetResponseDto ToDto(Pet pet)
+    private PetResponseDto ToDto(Pet pet)
     {
         return new PetResponseDto
         {
@@ -26,6 +30,7 @@ public class PetsController : BaseController
             AgeGroup = pet.AgeGroup,
             Description = pet.Description,
             ImageFileName = pet.ImageFileName,
+            ImageUrl = _imageService.GetImageUrl(pet.ImageFileName ?? string.Empty),
             ShelterId = pet.ShelterId,
             ShelterName = pet.Shelter?.Name
         };
@@ -67,7 +72,7 @@ public class PetsController : BaseController
     // POST /pets
     [Authorize(Roles = UserRoles.ShelterStaff + "," + UserRoles.Admin)]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] PetCreateDto dto)
+    public async Task<IActionResult> Create([FromForm] PetCreateDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -88,13 +93,32 @@ public class PetsController : BaseController
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
+            string? imageFileName = null;
+            
+            // Handle image upload if provided
+            if (dto.ImageFile != null)
+            {
+                try
+                {
+                    imageFileName = await _imageService.SaveImageAsync(dto.ImageFile);
+                }
+                catch (ArgumentException ex)
+                {
+                    return StandardError(400, ex.Message);
+                }
+                catch (InvalidOperationException)
+                {
+                    return StandardError(500, "Failed to save image file.");
+                }
+            }
+
             var pet = new Pet
             {
                 Name = dto.Name,
                 Type = dto.Type,
                 AgeGroup = dto.AgeGroup,
                 Description = dto.Description,
-                ImageFileName = dto.ImageFileName,
+                ImageFileName = imageFileName,
                 ShelterId = dto.ShelterId,
                 Shelter = shelter
             };
@@ -115,7 +139,7 @@ public class PetsController : BaseController
     // PUT /pets/{id}
     [Authorize(Roles = UserRoles.ShelterStaff + "," + UserRoles.Admin)]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] PetUpdateDto dto)
+    public async Task<IActionResult> Update(int id, [FromForm] PetUpdateDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -134,11 +158,34 @@ public class PetsController : BaseController
         if (!CanManagePet(user, pet.ShelterId))
             return StandardError(403, "You are not allowed to update this pet.");
 
+        // Handle image upload if provided
+        if (dto.ImageFile != null)
+        {
+            try
+            {
+                // Delete old image if it exists
+                if (!string.IsNullOrEmpty(pet.ImageFileName))
+                {
+                    _imageService.DeleteImage(pet.ImageFileName);
+                }
+
+                // Save new image
+                pet.ImageFileName = await _imageService.SaveImageAsync(dto.ImageFile);
+            }
+            catch (ArgumentException ex)
+            {
+                return StandardError(400, ex.Message);
+            }
+            catch (InvalidOperationException)
+            {
+                return StandardError(500, "Failed to save image file.");
+            }
+        }
+
         pet.Name = dto.Name;
         pet.Type = dto.Type;
         pet.AgeGroup = dto.AgeGroup;
         pet.Description = dto.Description;
-        pet.ImageFileName = dto.ImageFileName;
 
         await _context.SaveChangesAsync();
         return Ok(ToDto(pet));
@@ -168,6 +215,12 @@ public class PetsController : BaseController
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
+            // Delete image file if it exists
+            if (!string.IsNullOrEmpty(pet.ImageFileName))
+            {
+                _imageService.DeleteImage(pet.ImageFileName);
+            }
+
             _context.Pets.Remove(pet);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();

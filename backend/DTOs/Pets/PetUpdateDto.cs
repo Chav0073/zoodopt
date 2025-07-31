@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.DTOs.Pets
 {
@@ -19,7 +20,6 @@ namespace backend.DTOs.Pets
         [StringLength(1000)]
         public string? Description { get; set; }
 
-        [StringLength(255)]
-        public string? ImageFileName { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }
