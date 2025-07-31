@@ -4,20 +4,20 @@ import {
   Stack,
   Button
 } from "react-bootstrap";
-import './SheltersCarouselSm.css';
+import './PetsCarouselSm.css';
 import { useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
-const SheltersCarouselSm = ({ shelters }) => {
+const PetsCarouselSm = ({ pets }) => {
   const [index, setIndex] = useState(0);
 
   const handlePrev = () => {
-    setIndex((prev) => (prev === 0 ? shelters.length - 1: prev -1));
+    setIndex((prev) => (prev === 0 ? pets.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setIndex((prev) => (prev === shelters.length - 1 ? 0 : prev + 1));
+    setIndex((prev) => (prev === pets.length - 1 ? 0 : prev + 1));
   }
 
   return (
@@ -33,30 +33,30 @@ const SheltersCarouselSm = ({ shelters }) => {
         </div>
         <Carousel indicators={false} controls={false} activeIndex={index}
                     onSelect={setIndex}>
-          {shelters.map((shelter, index) => (
+          {pets.map((pet, index) => (
             <Carousel.Item key={index} style={{ height: 500 }}>
               <Stack
                 direction="horizontal"
                 className="h-100 justify-content-center align-items-center"
                 gap={3}
               >
-                <Card className="shelter-card">
+                <Card className="pet-card">
                   <Card.Img
                     variant="top"
-                    src="../../../public/images/shelterimg.jpg"
+                    src="../../../public/images/catShelterImg.jpg"
                     alt="shelter image"
                     className="card-img-top"
                   />
                   <Card.Body>
-                    <Card.Title>{shelter.name}</Card.Title>
+                    <Card.Title>{pet.name}</Card.Title>
                     <Card.Text className="card-text">
-                      {shelter.phone}
+                      {pet.shelterId}
                     </Card.Text>
                     <Card.Text className="card-text">
-                      {shelter.description}
+                      {pet.description}
                     </Card.Text>
                     <Card.Text className="card-text">
-                      {shelter.location}
+                      {pet.status}
                     </Card.Text>
                     <Button variant="primary">Edit</Button>
                   </Card.Body>
@@ -70,4 +70,4 @@ const SheltersCarouselSm = ({ shelters }) => {
   );
 };
 
-export default SheltersCarouselSm;
+export default PetsCarouselSm;

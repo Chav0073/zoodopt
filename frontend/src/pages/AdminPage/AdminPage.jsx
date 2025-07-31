@@ -5,6 +5,7 @@ import PetsContext from "../../../context/PetsContext";
 import SheltersContext from "../../../context/SheltersContext";
 import AccessDenied from "../../components/AccessDenied/AccessDenied";
 import SheltersCarousel from "../../components/SheltersCarousel/SheltersCarousel";
+import PetsCarousel from "../../components/PetsCarousel/PetsCarousel";
 
 const AdminPage = () => {
     const user = useContext(UserContext);
@@ -28,6 +29,12 @@ const AdminPage = () => {
             <div className="bg-light rounded p-4 pb-5">
                 <SheltersCarousel />
             </div>
+            <div className="bg-light rounded p-4 pb-5">
+                <PetsCarousel />
+            </div>
+            {/* <div className="bg-light rounded p-4 pb-5">
+                <SheltersCarousel />
+            </div> */}
         </div>
     );
 }
