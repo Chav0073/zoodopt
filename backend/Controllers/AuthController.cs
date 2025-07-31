@@ -10,15 +10,13 @@ namespace backend.Controllers;
 
 [ApiController]
 [Route("auth")]
-public class AuthController : ControllerBase
+public class AuthController : BaseController
 {
-    private readonly ApplicationDbContext _context;
     private readonly JwtService _jwt;
     private readonly PasswordHasher<User> _hasher;
 
-    public AuthController(ApplicationDbContext context, JwtService jwt, PasswordHasher<User> hasher)
+    public AuthController(ApplicationDbContext context, JwtService jwt, PasswordHasher<User> hasher) : base(context)
     {
-        _context = context;
         _jwt = jwt;
         _hasher = hasher;
     }
@@ -30,41 +28,51 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
 
         if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
-            return BadRequest("Email already in use.");
+            return StandardError(400, "Email already in use.");
 
         if (!UserRoles.All.Contains(dto.Role))
-            return BadRequest("Invalid role.");
+            return StandardError(400, "Invalid role.");
 
-        var user = new User
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
         {
-            Email = dto.Email,
-            Role = dto.Role
-        };
-        user.PasswordHash = _hasher.HashPassword(user, dto.Password);
+            var user = new User
+            {
+                Email = dto.Email,
+                Role = dto.Role
+            };
+            user.PasswordHash = _hasher.HashPassword(user, dto.Password);
 
-        if (dto.Role == "ShelterStaff")
-        {
-            if (dto.ShelterId == null)
-                return BadRequest("Shelter selection is required for ShelterStaff registration.");
+            if (dto.Role == UserRoles.ShelterStaff)
+            {
+                if (dto.ShelterId == null)
+                    return StandardError(400, "Shelter selection is required for ShelterStaff registration.");
 
-            var shelter = await _context.Shelters.FindAsync(dto.ShelterId.Value);
-            if (shelter == null)
-                return BadRequest("Selected shelter does not exist.");
+                var shelter = await _context.Shelters.FindAsync(dto.ShelterId.Value);
+                if (shelter == null)
+                    return StandardError(400, "Selected shelter does not exist.");
 
-            user.ShelterId = shelter.Id;
+                user.ShelterId = shelter.Id;
+            }
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var token = _jwt.GenerateToken(user);
+
+            await transaction.CommitAsync();
+            return Ok(new AuthResponseDto
+            {
+                Token = token,
+                Email = user.Email,
+                Role = user.Role
+            });
         }
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-
-        var token = _jwt.GenerateToken(user);
-
-        return Ok(new AuthResponseDto
+        catch
         {
-            Token = token,
-            Email = user.Email,
-            Role = user.Role
-        });
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
 
@@ -77,11 +85,11 @@ public class AuthController : ControllerBase
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
         if (user == null)
-            return Unauthorized("Invalid email or password.");
+            return StandardError(401, "Invalid email or password.");
 
         var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
         if (result == PasswordVerificationResult.Failed)
-            return Unauthorized("Invalid email or password.");
+            return StandardError(401, "Invalid email or password.");
 
         var token = _jwt.GenerateToken(user);
 
@@ -97,8 +105,6 @@ public class AuthController : ControllerBase
     public IActionResult Logout()
     {
         // With JWT, "logout" is client-side: remove the token on frontend.
-        return Ok(new { message = "Logout successful. Please remove your token from storage." });
+        return Ok(new { message = "Logout successful. Please remove your token from storage.", timestamp = DateTime.UtcNow });
     }
-
-
 }
