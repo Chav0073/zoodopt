@@ -27,7 +27,7 @@ const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         className={`form-control pe-5 ${error ? 'is-invalid' : ''}`}
-        required={required}
+        //required={required}
       />
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
