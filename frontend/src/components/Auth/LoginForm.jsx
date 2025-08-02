@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import { Eye, EyeSlashFill, PersonFill, KeyFill } from "react-bootstrap-icons";
-import './AuthForm.css'; // Import CSS
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false,
   });
 
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -52,10 +47,7 @@ const LoginForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();
@@ -68,15 +60,17 @@ const LoginForm = () => {
           }
           setErrors(serverErrors);
         } else if (res.status === 401) {
-          setErrors({ password: data.title || data.message || 'Invalid email or password.' });
+          const errorMessage = data.title || data.message || 'Invalid email or password.';
+          setErrors({ password: errorMessage });
         } else {
           setSubmitError(data.title || 'Login failed.');
         }
-        return;
+
+        return; // prevent finally from clearing isSubmitting too soon
       }
 
-      const storage = formData.rememberMe ? localStorage : sessionStorage;
-      storage.setItem('token', data.token);
+      // Store token and redirect on success
+      localStorage.setItem('token', data.token);
       navigate('/');
     } catch (err) {
       console.error('Network or unexpected error:', err);
@@ -87,117 +81,38 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div className="login-card">
-              <div className="login-header">
-                <h2 className="login-title">Welcome Back</h2>
-                <p className="login-subtitle">Sign in to your account</p>
-              </div>
-
-              <div className="card-body p-5">
-                {submitError && (
-                  <div className="alert login-error-alert" role="alert">
-                    {submitError}
-                  </div>
-                )}
-
-                <Form onSubmit={handleSubmit} noValidate>
-                  {/* Email */}
-                  <div className="mb-4">
-                    <Form.Label className="login-label">Email Address</Form.Label>
-                    <InputGroup className={errors.email ? 'has-error' : ''}>
-                      <InputGroup.Text className="login-icon">
-                        <PersonFill />
-                      </InputGroup.Text>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Enter your email address"
-                        isInvalid={!!errors.email}
-                        className="login-input"
-                      />
-                    </InputGroup>
-                    {errors.email && (
-                      <Form.Control.Feedback type="invalid" className="login-feedback">
-                        {errors.email}
-                      </Form.Control.Feedback>
-                    )}
-                  </div>
-
-                  {/* Password */}
-                  <div className="mb-4">
-                    <Form.Label className="login-label">Password</Form.Label>
-                    <InputGroup className={errors.password ? 'has-error' : ''}>
-                      <InputGroup.Text className="login-icon">
-                        <KeyFill />
-                      </InputGroup.Text>
-                      <Form.Control
-                        type={showPassword ? 'text' : 'password'}
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="Enter your password"
-                        isInvalid={!!errors.password}
-                        className="login-input"
-                      />
-                      <InputGroup.Text
-                        className="login-icon toggle-icon"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeSlashFill /> : <Eye />}
-                      </InputGroup.Text>
-                    </InputGroup>
-                    {errors.password && (
-                      <Form.Control.Feedback type="invalid" className="login-feedback">
-                        {errors.password}
-                      </Form.Control.Feedback>
-                    )}
-                  </div>
-
-                  {/* Remember Me */}
-                  <div className="mb-4 d-flex justify-content-between align-items-center login-options">
-                    <Form.Check
-                      type="checkbox"
-                      id="rememberMe"
-                      name="rememberMe"
-                      checked={formData.rememberMe}
-                      onChange={handleChange}
-                      label={<span className="remember-label">Remember me</span>}
-                    />
-
-                    <Link to="/forgot-password" className="forgot-link">
-                      Forgot Password?
-                    </Link>
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="mb-4">
-                    <button type="submit" className="login-button" disabled={isSubmitting}>
-                      {isSubmitting ? <><span className="spinner">⏳</span> Signing In...</> : 'Sign In'}
-                    </button>
-                  </div>
-
-                  {/* Register Link */}
-                  <div className="text-center">
-                    <p className="register-text">
-                      Don't have an account?{' '}
-                      <Link to="/register" className="register-link">
-                        Create account
-                      </Link>
-                    </p>
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </div>
+    <form onSubmit={handleSubmit} className="mt-4" noValidate>
+      {submitError && (
+        <div className="alert alert-danger" role="alert">
+          {submitError}
         </div>
-      </div>
-    </div>
+      )}
+      <Input
+        label="Email"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        error={errors.email}
+        required={false} // disable browser validation
+      />
+      <Input
+        label="Password"
+        name="password"
+        type="password"
+        value={formData.password}
+        onChange={handleChange}
+        error={errors.password}
+        required={false} // disable browser validation
+      />
+      <Button type="submit" loading={isSubmitting} className="w-100">
+        Login
+      </Button>
+
+      <p className="mt-3 text-center">
+        Don't have an account? <Link to="/register">Register here</Link>.
+      </p>
+    </form>
   );
 };
 
