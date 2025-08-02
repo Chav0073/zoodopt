@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import RegisterPage from "./pages/Auth/RegisterUserPage";
 import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
+import MyApplicationsPage from "./pages/Pets/MyApplicationsPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginUserPage />} />
           <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
+          <Route path="pets/my-applications" element={<MyApplicationsPage />} />
+
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
           </Route>
