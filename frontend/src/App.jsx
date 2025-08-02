@@ -17,9 +17,8 @@ import ManageShelters from "./components/ManageShelters/ManageShelters";
 import RegisterPage from "./pages/Auth/RegisterUserPage";
 import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
-import MyApplicationsPage from "./pages/Pets/MyApplicationsPage";
-import { useState } from "react";
 
+import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -42,7 +41,6 @@ function App() {
 
                 {/* Pet adoption route */}
                 <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
-                <Route path="pets/my-applications" element={<MyApplicationsPage />} />
 
                 {/* Main app layout */}
                 <Route path="/" element={<Layout />}>
