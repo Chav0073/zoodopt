@@ -56,6 +56,24 @@ public class ApplicationsController : BaseController
         return Ok(apps.Select(ToDto));
     }
 
+    // GET /applications/my-applications
+    [Authorize]
+    [HttpGet("my-applications")]
+    public async Task<IActionResult> GetMyApplications()
+    {
+        var user = await GetCurrentUserAsync();
+        if (user == null)
+            return StandardError(401, "User not authenticated.");
+
+        var apps = await _context.Applications
+            .Include(a => a.Pet)
+            .Where(a => a.UserId == user.Id)
+            .OrderByDescending(a => a.SubmittedAt)
+            .ToListAsync();
+
+        return Ok(apps.Select(ToDto));
+    }
+
     // GET /applications/{id}
     [Authorize]
     [HttpGet("{id}")]
