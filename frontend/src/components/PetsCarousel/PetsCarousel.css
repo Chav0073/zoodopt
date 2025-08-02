@@ -1,0 +1,22 @@
+.pet-card .card-title {
+    color: #2563eb; /* blue for pet name */
+    font-weight: bold;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+.pet-card .card-text {
+    color: #374151; /* dark gray for details */
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.pet-card .card-text:first-of-type {
+    font-style: italic; /* shelterId styled differently */
+    color: #64748b;
+}
+
+.pet-card .card-text:last-of-type {
+    font-weight: 500; /* status a bit bolder */
+    color: #059669;
+}
