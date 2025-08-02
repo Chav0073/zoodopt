@@ -1,0 +1,49 @@
+.user-card {
+  min-height: 250px; /* Fixed typo from '300x' */
+  max-height: 250px;
+  width: 16rem; /* Slightly smaller width */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  height: 160px; /* Slightly smaller image height */
+  object-fit: cover;
+  width: 100%;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0.75rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Max 3 lines */
+  -webkit-box-orient: vertical;
+  flex-shrink: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+/* Optional: For Carousel.Item if you still want a fixed height */
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px; /* Just enough to fit the card */
+}
