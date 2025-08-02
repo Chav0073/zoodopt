@@ -4,8 +4,9 @@ import HomePage from "./pages/HomePage/HomePage";
 import { currentUser, mockPets, mockShelters, mockUsers } from "../data/mockup_data";
 import UserContext from "../context/UserContext";
 import AdminPage from "./pages/AdminPage/AdminPage";
-import ManagePets from "./pages/ManagePets/ManagePets";
-import ManageUsers from "./pages/ManageUsers/ManageUsers";
+import ManagePets from "./components/ManagePets/ManagePets";
+import ManageUsers from "./components/ManageUsers/ManageUsers";
+import ManageShelters from "./components/ManageShelters/ManageShelters";
 import { useState } from "react";
 import PetsContext from "../context/PetsContext";
 import SheltersContext from "../context/SheltersContext";
@@ -28,14 +29,15 @@ function App() {
           <UsersContext.Provider value={users}>
               <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout/>}>
-                  <Route index element={<HomePage />} />
-                  <Route path="admin" element={<AdminPage/>}>
-                    {/* <Route path="shelters" element={<ManageShelters/>} />
-                    <Route path="pets" element={<ManagePets/>} />
-                    <Route path="users" element={<ManageUsers/>} /> */}
-                  </Route>
+                <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                
+                <Route path="admin" element={<AdminPage />}>
+                  <Route path="shelters" element={<ManageShelters />} />
+                  <Route path="pets" element={<ManagePets />} />
+                  <Route path="users" element={<ManageUsers />} />
                 </Route>
+              </Route>
               </Routes>
             </BrowserRouter>
           </UsersContext.Provider>
