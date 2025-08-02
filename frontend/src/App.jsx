@@ -45,7 +45,7 @@ function App() {
                 {/* Main app layout */}
                 <Route path="/" element={<Layout />}>
                   <Route index element={<HomePage />} />
-
+                
                   {/* Admin nested routes */}
                   <Route path="admin" element={<AdminPage />}>
                     <Route path="shelters" element={<ManageShelters />} />
