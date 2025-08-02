@@ -2,28 +2,29 @@
 
 ### API Endpoint Table
 
-| Endpoint                   | Method | Auth | Purpose                                    |
-| -------------------------- | ------ | ---- | ------------------------------------------ |
-| /auth/register             | POST   | No   | Register a user (public/staff/admin)       |
-| /auth/login                | POST   | No   | Authenticate and get token                 |
-| /auth/logout               | POST   | No   | "Logout" (client removes token)            |
-| /users/me                  | GET    | Yes  | Get current user's profile                 |
-| /pets                      | GET    | No   | List all pets (with filters)               |
-| /pets/{id}                 | GET    | No   | Get specific pet details                   |
-| /pets                      | POST   | Yes  | Add new pet (shelter staff/admin)          |
-| /pets/{id}                 | PUT    | Yes  | Update pet (shelter staff/admin)           |
-| /pets/{id}                 | DELETE | Yes  | Delete pet (shelter staff/admin)           |
-| /applications              | GET    | Yes  | View apps for shelter's pets (staff/admin) |
-| /applications/{id}         | GET    | Yes  | Get specific application details           |
-| /applications              | POST   | Yes  | Submit adoption app (any authenticated)    |
-| /applications/{id}/message | PUT    | Yes  | Update application message (applicant)     |
-| /applications/{id}/status  | PUT    | Yes  | Update app status (staff/admin)            |
-| /applications/{id}         | DELETE | Yes  | Delete application (applicant/admin)       |
-| /shelters                  | GET    | No   | List all shelters (public)                 |
-| /shelters/{id}             | GET    | No   | Get specific shelter details               |
-| /shelters                  | POST   | Yes  | Create shelter (admin only)                |
-| /shelters/{id}             | PUT    | Yes  | Update shelter (admin only)                |
-| /shelters/{id}             | DELETE | Yes  | Delete shelter (admin only)                |
+| Endpoint                      | Method | Auth | Purpose                                    |
+| ----------------------------- | ------ | ---- | ------------------------------------------ |
+| /auth/register                | POST   | No   | Register a user (public/staff/admin)       |
+| /auth/login                   | POST   | No   | Authenticate and get token                 |
+| /auth/logout                  | POST   | No   | "Logout" (client removes token)            |
+| /users/me                     | GET    | Yes  | Get current user's profile                 |
+| /pets                         | GET    | No   | List all pets (with filters)               |
+| /pets/{id}                    | GET    | No   | Get specific pet details                   |
+| /pets                         | POST   | Yes  | Add new pet (shelter staff/admin)          |
+| /pets/{id}                    | PUT    | Yes  | Update pet (shelter staff/admin)           |
+| /pets/{id}                    | DELETE | Yes  | Delete pet (shelter staff/admin)           |
+| /applications                 | GET    | Yes  | View apps for shelter's pets (staff/admin) |
+| /applications/my-applications | GET    | Yes  | Get current user's own applications        |
+| /applications/{id}            | GET    | Yes  | Get specific application details           |
+| /applications                 | POST   | Yes  | Submit adoption app (any authenticated)    |
+| /applications/{id}/message    | PUT    | Yes  | Update application message (applicant)     |
+| /applications/{id}/status     | PUT    | Yes  | Update app status (staff/admin)            |
+| /applications/{id}            | DELETE | Yes  | Delete application (applicant/admin)       |
+| /shelters                     | GET    | No   | List all shelters (public)                 |
+| /shelters/{id}                | GET    | No   | Get specific shelter details               |
+| /shelters                     | POST   | Yes  | Create shelter (admin only)                |
+| /shelters/{id}                | PUT    | Yes  | Update shelter (admin only)                |
+| /shelters/{id}                | DELETE | Yes  | Delete shelter (admin only)                |
 
 ## Authentication
 
@@ -177,7 +178,7 @@ Common HTTP status codes:
   description: "Updated description" (optional)
   imageFile: [image file] (optional - replaces existing image)
   ```
-- **Note**: 
+- **Note**:
   - Shelter staff can only update pets from their own shelter
   - If a new image is uploaded, the old image is automatically deleted
   - Images are validated for type and size (max 5MB)
@@ -200,6 +201,37 @@ Common HTTP status codes:
 - **Description**: View applications for pets (shelter staff and admin only)
 - **Auth Required**: Yes (ShelterStaff or Admin)
 - **Response**: Array of applications (shelter staff see only their shelter's applications)
+
+---
+
+#### `/applications/my-applications` — `GET`
+
+- **Description**: Get all applications submitted by the current user
+- **Auth Required**: Yes (any authenticated user)
+- **Response**: Array of the user's own applications, ordered by submission date (newest first)
+- **Example Response**:
+  ```json
+  [
+    {
+      "id": 4,
+      "petId": 2,
+      "userId": 2,
+      "message": "I'm an experienced adopter.",
+      "status": "Pending",
+      "submittedAt": "2025-07-31T17:09:04.000Z",
+      "petName": "Whiskers"
+    },
+    {
+      "id": 1,
+      "petId": 1,
+      "userId": 2,
+      "message": "I love dogs and have experience adopting.",
+      "status": "Approved",
+      "submittedAt": "2025-07-31T05:02:37.000Z",
+      "petName": "Max"
+    }
+  ]
+  ```
 
 ---
 
