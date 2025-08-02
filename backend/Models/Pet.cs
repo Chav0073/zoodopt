@@ -7,13 +7,13 @@ namespace backend.Models
         public int Id { get; set; }
 
         [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
-        public required string Type { get; set; } // e.g., Dog, Cat
+        public string Type { get; set; } = string.Empty; // e.g., Dog, Cat
 
         [Required]
-        public required string AgeGroup { get; set; } // e.g., Puppy, Adult
+        public string AgeGroup { get; set; } = string.Empty; // e.g., Puppy, Adult
 
         public string? Description { get; set; }
         public string? ImageFileName { get; set; }

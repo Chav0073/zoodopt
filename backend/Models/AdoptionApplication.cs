@@ -8,10 +8,14 @@ namespace backend.Models
 
         [Required]
         public int PetId { get; set; }
+
+        [Required]
         public required Pet Pet { get; set; }
 
         [Required]
         public int UserId { get; set; }
+
+        [Required]
         public required User User { get; set; }
 
         public string? Message { get; set; }
