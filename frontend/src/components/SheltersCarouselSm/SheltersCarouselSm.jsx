@@ -34,19 +34,13 @@ const SheltersCarouselSm = ({ shelters }) => {
         <Carousel indicators={false} controls={false} activeIndex={index}
                     onSelect={setIndex}>
           {shelters.map((shelter, index) => (
-            <Carousel.Item key={index} style={{ height: 500 }}>
+            <Carousel.Item key={index} style={{ height: 400 }}>
               <Stack
                 direction="horizontal"
                 className="h-100 justify-content-center align-items-center"
                 gap={3}
               >
                 <Card className="shelter-card">
-                  <Card.Img
-                    variant="top"
-                    src="../../../public/images/shelterimg.jpg"
-                    alt="shelter image"
-                    className="card-img-top"
-                  />
                   <Card.Body>
                     <Card.Title>{shelter.name}</Card.Title>
                     <Card.Text className="card-text">
