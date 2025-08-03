@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Alert, Container } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import fetchShelters from "../../helpers/fetchShelters";
 
@@ -26,6 +26,10 @@ const CreatePetPage = () => {
     };
     loadShelters();
   }, [token]);
+
+  const handleBack = () => {
+    navigate("/admin");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,57 +70,58 @@ const CreatePetPage = () => {
   };
 
   return (
-    <Container className="mt-4">
-      <h2>Create Pet</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleSubmit} encType="multipart/form-data">
-        <Form.Group controlId="name" className="mb-3">
-          <Form.Label>Name*</Form.Label>
+    <div className="bg-light rounded p-4 pb-5">
+      <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
+        <h2 className="mb-0 fw-bold text-primary">Create Pet</h2>
+        <Button variant="outline-primary" className="fw-semibold px-4 py-2" onClick={handleBack}>
+          Back to Admin Dashboard
+        </Button>
+      </div>
+
+      <Form onSubmit={handleSubmit} encType="multipart/form-data" className="bg-white p-4 rounded shadow-sm">
+        {error && <Alert variant="danger">{error}</Alert>}
+
+        <Form.Group className="mb-3" controlId="petName">
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
+            placeholder="Enter pet name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </Form.Group>
 
-        <Form.Group controlId="type" className="mb-3">
-          <Form.Label>Type*</Form.Label>
-          <Form.Select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-          >
+        <Form.Group className="mb-3" controlId="petType">
+          <Form.Label>Type</Form.Label>
+          <Form.Select value={type} onChange={(e) => setType(e.target.value)} required>
             <option>Dog</option>
             <option>Cat</option>
             <option>Other</option>
           </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="ageGroup" className="mb-3">
-          <Form.Label>Age Group*</Form.Label>
-          <Form.Select
-            value={ageGroup}
-            onChange={(e) => setAgeGroup(e.target.value)}
-            required
-          >
+        <Form.Group className="mb-3" controlId="petAgeGroup">
+          <Form.Label>Age Group</Form.Label>
+          <Form.Select value={ageGroup} onChange={(e) => setAgeGroup(e.target.value)} required>
             <option>Puppy</option>
             <option>Adult</option>
             <option>Senior</option>
           </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="description" className="mb-3">
+        <Form.Group className="mb-3" controlId="petDescription">
           <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
+            placeholder="Enter pet description"
             rows={3}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
 
-        <Form.Group controlId="imageFile" className="mb-3">
+        <Form.Group className="mb-3" controlId="petImage">
           <Form.Label>Image</Form.Label>
           <Form.Control
             type="file"
@@ -125,8 +130,8 @@ const CreatePetPage = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="shelterId" className="mb-3">
-          <Form.Label>Shelter*</Form.Label>
+        <Form.Group className="mb-4" controlId="shelterId">
+          <Form.Label>Shelter</Form.Label>
           <Form.Select
             value={shelterId}
             onChange={(e) => setShelterId(e.target.value)}
@@ -140,11 +145,11 @@ const CreatePetPage = () => {
           </Form.Select>
         </Form.Group>
 
-        <Button type="submit" variant="primary">
+        <Button variant="primary" type="submit" className="fw-semibold px-4">
           Create Pet
         </Button>
       </Form>
-    </Container>
+    </div>
   );
 };
 
