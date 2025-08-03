@@ -50,7 +50,7 @@
   background: linear-gradient(45deg, #ff6b6b, #ffa726);
   color: white;
   text-align: center;
-  padding: 1.5rem;
+  padding: 1rem;
   position: relative;
   overflow: hidden;
 }
@@ -73,7 +73,7 @@
 }
 
 .adopt-image {
-  max-height: 500px;
+  max-height: 400px;
   width: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
@@ -99,11 +99,12 @@
 
 .adopt-form-container {
   background: linear-gradient(135deg, #667eea, #383bf0ff);
+  background: linear-gradient(135deg, #667eea, #383bf0ff);
   color: white;
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
   padding: 2rem;
   border-radius: 1rem;
-  animation: fadeIn 0.8s ease-out;
+  font-size: 1.8rem;
 }
 
 .adopt-textarea {
