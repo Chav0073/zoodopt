@@ -17,6 +17,9 @@ import ManageShelters from "./components/ManageShelters/ManageShelters";
 import RegisterPage from "./pages/Auth/RegisterUserPage";
 import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
+import EditShelterPage from "./pages/EditShelterPage/EditShelterPage";
+import EditPetPage from "./pages/EditPetPage/EditPetPage";
+=======
 import MyApplicationsPage from "./pages/Pets/MyApplicationsPage";
 
 import { useState } from "react";
@@ -46,12 +49,15 @@ function App() {
                 {/* Main app layout */}
                 <Route path="/" element={<Layout />}>
                   <Route index element={<HomePage />} />
+                
                   <Route path="pets/my-applications" element={<MyApplicationsPage />} />
 
                   {/* Admin nested routes */}
                   <Route path="admin" element={<AdminPage />}>
                     <Route path="shelters" element={<ManageShelters />} />
+                    <Route path="shelters/edit/:shelterId" element={<EditShelterPage />}/>
                     <Route path="pets" element={<ManagePets />} />
+                    <Route path="pets/edit/:petId" element={<EditPetPage />} />
                     <Route path="users" element={<ManageUsers />} />
                   </Route>
                 </Route>
