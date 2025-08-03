@@ -133,6 +133,13 @@ public class ApplicationsController : BaseController
             };
 
             _context.Applications.Add(application);
+
+            // Update pet status to Pending if it's currently Available
+            if (pet.Status == "Available")
+            {
+                pet.Status = "Pending";
+            }
+
             await _context.SaveChangesAsync();
 
             var created = await _context.Applications
@@ -203,10 +210,51 @@ public class ApplicationsController : BaseController
         if (!ApplicationStatuses.All.Contains(dto.Status))
             return StandardError(400, $"Invalid status. Allowed values: {string.Join(", ", ApplicationStatuses.All)}");
 
-        app.Status = dto.Status;
-        await _context.SaveChangesAsync();
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            app.Status = dto.Status;
 
-        return Ok(ToDto(app));
+            // If application is approved, update pet status and reject other applications
+            if (dto.Status == ApplicationStatuses.Approved)
+            {
+                // Update pet status to Adopted
+                app.Pet.Status = "Adopted";
+
+                // Reject all other pending applications for this pet
+                var otherApplications = await _context.Applications
+                    .Where(a => a.PetId == app.PetId && a.Id != app.Id && a.Status == ApplicationStatuses.Pending)
+                    .ToListAsync();
+
+                foreach (var otherApp in otherApplications)
+                {
+                    otherApp.Status = ApplicationStatuses.Rejected;
+                }
+            }
+            // If application is rejected and pet is adopted, check if there are other approved applications
+            else if (dto.Status == ApplicationStatuses.Rejected && app.Pet.Status == "Adopted")
+            {
+                // Check if there are any other approved applications for this pet
+                var hasOtherApprovedApps = await _context.Applications
+                    .AnyAsync(a => a.PetId == app.PetId && a.Id != app.Id && a.Status == ApplicationStatuses.Approved);
+
+                // If no other approved applications, set pet back to available
+                if (!hasOtherApprovedApps)
+                {
+                    app.Pet.Status = "Available";
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return Ok(ToDto(app));
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     // DELETE /applications/{id}
@@ -218,7 +266,9 @@ public class ApplicationsController : BaseController
         if (user == null)
             return StandardError(401, "User not authenticated.");
 
-        var app = await _context.Applications.FindAsync(id);
+        var app = await _context.Applications
+            .Include(a => a.Pet)
+            .FirstOrDefaultAsync(a => a.Id == id);
         if (app == null)
             return StandardError(404, "Application not found.");
 
@@ -229,6 +279,23 @@ public class ApplicationsController : BaseController
         try
         {
             _context.Applications.Remove(app);
+
+            // Check if this was the last pending application for the pet
+            var remainingApplications = await _context.Applications
+                .Where(a => a.PetId == app.PetId && a.Id != app.Id)
+                .ToListAsync();
+
+            // If no remaining applications and pet is pending, set back to available
+            if (!remainingApplications.Any() && app.Pet.Status == "Pending")
+            {
+                app.Pet.Status = "Available";
+            }
+            // If no approved applications remain and pet is adopted, set back to available
+            else if (!remainingApplications.Any(a => a.Status == ApplicationStatuses.Approved) && app.Pet.Status == "Adopted")
+            {
+                app.Pet.Status = "Available";
+            }
+
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
             return NoContent();

@@ -10,5 +10,18 @@ namespace backend.DTOs.Shelters
 
         [StringLength(200)]
         public string? Location { get; set; }
+
+        [StringLength(20)]
+        public string? Phone { get; set; }
+
+        [EmailAddress]
+        [StringLength(100)]
+        public string? Email { get; set; }
+
+        [StringLength(1000)]
+        public string? Description { get; set; }
+
+        [StringLength(200)]
+        public string? Logo { get; set; }
     }
 }
