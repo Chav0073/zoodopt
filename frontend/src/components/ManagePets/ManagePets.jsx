@@ -30,6 +30,10 @@ const ManagePets = () => {
         <div className="bg-light rounded p-4 pb-5">
             <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
                 <h2 className="mb-0 fw-bold text-primary">Pets</h2>
+                <Button variant="primary"
+                className="fw-semibold px-4 py-2"> 
+                    Create Shelter
+                </Button>
                 <Button
                     variant="outline-primary"
                     className="fw-semibold px-4 py-2"
