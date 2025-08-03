@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
 const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
   const [sortConfig, setSortConfig] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");      
+  const [successMessage, setSuccessMessage] = useState("");   
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // <600px
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
     navigate(`/admin/shelters/edit/${id}`);
-  }
+  };
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Are you sure you want to delete this shelter?");
@@ -30,18 +33,32 @@ const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
       });
 
       if (response.status === 204) {
-        alert("Shelter deleted successfully.");
+        setErrorMessage(""); 
+        setSuccessMessage("Shelter deleted successfully."); 
         if (onShelterDeleted) onShelterDeleted(id);
       } else if (response.status === 400 || response.status === 409) {
-        const error = await response.text();
-        alert(`Could not delete shelter: ${error}`);
+        const errorText = await response.text();
+        const parsed = JSON.parse(errorText);
+        setErrorMessage(parsed.error || "Failed to delete shelter.");
+        setSuccessMessage(""); 
       } else {
         throw new Error("Unexpected server response");
       }
     } catch (error) {
-      alert("Error deleting shelter: " + error.message);
+      setErrorMessage("Error deleting shelter: " + error.message);
+      setSuccessMessage(""); 
     }
   };
+
+  useEffect(() => {
+    if (errorMessage || successMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+        setSuccessMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, successMessage]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
@@ -85,7 +102,18 @@ const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
 
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
-      <Paper sx={{ minWidth: 600 }}>
+      <Paper sx={{ minWidth: 600, p: 2 }}>
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
+        {successMessage && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            {successMessage}
+          </Alert>
+        )}
+
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={shelters}
