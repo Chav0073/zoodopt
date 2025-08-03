@@ -34,7 +34,7 @@ const SheltersCarouselSm = ({ shelters }) => {
         <Carousel indicators={false} controls={false} activeIndex={index}
                     onSelect={setIndex}>
           {shelters.map((shelter, index) => (
-            <Carousel.Item key={index} style={{ height: 500 }}>
+            <Carousel.Item key={index} style={{ height: 400 }}>
               <Stack
                 direction="horizontal"
                 className="h-100 justify-content-center align-items-center"
