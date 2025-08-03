@@ -1,15 +1,27 @@
 import { useParams } from "react-router-dom";
-import fetchShelters from "../../helpers/fetchShelter";
+import { useEffect, useState } from "react";
+import fetchShelter from "../../helpers/fetchShelter";
+import getToken from "../../helpers/getToken";
+import EditShelter from "../../components/EditShelter/EditShelter";
 
 const EditShelterPage = () => {
-    let params = useParams();
-    let shelterId = params.shelterId;
-    
-    let shelter = fetchShelter(getToken(), shelterId);
+    const { shelterId } = useParams();
+    const [shelter, setShelter] = useState(null);
 
-    return <>
-        <p>{shelterId}</p>
-    </>
-}
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetchShelter(getToken(), shelterId);
+            setShelter(data);
+        };
+
+        fetchData();
+    }, [shelterId]);
+
+    return (
+        <>
+            {shelter ? <EditShelter shelter={shelter} /> : <p>Loading...</p>}
+        </>
+    );
+};
 
 export default EditShelterPage;
