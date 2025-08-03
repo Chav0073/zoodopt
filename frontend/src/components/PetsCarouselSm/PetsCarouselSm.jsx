@@ -43,8 +43,8 @@ const PetsCarouselSm = ({ pets }) => {
                 <Card className="pet-card">
                   <Card.Img
                     variant="top"
-                    src="../../../public/images/catShelterImg.jpg"
-                    alt="shelter image"
+                    src={`http://localhost:5217/images/${pet.imageFileName}`}
+                    alt={`${pet.imageUrl}`}
                     className="card-img-top"
                   />
                   <Card.Body>

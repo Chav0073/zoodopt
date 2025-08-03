@@ -24,6 +24,8 @@ import MyApplicationsPage from "./pages/Pets/MyApplicationsPage";
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import CreateShelterPage from "./pages/CreateShelter/CreateShelterPage";
+import CreatePetPage from "./pages/CreatePet/CreatePetPage";
 
 function App() {
   const [user, setUser] = useState(currentUser);
@@ -54,8 +56,10 @@ function App() {
                   <Route path="admin" element={<AdminPage />}>
                     <Route path="shelters" element={<ManageShelters />} />
                     <Route path="shelters/edit/:shelterId" element={<EditShelterPage />}/>
+                    <Route path="shelters/create" element={<CreateShelterPage/>}/>
                     <Route path="pets" element={<ManagePets />} />
                     <Route path="pets/edit/:petId" element={<EditPetPage />} />
+                    <Route path="pets/create" element={<CreatePetPage />} />
                     <Route path="users" element={<ManageUsers />} />
                   </Route>
                 </Route>
