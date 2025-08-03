@@ -123,6 +123,23 @@ components:
           type: string
           maxLength: 50
           example: "Adult"
+        breed:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "Persian"
+        gender:
+          type: string
+          maxLength: 50
+          nullable: true
+          example: "Female"
+        status:
+          type: string
+          maxLength: 50
+          nullable: true
+          default: "Available"
+          enum: [Available, Pending, Adopted]
+          example: "Available"
         description:
           type: string
           maxLength: 1000
@@ -156,6 +173,22 @@ components:
           type: string
           maxLength: 50
           example: "Senior"
+        breed:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "Persian"
+        gender:
+          type: string
+          maxLength: 50
+          nullable: true
+          example: "Female"
+        status:
+          type: string
+          maxLength: 50
+          nullable: true
+          enum: [Available, Pending, Adopted]
+          example: "Available"
         description:
           type: string
           maxLength: 1000
@@ -177,6 +210,15 @@ components:
           type: string
         ageGroup:
           type: string
+        breed:
+          type: string
+          nullable: true
+        gender:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [Available, Pending, Adopted]
         description:
           type: string
           nullable: true
@@ -263,6 +305,27 @@ components:
           maxLength: 200
           nullable: true
           example: "123 Pet Street, City, State"
+        phone:
+          type: string
+          maxLength: 20
+          nullable: true
+          example: "555-123-4567"
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          nullable: true
+          example: "contact@shelter.com"
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          example: "We specialize in rescuing and rehoming cats and dogs"
+        logo:
+          type: string
+          maxLength: 200
+          nullable: true
+          example: "shelter-logo.png"
 
     ShelterUpdateDto:
       type: object
@@ -279,6 +342,27 @@ components:
           maxLength: 200
           nullable: true
           example: "456 New Address, City, State"
+        phone:
+          type: string
+          maxLength: 20
+          nullable: true
+          example: "555-987-6543"
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          nullable: true
+          example: "updated@shelter.com"
+        description:
+          type: string
+          maxLength: 1000
+          nullable: true
+          example: "Updated shelter description with new programs"
+        logo:
+          type: string
+          maxLength: 200
+          nullable: true
+          example: "new-logo.png"
 
     ShelterResponseDto:
       type: object
@@ -288,6 +372,18 @@ components:
         name:
           type: string
         location:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        logo:
           type: string
           nullable: true
         petCount:
@@ -300,7 +396,11 @@ paths:
       tags:
         - Authentication
       summary: Register a new user
-      description: Register as a public user, shelter staff, or admin
+      description: |
+        Register as a public user, shelter staff, or admin.
+
+        **Security**: Public registration is limited to "Public" role only. 
+        Admin and ShelterStaff accounts can only be created by existing admin users.
       requestBody:
         required: true
         content:
@@ -316,6 +416,12 @@ paths:
                 $ref: "#/components/schemas/AuthResponseDto"
         "400":
           description: Validation failed or email already in use
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Only administrators can create privileged user accounts
           content:
             application/json:
               schema:
@@ -615,7 +721,11 @@ paths:
       tags:
         - Applications
       summary: Create application
-      description: Submit an adoption application
+      description: |
+        Submit an adoption application.
+
+        **Automatic Workflow**: When an application is submitted for a pet with status "Available", 
+        the pet status automatically changes to "Pending".
       security:
         - bearerAuth: []
       requestBody:
@@ -824,7 +934,13 @@ paths:
       tags:
         - Applications
       summary: Update application status
-      description: Update application status (shelter staff and admin only)
+      description: |
+        Update application status (shelter staff and admin only).
+
+        **Automatic Workflow**:
+        - Approving an application automatically sets the pet status to "Adopted"
+        - Approving an application automatically rejects all other pending applications for the same pet
+        - Rejecting an approved application may revert pet status to "Available" if no other approved applications exist
       security:
         - bearerAuth: []
       parameters:

@@ -1,37 +1,150 @@
 # Zoodopt API Reference
 
+## Overview
+
+The Zoodopt API provides endpoints for managing pet adoption applications, shelters, and users. The API uses JWT tokens for authentication and follows RESTful conventions.
+
+**Base URL:** `http://localhost:5217`
+
 ### API Endpoint Table
 
-| Endpoint                      | Method | Auth | Purpose                                    |
-| ----------------------------- | ------ | ---- | ------------------------------------------ |
-| /auth/register                | POST   | No   | Register a user (public/staff/admin)       |
-| /auth/login                   | POST   | No   | Authenticate and get token                 |
-| /auth/logout                  | POST   | No   | "Logout" (client removes token)            |
-| /users/me                     | GET    | Yes  | Get current user's profile                 |
-| /pets                         | GET    | No   | List all pets (with filters)               |
-| /pets/{id}                    | GET    | No   | Get specific pet details                   |
-| /pets                         | POST   | Yes  | Add new pet (shelter staff/admin)          |
-| /pets/{id}                    | PUT    | Yes  | Update pet (shelter staff/admin)           |
-| /pets/{id}                    | DELETE | Yes  | Delete pet (shelter staff/admin)           |
-| /applications                 | GET    | Yes  | View apps for shelter's pets (staff/admin) |
-| /applications/my-applications | GET    | Yes  | Get current user's own applications        |
-| /applications/{id}            | GET    | Yes  | Get specific application details           |
-| /applications                 | POST   | Yes  | Submit adoption app (any authenticated)    |
-| /applications/{id}/message    | PUT    | Yes  | Update application message (applicant)     |
-| /applications/{id}/status     | PUT    | Yes  | Update app status (staff/admin)            |
-| /applications/{id}            | DELETE | Yes  | Delete application (applicant/admin)       |
-| /shelters                     | GET    | No   | List all shelters (public)                 |
-| /shelters/{id}                | GET    | No   | Get specific shelter details               |
-| /shelters                     | POST   | Yes  | Create shelter (admin only)                |
-| /shelters/{id}                | PUT    | Yes  | Update shelter (admin only)                |
-| /shelters/{id}                | DELETE | Yes  | Delete shelter (admin only)                |
+| Endpoint                      | Method | Auth | Purpose                                                 |
+| ----------------------------- | ------ | ---- | ------------------------------------------------------- |
+| /auth/register                | POST   | No\* | Register a user (public self-reg, admin for privileged) |
+| /auth/login                   | POST   | No   | Authenticate and get token                              |
+| /users/me                     | GET    | Yes  | Get current user's profile                              |
+| /pets                         | GET    | No   | List all pets (with filters)                            |
+| /pets/{id}                    | GET    | No   | Get specific pet details                                |
+| /pets                         | POST   | Yes  | Add new pet (shelter staff/admin)                       |
+| /pets/{id}                    | PUT    | Yes  | Update pet (shelter staff/admin)                        |
+| /pets/{id}                    | DELETE | Yes  | Delete pet (shelter staff/admin)                        |
+| /applications                 | GET    | Yes  | View apps for shelter's pets (staff/admin)              |
+| /applications/my-applications | GET    | Yes  | Get current user's own applications                     |
+| /applications/{id}            | GET    | Yes  | Get specific application details                        |
+| /applications                 | POST   | Yes  | Submit adoption app (any authenticated)                 |
+| /applications/{id}/message    | PUT    | Yes  | Update application message (applicant)                  |
+| /applications/{id}/status     | PUT    | Yes  | Update app status (staff/admin)                         |
+| /applications/{id}            | DELETE | Yes  | Delete application (applicant/admin)                    |
+| /shelters                     | GET    | No   | List all shelters (public)                              |
+| /shelters/{id}                | GET    | No   | Get specific shelter details                            |
+| /shelters                     | POST   | Yes  | Create shelter (admin only)                             |
+| /shelters/{id}                | PUT    | Yes  | Update shelter (admin only)                             |
+| /shelters/{id}                | DELETE | Yes  | Delete shelter (admin only)                             |
+
+\* Public registration allows only "Public" role. Admin/ShelterStaff accounts require admin authentication.
 
 ## Authentication
+
+### JWT Token Authentication
 
 All endpoints marked with "Auth: Yes" require a Bearer token in the Authorization header:
 
 ```
 Authorization: Bearer <your-jwt-token>
+```
+
+### User Roles
+
+- **Public**: Can view pets/shelters, submit applications
+- **ShelterStaff**: Can manage pets for their assigned shelter, manage applications
+- **Admin**: Full access to all resources
+
+### Security Features
+
+- **Role-Based Access**: Endpoints are protected by role-based authorization
+- **Registration Security**: Only admin users can create Admin or ShelterStaff accounts; public registration is limited to "Public" role
+- **Shelter Isolation**: ShelterStaff users can only manage pets and applications for their assigned shelter
+- **Application Privacy**: Users can only view their own applications (except staff/admin viewing their shelter's applications)
+
+## Data Models
+
+### Pet Model
+
+```json
+{
+  "id": 1,
+  "name": "Bella",
+  "type": "Dog",
+  "ageGroup": "Adult",
+  "breed": "Labrador Retriever",
+  "gender": "Female",
+  "status": "Available",
+  "description": "Friendly and energetic...",
+  "imageFileName": "bella.jpg",
+  "imageUrl": "/images/bella.jpg",
+  "shelterId": 1,
+  "shelterName": "Happy Tails Shelter"
+}
+```
+
+**Pet Status Values:**
+
+- `Available` - Ready for adoption
+- `Pending` - Has pending application(s)
+- `Adopted` - Successfully adopted
+
+### Shelter Model
+
+```json
+{
+  "id": 1,
+  "name": "Happy Tails Shelter",
+  "location": "Toronto, ON",
+  "phone": "416-555-0101",
+  "email": "contact@happytails.ca",
+  "description": "We specialize in dogs and rabbits...",
+  "logo": "happytails.png",
+  "petCount": 2
+}
+```
+
+### Application Model
+
+```json
+{
+  "id": 1,
+  "petId": 1,
+  "userId": 5,
+  "message": "I would love to adopt Bella!",
+  "status": "Pending",
+  "submittedAt": "2025-08-03T20:48:57.602647Z",
+  "petName": "Bella"
+}
+```
+
+**Application Status Values:**
+
+- `Pending` - Awaiting review
+- `Approved` - Application accepted
+- `Rejected` - Application declined
+
+## Automatic Adoption Workflow
+
+The API includes automatic pet status management throughout the adoption process:
+
+### Application Submission
+
+- When a user submits an application for a pet with status "Available", the pet status automatically changes to "Pending"
+- Users cannot submit multiple applications for the same pet
+
+### Application Approval
+
+- When an application is approved, the pet status automatically changes to "Adopted"
+- All other pending applications for the same pet are automatically rejected
+- This ensures only one adoption can be completed per pet
+
+### Application Rejection/Deletion
+
+- If an approved application is later rejected or deleted, the system checks for other approved applications
+- If no other approved applications exist, the pet status reverts to "Available"
+- If the last pending application is deleted and no applications remain, the pet status reverts to "Available"
+
+### Status Flow
+
+```
+Available → Pending (when first application submitted)
+Pending → Adopted (when application approved)
+Adopted → Available (when approved application rejected/deleted and no other approved apps exist)
 ```
 
 ## Error Response Format
@@ -41,7 +154,7 @@ All errors follow a consistent format:
 ```json
 {
   "error": "Error message description",
-  "timestamp": "2025-07-31T12:00:00.000Z"
+  "timestamp": "2025-08-03T21:00:00.000Z"
 }
 ```
 
@@ -156,6 +269,9 @@ Common HTTP status codes:
   name: "Fluffy" (required)
   type: "Cat" (required)
   ageGroup: "Adult" (required)
+  breed: "Persian" (optional)
+  gender: "Female" (optional)
+  status: "Available" (optional, defaults to "Available")
   description: "Friendly and playful cat" (optional)
   imageFile: [image file] (optional - jpg, jpeg, png, gif, webp, max 5MB)
   shelterId: 1 (required)
@@ -175,6 +291,9 @@ Common HTTP status codes:
   name: "Fluffy Updated" (required)
   type: "Cat" (required)
   ageGroup: "Senior" (required)
+  breed: "Persian" (optional)
+  gender: "Female" (optional)
+  status: "Available" (optional)
   description: "Updated description" (optional)
   imageFile: [image file] (optional - replaces existing image)
   ```
@@ -321,7 +440,11 @@ Common HTTP status codes:
   ```json
   {
     "name": "New Animal Shelter",
-    "location": "123 Pet Street, City, State"
+    "location": "123 Pet Street, City, State",
+    "phone": "555-123-4567",
+    "email": "contact@shelter.com",
+    "description": "We specialize in rescuing and rehoming cats and dogs",
+    "logo": "shelter-logo.png"
   }
   ```
 
@@ -335,7 +458,11 @@ Common HTTP status codes:
   ```json
   {
     "name": "Updated Shelter Name",
-    "location": "456 New Address, City, State"
+    "location": "456 New Address, City, State",
+    "phone": "555-987-6543",
+    "email": "updated@shelter.com",
+    "description": "Updated shelter description with new programs",
+    "logo": "new-logo.png"
   }
   ```
 
@@ -360,6 +487,9 @@ Common HTTP status codes:
   "name": "Fluffy",
   "type": "Cat",
   "ageGroup": "Adult",
+  "breed": "Persian",
+  "gender": "Female",
+  "status": "Available",
   "description": "Friendly cat",
   "imageFileName": "fluffy.jpg",
   "imageUrl": "/images/fluffy.jpg",
@@ -389,6 +519,10 @@ Common HTTP status codes:
   "id": 1,
   "name": "Happy Paws Shelter",
   "location": "123 Pet Street",
+  "phone": "555-123-4567",
+  "email": "contact@shelter.com",
+  "description": "We specialize in rescuing and rehoming cats and dogs",
+  "logo": "shelter-logo.png",
   "petCount": 15
 }
 ```
