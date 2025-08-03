@@ -41,12 +41,6 @@ const SheltersCarouselSm = ({ shelters }) => {
                 gap={3}
               >
                 <Card className="shelter-card">
-                  <Card.Img
-                    variant="top"
-                    src="../../../public/images/shelterimg.jpg"
-                    alt="shelter image"
-                    className="card-img-top"
-                  />
                   <Card.Body>
                     <Card.Title>{shelter.name}</Card.Title>
                     <Card.Text className="card-text">

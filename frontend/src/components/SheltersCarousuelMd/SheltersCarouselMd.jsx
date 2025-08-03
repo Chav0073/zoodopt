@@ -45,12 +45,6 @@ const SheltersCarouselMd = ({ shelters }) => {
                             >
                                 {shelter.map((shelter, cardIdx) => (
                                     <Card className="shelter-card" key={shelter.id || cardIdx}>
-                                        <Card.Img
-                                            variant="top"
-                                            src="../../../public/images/shelterimg.jpg"
-                                            alt="shelter image"
-                                            className="card-img-top"
-                                        />
                                         <Card.Body>
                                             <Card.Title>{shelter.name}</Card.Title>
                                             <Card.Text className="card-text">
