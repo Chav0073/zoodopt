@@ -17,7 +17,11 @@ const AdminPage = () => {
     const location = useLocation();
 
     if (user == null) {
-        return <p className="text-center mt-5 fs-4 text-secondary">Please, sign in.</p>;
+        return (
+            <p className="text-center mt-5 fs-5 text-secondary px-3">
+                Please, sign in.
+            </p>
+        );
     }
 
     if (user.role !== "admin") {
@@ -27,20 +31,22 @@ const AdminPage = () => {
     const isIndexRoute = location.pathname === "/admin";
 
     return (
-        <div className="container py-5">
-            <div className="bg-white rounded shadow-sm p-4 mb-4 d-flex align-items-center">
-                <h1 className="mb-0 fw-bold text-primary flex-grow-1">Admin Dashboard</h1>
+        <div className="container-fluid px-3 px-md-4 py-4">
+            <div className="bg-white rounded shadow-sm p-3 p-md-4 mb-4 d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2">
+                <h1 className="mb-0 fw-bold text-primary text-center text-md-start w-100">
+                    Admin Dashboard
+                </h1>
             </div>
 
             {isIndexRoute ? (
                 <>
-                    <div className="bg-light rounded p-4 pb-5">
+                    <div className="bg-light rounded p-3 p-md-4 mb-4">
                         <SheltersCarousel />
                     </div>
-                    <div className="bg-light rounded p-4 pb-5">
+                    <div className="bg-light rounded p-3 p-md-4 mb-4">
                         <PetsCarousel />
                     </div>
-                    <div className="bg-light rounded p-4 pb-5">
+                    <div className="bg-light rounded p-3 p-md-4 mb-3">
                         <UsersCarousel />
                     </div>
                 </>
