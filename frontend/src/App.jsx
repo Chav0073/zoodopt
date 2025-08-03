@@ -17,6 +17,7 @@ import ManageShelters from "./components/ManageShelters/ManageShelters";
 import RegisterPage from "./pages/Auth/RegisterUserPage";
 import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
+import EditShelterPage from "./pages/EditShelterPage/EditShelterPage";
 
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -49,6 +50,7 @@ function App() {
                   {/* Admin nested routes */}
                   <Route path="admin" element={<AdminPage />}>
                     <Route path="shelters" element={<ManageShelters />} />
+                    <Route path="shelters/edit/:shelterId" element={<EditShelterPage />}/>
                     <Route path="pets" element={<ManagePets />} />
                     <Route path="users" element={<ManageUsers />} />
                   </Route>
