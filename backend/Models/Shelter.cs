@@ -11,6 +11,14 @@ namespace backend.Models
 
         public string? Location { get; set; }
 
+        public string? Phone { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Description { get; set; }
+
+        public string? Logo { get; set; }
+
         public List<Pet>? Pets { get; set; }
         public List<User>? Staff { get; set; } // optional if navigation needed
     }

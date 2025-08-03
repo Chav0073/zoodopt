@@ -28,6 +28,9 @@ public class PetsController : BaseController
             Name = pet.Name,
             Type = pet.Type,
             AgeGroup = pet.AgeGroup,
+            Breed = pet.Breed,
+            Gender = pet.Gender,
+            Status = pet.Status,
             Description = pet.Description,
             ImageFileName = pet.ImageFileName,
             ImageUrl = _imageService.GetImageUrl(pet.ImageFileName ?? string.Empty),
@@ -94,7 +97,7 @@ public class PetsController : BaseController
         try
         {
             string? imageFileName = null;
-            
+
             // Handle image upload if provided
             if (dto.ImageFile != null)
             {
@@ -117,6 +120,9 @@ public class PetsController : BaseController
                 Name = dto.Name,
                 Type = dto.Type,
                 AgeGroup = dto.AgeGroup,
+                Breed = dto.Breed,
+                Gender = dto.Gender,
+                Status = dto.Status ?? "Available",
                 Description = dto.Description,
                 ImageFileName = imageFileName,
                 ShelterId = dto.ShelterId,
@@ -185,6 +191,9 @@ public class PetsController : BaseController
         pet.Name = dto.Name;
         pet.Type = dto.Type;
         pet.AgeGroup = dto.AgeGroup;
+        pet.Breed = dto.Breed;
+        pet.Gender = dto.Gender;
+        pet.Status = dto.Status ?? "Available";
         pet.Description = dto.Description;
 
         await _context.SaveChangesAsync();
