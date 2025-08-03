@@ -21,8 +21,10 @@ const MyApplicationsPage = () => {
         const res = await fetch('http://localhost:5217/applications/my-applications', {
           headers: { Authorization: `Bearer ${token}` },
         });
-
-        if (!res.ok) throw new Error('Failed to load applications.');
+        
+        if (!res.ok) {
+          throw new Error(`Failed to load applications: ${res.status} response`);
+        }
         const apps = await res.json();
 
         const enrichedApps = await Promise.all(
