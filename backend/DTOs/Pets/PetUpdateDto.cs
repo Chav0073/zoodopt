@@ -17,6 +17,15 @@ namespace backend.DTOs.Pets
         [StringLength(50)]
         public string AgeGroup { get; set; } = string.Empty;
 
+        [StringLength(100)]
+        public string? Breed { get; set; }
+
+        [StringLength(50)]
+        public string? Gender { get; set; }
+
+        [StringLength(50)]
+        public string? Status { get; set; }
+
         [StringLength(1000)]
         public string? Description { get; set; }
 

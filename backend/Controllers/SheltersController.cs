@@ -23,6 +23,10 @@ public class SheltersController : BaseController
             Id = shelter.Id,
             Name = shelter.Name,
             Location = shelter.Location,
+            Phone = shelter.Phone,
+            Email = shelter.Email,
+            Description = shelter.Description,
+            Logo = shelter.Logo,
             PetCount = shelter.Pets?.Count ?? 0
         };
     }
@@ -75,7 +79,11 @@ public class SheltersController : BaseController
             var shelter = new Shelter
             {
                 Name = dto.Name,
-                Location = dto.Location
+                Location = dto.Location,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                Description = dto.Description,
+                Logo = dto.Logo
             };
 
             _context.Shelters.Add(shelter);
@@ -118,6 +126,10 @@ public class SheltersController : BaseController
 
         shelter.Name = dto.Name;
         shelter.Location = dto.Location;
+        shelter.Phone = dto.Phone;
+        shelter.Email = dto.Email;
+        shelter.Description = dto.Description;
+        shelter.Logo = dto.Logo;
 
         await _context.SaveChangesAsync();
         return Ok(ToDto(shelter));
