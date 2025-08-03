@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import getToken from "../../helpers/getToken";
 const EditPetPage = () => {
-    const { shelterId } = useParams();
-    const [shelter, setShelter] = useState(null);
+    const { petId } = useParams();
+    const [ pet, setPet] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
