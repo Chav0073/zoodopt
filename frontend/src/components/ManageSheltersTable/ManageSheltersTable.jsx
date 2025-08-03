@@ -21,7 +21,7 @@ const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`/shelters/${id}`, {
+      const response = await fetch(`http://localhost:5217/shelters/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
