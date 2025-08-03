@@ -18,6 +18,7 @@ import RegisterPage from "./pages/Auth/RegisterUserPage";
 import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
 import EditShelterPage from "./pages/EditShelterPage/EditShelterPage";
+import EditPetPage from "./pages/EditPetPage/EditPetPage";
 
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -52,6 +53,7 @@ function App() {
                     <Route path="shelters" element={<ManageShelters />} />
                     <Route path="shelters/edit/:shelterId" element={<EditShelterPage />}/>
                     <Route path="pets" element={<ManagePets />} />
+                    <Route path="pets/edit/:petId" element={<EditPetPage />} />
                     <Route path="users" element={<ManageUsers />} />
                   </Route>
                 </Route>
