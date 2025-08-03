@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Eye, EyeSlashFill, PersonFill, KeyFill, ShieldLockFill } from "react-bootstrap-icons";
 import './AuthForm.css';
+import Spinner from "react-bootstrap/Spinner";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -123,9 +124,7 @@ const RegisterForm = () => {
                       />
                     </InputGroup>
                     {errors.email && (
-                      <Form.Control.Feedback type="invalid" className="invalid-feedback">
-                        {errors.email}
-                      </Form.Control.Feedback>
+                      <div className="login-feedback">{errors.email}</div>
                     )}
                   </div>
 
@@ -151,9 +150,7 @@ const RegisterForm = () => {
                       </InputGroup.Text>
                     </InputGroup>
                     {errors.password && (
-                      <Form.Control.Feedback type="invalid" className="invalid-feedback">
-                        {errors.password}
-                      </Form.Control.Feedback>
+                      <div className="login-feedback">{errors.password}</div>
                     )}
                   </div>
 
@@ -179,9 +176,9 @@ const RegisterForm = () => {
                       </InputGroup.Text>
                     </InputGroup>
                     {errors.confirmPassword && (
-                      <Form.Control.Feedback type="invalid" className="invalid-feedback">
+                      <div className="login-feedback">
                         {errors.confirmPassword}
-                      </Form.Control.Feedback>
+                      </div>
                     )}
                   </div>
 
@@ -194,7 +191,7 @@ const RegisterForm = () => {
                     >
                       {isSubmitting ? (
                         <>
-                          <span className="spinner">⏳</span> Creating Account...
+                          <Spinner animation="border" size="sm" className="me-2" /> Creating Account...
                         </>
                       ) : (
                         'Create Account'
