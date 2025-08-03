@@ -32,7 +32,6 @@ function App() {
   const [shelters, setShelters] = useState(mockShelters);
 
   return (
-    <UserContext.Provider value={user}>
       <PetsContext.Provider value={pets}>
         <SheltersContext.Provider value={shelters}>
           <UsersContext.Provider value={users}>
@@ -65,7 +64,6 @@ function App() {
           </UsersContext.Provider>
         </SheltersContext.Provider>
       </PetsContext.Provider>
-    </UserContext.Provider>
   )
 }
 
