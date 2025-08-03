@@ -2,6 +2,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './AdoptPetPage.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 const AdoptPetPage = () => {
   const { token } = useAuth();
@@ -151,7 +152,7 @@ const AdoptPetPage = () => {
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="spinner">⏳</span> Submitting...
+                      <Spinner animation="border" size="sm" className="me-2" /> Submitting...
                     </>
                   ) : (
                     'Submit Application'
