@@ -33,6 +33,16 @@ public class AuthController : BaseController
         if (!UserRoles.All.Contains(dto.Role))
             return StandardError(400, "Invalid role.");
 
+        // Security Check: Only allow Public role for self-registration
+        // Admin and ShelterStaff accounts must be created by existing admins
+        if (dto.Role != UserRoles.Public)
+        {
+            // Check if user is authenticated and is an admin
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null || currentUser.Role != UserRoles.Admin)
+                return StandardError(403, "Only administrators can create privileged user accounts.");
+        }
+
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
