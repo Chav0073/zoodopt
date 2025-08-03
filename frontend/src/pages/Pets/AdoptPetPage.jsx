@@ -1,8 +1,10 @@
+import { useAuth } from '../../../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './AdoptPetPage.css';
 
 const AdoptPetPage = () => {
+  const { token } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [pet, setPet] = useState(null);
@@ -12,17 +14,22 @@ const AdoptPetPage = () => {
   const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
     const fetchPet = async () => {
       try {
         const res = await fetch(`http://localhost:5217/pets/${id}`);
-        if (!res.ok) throw new Error('Pet not found.');
+        if (res.status === 404) {
+          setError('NOT_FOUND');
+          return;
+        }
+        if (!res.ok) {
+          setError('GENERAL');
+          return;
+        }
         const data = await res.json();
         setPet(data);
       } catch (err) {
-        setError(err.message);
+        setError('GENERAL');
       } finally {
         setLoading(false);
       }
@@ -63,8 +70,26 @@ const AdoptPetPage = () => {
     }
   };
 
+  // Loading state
   if (loading) return <p>Loading pet...</p>;
-  if (error) return <p className="text-danger">{error}</p>;
+
+  // Not found
+  if (error === 'NOT_FOUND') {
+    return (
+      <div className="full-page-wrapper bg-gradient-primary">
+        <div className="status-box fade-in">
+          <div className="emoji-large">🐾</div>
+          <h3 className="status-text">No Pets Found</h3>
+          <p className="status-subtext">There are no pets with that ID.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // General error
+  if (error === 'GENERAL') {
+    return <p className="text-danger">An error occurred while loading the pet.</p>;
+  }
 
   return (
     <div className="container mt-4 p-0" style={{ maxWidth: '600px' }}>
@@ -104,7 +129,7 @@ const AdoptPetPage = () => {
           <div className="adopt-form-container">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <h3 htmlFor="message" className="form-label  pb-2">
+                <h3 htmlFor="message" className="form-label pb-2">
                   Why do you want to adopt {pet.name}?
                 </h3>
                 <textarea
