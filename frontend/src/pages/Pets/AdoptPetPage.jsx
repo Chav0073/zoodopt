@@ -55,7 +55,7 @@ const AdoptPetPage = () => {
         throw new Error(errorMessage);
       }
 
-      navigate('/pets/adopt/3');
+      navigate('/pets/my-applications');
     } catch (err) {
       setSubmitError(err.message);
     } finally {
@@ -67,7 +67,7 @@ const AdoptPetPage = () => {
   if (error) return <p className="text-danger">{error}</p>;
 
   return (
-    <div className="container mt-4 p-0">
+    <div className="container mt-4 p-0" style={{ maxWidth: '600px' }}>
       <div className="card border-0 shadow-lg adopt-container">
         <div className="adopt-header">
           <h2>Adopt {pet.name}</h2>
@@ -91,22 +91,22 @@ const AdoptPetPage = () => {
 
           <div className="mb-4">
             <div className="adopt-detail-box">
-              <h5 className="mb-0">🐾 <strong>Type:</strong> {pet.type}</h5>
+              <p className="mb-0">🐾 <strong>Type:</strong> {pet.type}</p>
             </div>
             <div className="adopt-detail-box" style={{ animationDelay: '0.1s' }}>
-              <h5 className="mb-0">📅 <strong>Age Group:</strong> {pet.ageGroup}</h5>
+              <p className="mb-0">📅 <strong>Age Group:</strong> {pet.ageGroup}</p>
             </div>
             <div className="adopt-detail-box" style={{ animationDelay: '0.2s' }}>
-              <h5 className="mb-0">ℹ️ {pet.description}</h5>
+              <p className="mb-0">ℹ️ {pet.description}</p>
             </div>
           </div>
 
           <div className="adopt-form-container">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="message" className="form-label fw-semibold pb-2" style={{ fontSize: '1.8rem' }}>
+                <h3 htmlFor="message" className="form-label  pb-2">
                   Why do you want to adopt {pet.name}?
-                </label>
+                </h3>
                 <textarea
                   id="message"
                   className="form-control border-0 adopt-textarea"
