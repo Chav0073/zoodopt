@@ -19,7 +19,6 @@ import LoginUserPage from "./pages/Auth/LoginUserPage";
 import AdoptPetPage from "./pages/Pets/AdoptPetPage";
 import EditShelterPage from "./pages/EditShelterPage/EditShelterPage";
 import EditPetPage from "./pages/EditPetPage/EditPetPage";
-=======
 import MyApplicationsPage from "./pages/Pets/MyApplicationsPage";
 
 import { useState } from "react";
