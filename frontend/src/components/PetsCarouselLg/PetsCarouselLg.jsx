@@ -44,7 +44,7 @@ const PetsCarouselLg = ({ pets }) => {
                                     <Card className="pet-card" key={cardIdx}>
                                         <Card.Img
                                             variant="top"
-                                            src="../../../public/images/catShelterImg.jpg"
+                                            src={`http://localhost:5217/images/${pet.imageFileName}`}
                                             alt="shelter image"
                                             className="card-img-top"
                                         />
