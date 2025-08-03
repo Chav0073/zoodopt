@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -7,6 +8,8 @@ import './AuthForm.css';
 import Spinner from "react-bootstrap/Spinner";
 
 const LoginForm = () => {
+  const { login } = useAuth();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -76,8 +79,7 @@ const LoginForm = () => {
         return;
       }
 
-      const storage = formData.rememberMe ? localStorage : sessionStorage;
-      storage.setItem('token', data.token);
+      login(data.token, data.role, formData.rememberMe);
       navigate('/');
     } catch (err) {
       console.error('Network or unexpected error:', err);

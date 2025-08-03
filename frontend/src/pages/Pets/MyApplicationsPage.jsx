@@ -1,8 +1,10 @@
+import { useAuth } from '../../../context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyApplicationsPage.css';
 
 const MyApplicationsPage = () => {
+  const { token } = useAuth();
   const [applications, setApplications] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editedMessage, setEditedMessage] = useState('');
@@ -10,8 +12,7 @@ const MyApplicationsPage = () => {
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [applicationToDelete, setApplicationToDelete] = useState(null);
-
-  const token = localStorage.getItem('token');
+  
   const navigate = useNavigate();
 
   useEffect(() => {
