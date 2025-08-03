@@ -1,5 +1,5 @@
 const getToken = () => {
-    let token = JSON.parse(localStorage.getItem("token"));
+    let token = JSON.stringify(localStorage.getItem("token"));
     return token;
 }
 
