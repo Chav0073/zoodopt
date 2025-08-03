@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -78,7 +79,7 @@ const RegisterForm = () => {
       }
 
       console.log('Registration success:', data);
-      localStorage.setItem('token', data.token);
+      login(data.token, data.role);
       navigate('/');
     } catch (err) {
       console.error('Error:', err);
