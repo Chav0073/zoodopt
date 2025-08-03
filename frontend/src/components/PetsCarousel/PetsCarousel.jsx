@@ -10,6 +10,7 @@ import PetsCarouselMd from "../PetsCarouselMd/PetsCarouselMd";
 import PetsCarouselLg from "../PetsCarouselLg/PetsCarouselLg";
 import "./PetsCarousel.css";
 import { useNavigate } from 'react-router';
+import CreatePetBtn from "../CreatePetBtn/CreatePetBtn";
 
 const PetsCarousel = () => {
     const pets = useContext(PetsContext);
@@ -28,9 +29,12 @@ const PetsCarousel = () => {
         <>
             <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
                 <h2 className="mb-0 fw-bold text-primary">Pets</h2>
-                <Button variant="outline-primary" className="fw-semibold px-4 py-2" onClick={(e) => handleClick(e)}>
-                    Pets List
-                </Button>
+                <div>
+                    <CreatePetBtn />
+                    <Button variant="outline-primary" className="fw-semibold px-4 py-2" onClick={(e) => handleClick(e)}>
+                        Pets List
+                    </Button>
+                </div>
             </div>
             {size.width <= 576 ? (
                 <PetsCarouselSm pets={pets}/>
