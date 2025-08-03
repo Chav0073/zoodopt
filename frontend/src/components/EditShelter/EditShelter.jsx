@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const EditShelter = ({ shelter }) => {
+const EditShelter = ({ shelter, shelterId }) => {
     const [name, setName] = useState(shelter.name);
     const [location, setLocation] = useState(shelter.location);
     const navigate = useNavigate();
@@ -11,13 +11,12 @@ const EditShelter = ({ shelter }) => {
         e.preventDefault();
 
         const updatedShelter = {
-            id: shelter.objectid,
-            name,
-            location,
+            "name": name,
+            "location": location
         };
 
         try {
-            const res = await fetch(`http://localhost:5217/shelters/${shelter.objectid}`, {
+            const res = await fetch(`http://localhost:5217/shelters/${shelterId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

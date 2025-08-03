@@ -19,7 +19,7 @@ const EditShelterPage = () => {
 
     return (
         <>
-            {shelter ? <EditShelter shelter={shelter} /> : <p>Loading...</p>}
+            {shelter ? <EditShelter shelter={shelter} shelterId={shelterId} /> : <p>Loading...</p>}
         </>
     );
 };
