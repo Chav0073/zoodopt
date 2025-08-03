@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Eye, EyeSlashFill, PersonFill, KeyFill } from "react-bootstrap-icons";
-import './AuthForm.css'; // Import CSS
+import './AuthForm.css'; 
+import Spinner from "react-bootstrap/Spinner";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -123,9 +124,7 @@ const LoginForm = () => {
                       />
                     </InputGroup>
                     {errors.email && (
-                      <Form.Control.Feedback type="invalid" className="login-feedback">
-                        {errors.email}
-                      </Form.Control.Feedback>
+                      <div className="login-feedback">{errors.email}</div>
                     )}
                   </div>
 
@@ -153,9 +152,7 @@ const LoginForm = () => {
                       </InputGroup.Text>
                     </InputGroup>
                     {errors.password && (
-                      <Form.Control.Feedback type="invalid" className="login-feedback">
-                        {errors.password}
-                      </Form.Control.Feedback>
+                      <div className="login-feedback">{errors.password}</div>
                     )}
                   </div>
 
@@ -178,7 +175,14 @@ const LoginForm = () => {
                   {/* Submit Button */}
                   <div className="mb-4">
                     <button type="submit" className="login-button" disabled={isSubmitting}>
-                      {isSubmitting ? <><span className="spinner">⏳</span> Signing In...</> : 'Sign In'}
+                      {isSubmitting ? (
+                        <>
+                          <Spinner animation="border" size="sm" className="me-2" />
+                          Signing In...
+                        </>
+                      ) : (
+                        'Sign In'
+                      )}
                     </button>
                   </div>
 
