@@ -1,8 +1,8 @@
 import { Container, Row, Col, Button, Card, Image } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useState, useEffect } from "react";
-import PetsCarousel from "../../components/PetsCarousel/PetsCarousel";
-import SheltersCarousel from "../../components/SheltersCarousel/SheltersCarousel";
+import PetsGrid from "../../components/PetsGrid/PetsGrid";
+import SheltersShowcase from "../../components/SheltersShowcase/SheltersShowcase";
 
 const HomePage = () => {
   const [stats, setStats] = useState({
@@ -350,7 +350,12 @@ const HomePage = () => {
                   </Button>
                 )}
               </div>
-              <PetsCarousel pets={filteredPets} />
+              <PetsGrid
+                pets={filteredPets}
+                maxPets={10}
+                variant="homepage"
+                showViewMoreButton={true}
+              />
             </Col>
           </Row>
         </Container>
@@ -476,7 +481,7 @@ const HomePage = () => {
                   Working with trusted organizations to help pets find homes
                 </p>
               </div>
-              <SheltersCarousel />
+              <SheltersShowcase />
             </Col>
           </Row>
         </Container>

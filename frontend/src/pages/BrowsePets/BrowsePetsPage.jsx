@@ -1,10 +1,20 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Form, InputGroup, Badge } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  InputGroup,
+  Badge,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { FaSearch, FaMapMarkerAlt, FaHeart, FaFilter } from "react-icons/fa";
 import fetchPets from "../../helpers/fetchPets";
 import fetchShelters from "../../helpers/fetchShelters";
 import { useAuth } from "../../../context/AuthContext";
+import PetCard from "../../components/PetCard/PetCard";
 import "./BrowsePetsPage.css";
 
 const BrowsePetsPage = () => {
@@ -21,7 +31,7 @@ const BrowsePetsPage = () => {
     ageGroup: "",
     location: "",
     gender: "",
-    breed: ""
+    breed: "",
   });
 
   // Fetch pets and shelters data
@@ -31,26 +41,31 @@ const BrowsePetsPage = () => {
         // Fetch pets and shelters using helper functions
         const [petsData, sheltersData] = await Promise.all([
           fetchPets(),
-          fetchShelters(token)
+          fetchShelters(token),
         ]);
 
         // Create a map of shelters for easy lookup
         const shelterMap = {};
         if (sheltersData) {
-          sheltersData.forEach(shelter => {
+          sheltersData.forEach((shelter) => {
             shelterMap[shelter.id] = shelter;
           });
         }
 
         // Enrich pets with shelter data
-        const enrichedPets = petsData ? petsData.map(pet => ({
-          ...pet,
-          shelterData: shelterMap[pet.shelterId] || null,
-          shelterLocation: shelterMap[pet.shelterId]?.location || "Unknown Location"
-        })) : [];
+        const enrichedPets = petsData
+          ? petsData.map((pet) => ({
+              ...pet,
+              shelterData: shelterMap[pet.shelterId] || null,
+              shelterLocation:
+                shelterMap[pet.shelterId]?.location || "Unknown Location",
+            }))
+          : [];
 
         // Only show available pets
-        const availablePets = enrichedPets.filter(pet => pet.status === "Available");
+        const availablePets = enrichedPets.filter(
+          (pet) => pet.status === "Available"
+        );
 
         setPets(availablePets);
         setFilteredPets(availablePets);
@@ -71,30 +86,33 @@ const BrowsePetsPage = () => {
     // Search filter (name, breed, description)
     if (filters.search.trim()) {
       const searchTerm = filters.search.toLowerCase();
-      filtered = filtered.filter(pet =>
-        pet.name.toLowerCase().includes(searchTerm) ||
-        pet.breed.toLowerCase().includes(searchTerm) ||
-        pet.description.toLowerCase().includes(searchTerm)
+      filtered = filtered.filter(
+        (pet) =>
+          pet.name.toLowerCase().includes(searchTerm) ||
+          pet.breed.toLowerCase().includes(searchTerm) ||
+          pet.description.toLowerCase().includes(searchTerm)
       );
     }
 
     // Pet type filter
     if (filters.petType) {
-      filtered = filtered.filter(pet =>
-        pet.type.toLowerCase() === filters.petType.toLowerCase()
+      filtered = filtered.filter(
+        (pet) => pet.type.toLowerCase() === filters.petType.toLowerCase()
       );
     }
 
     // Age group filter
     if (filters.ageGroup) {
-      filtered = filtered.filter(pet => {
+      filtered = filtered.filter((pet) => {
         const age = parseInt(pet.ageGroup) || 0;
         switch (filters.ageGroup) {
           case "Puppy":
           case "Kitten":
-            return age === 0 || pet.ageGroup === "Puppy" || pet.ageGroup === "Kitten";
+            return (
+              age === 0 || pet.ageGroup === "Puppy" || pet.ageGroup === "Kitten"
+            );
           case "Adult":
-            return age >= 1 && age <= 7 || pet.ageGroup === "Adult";
+            return (age >= 1 && age <= 7) || pet.ageGroup === "Adult";
           case "Senior":
             return age > 7 || pet.ageGroup === "Senior";
           default:
@@ -106,22 +124,22 @@ const BrowsePetsPage = () => {
     // Location filter
     if (filters.location.trim()) {
       const locationTerm = filters.location.toLowerCase();
-      filtered = filtered.filter(pet =>
+      filtered = filtered.filter((pet) =>
         pet.shelterLocation.toLowerCase().includes(locationTerm)
       );
     }
 
     // Gender filter
     if (filters.gender) {
-      filtered = filtered.filter(pet =>
-        pet.gender.toLowerCase() === filters.gender.toLowerCase()
+      filtered = filtered.filter(
+        (pet) => pet.gender.toLowerCase() === filters.gender.toLowerCase()
       );
     }
 
     // Breed filter
     if (filters.breed.trim()) {
       const breedTerm = filters.breed.toLowerCase();
-      filtered = filtered.filter(pet =>
+      filtered = filtered.filter((pet) =>
         pet.breed.toLowerCase().includes(breedTerm)
       );
     }
@@ -130,9 +148,9 @@ const BrowsePetsPage = () => {
   }, [filters, pets]);
 
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
@@ -143,12 +161,12 @@ const BrowsePetsPage = () => {
       ageGroup: "",
       location: "",
       gender: "",
-      breed: ""
+      breed: "",
     });
   };
 
   const getActiveFilterCount = () => {
-    return Object.values(filters).filter(value => value.trim() !== "").length;
+    return Object.values(filters).filter((value) => value.trim() !== "").length;
   };
 
   if (loading) {
@@ -167,7 +185,10 @@ const BrowsePetsPage = () => {
   }
 
   return (
-    <div className="browse-pets-page" style={{ backgroundColor: "#F0F0F0", minHeight: "100vh" }}>
+    <div
+      className="browse-pets-page"
+      style={{ backgroundColor: "#F0F0F0", minHeight: "100vh" }}
+    >
       {/* Header Section */}
       <section className="browse-header bg-primary text-white py-3">
         <Container fluid>
@@ -175,7 +196,8 @@ const BrowsePetsPage = () => {
             <Col xs={11} sm={10} md={9} lg={8} xl={7} className="text-center">
               <h1 className="h2 fw-bold mb-2">Browse Pets</h1>
               <p className="mb-0">
-                Find your perfect companion from {pets.length} adorable pets waiting for their forever homes
+                Find your perfect companion from {pets.length} adorable pets
+                waiting for their forever homes
               </p>
             </Col>
           </Row>
@@ -197,7 +219,9 @@ const BrowsePetsPage = () => {
                     type="text"
                     placeholder="Search by name, breed, or description..."
                     value={filters.search}
-                    onChange={(e) => handleFilterChange("search", e.target.value)}
+                    onChange={(e) =>
+                      handleFilterChange("search", e.target.value)
+                    }
                     className="border-0 bg-light"
                   />
                 </InputGroup>
@@ -218,7 +242,7 @@ const BrowsePetsPage = () => {
                     </Badge>
                   )}
                 </Button>
-                
+
                 {getActiveFilterCount() > 0 && (
                   <Button
                     variant="outline-secondary"
@@ -236,10 +260,14 @@ const BrowsePetsPage = () => {
                   <Row className="g-3">
                     <Col xs={12} sm={6}>
                       <Form.Group>
-                        <Form.Label className="fw-semibold">Pet Type</Form.Label>
+                        <Form.Label className="fw-semibold">
+                          Pet Type
+                        </Form.Label>
                         <Form.Select
                           value={filters.petType}
-                          onChange={(e) => handleFilterChange("petType", e.target.value)}
+                          onChange={(e) =>
+                            handleFilterChange("petType", e.target.value)
+                          }
                         >
                           <option value="">All Types</option>
                           <option value="Dog">Dogs</option>
@@ -247,13 +275,17 @@ const BrowsePetsPage = () => {
                         </Form.Select>
                       </Form.Group>
                     </Col>
-                    
+
                     <Col xs={12} sm={6}>
                       <Form.Group>
-                        <Form.Label className="fw-semibold">Age Group</Form.Label>
+                        <Form.Label className="fw-semibold">
+                          Age Group
+                        </Form.Label>
                         <Form.Select
                           value={filters.ageGroup}
-                          onChange={(e) => handleFilterChange("ageGroup", e.target.value)}
+                          onChange={(e) =>
+                            handleFilterChange("ageGroup", e.target.value)
+                          }
                         >
                           <option value="">All Ages</option>
                           <option value="Puppy">Puppy/Kitten</option>
@@ -268,7 +300,9 @@ const BrowsePetsPage = () => {
                         <Form.Label className="fw-semibold">Gender</Form.Label>
                         <Form.Select
                           value={filters.gender}
-                          onChange={(e) => handleFilterChange("gender", e.target.value)}
+                          onChange={(e) =>
+                            handleFilterChange("gender", e.target.value)
+                          }
                         >
                           <option value="">All Genders</option>
                           <option value="Male">Male</option>
@@ -279,12 +313,16 @@ const BrowsePetsPage = () => {
 
                     <Col xs={12} sm={6}>
                       <Form.Group>
-                        <Form.Label className="fw-semibold">Location</Form.Label>
+                        <Form.Label className="fw-semibold">
+                          Location
+                        </Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="City or location..."
                           value={filters.location}
-                          onChange={(e) => handleFilterChange("location", e.target.value)}
+                          onChange={(e) =>
+                            handleFilterChange("location", e.target.value)
+                          }
                         />
                       </Form.Group>
                     </Col>
@@ -296,7 +334,9 @@ const BrowsePetsPage = () => {
                           type="text"
                           placeholder="Breed name..."
                           value={filters.breed}
-                          onChange={(e) => handleFilterChange("breed", e.target.value)}
+                          onChange={(e) =>
+                            handleFilterChange("breed", e.target.value)
+                          }
                         />
                       </Form.Group>
                     </Col>
@@ -343,7 +383,9 @@ const BrowsePetsPage = () => {
                 <div className="browse-sidebar-filters">
                   {/* Search */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Search</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Search
+                    </Form.Label>
                     <InputGroup className="shadow-sm">
                       <InputGroup.Text className="bg-white border-end-0">
                         <FaSearch className="text-muted" size={14} />
@@ -352,7 +394,9 @@ const BrowsePetsPage = () => {
                         type="text"
                         placeholder="Name, breed..."
                         value={filters.search}
-                        onChange={(e) => handleFilterChange("search", e.target.value)}
+                        onChange={(e) =>
+                          handleFilterChange("search", e.target.value)
+                        }
                         className="border-start-0"
                       />
                     </InputGroup>
@@ -360,10 +404,14 @@ const BrowsePetsPage = () => {
 
                   {/* Pet Type */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Pet Type</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Pet Type
+                    </Form.Label>
                     <Form.Select
                       value={filters.petType}
-                      onChange={(e) => handleFilterChange("petType", e.target.value)}
+                      onChange={(e) =>
+                        handleFilterChange("petType", e.target.value)
+                      }
                       className="shadow-sm"
                     >
                       <option value="">All Types</option>
@@ -374,10 +422,14 @@ const BrowsePetsPage = () => {
 
                   {/* Age Group */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Age Group</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Age Group
+                    </Form.Label>
                     <Form.Select
                       value={filters.ageGroup}
-                      onChange={(e) => handleFilterChange("ageGroup", e.target.value)}
+                      onChange={(e) =>
+                        handleFilterChange("ageGroup", e.target.value)
+                      }
                       className="shadow-sm"
                     >
                       <option value="">All Ages</option>
@@ -389,10 +441,14 @@ const BrowsePetsPage = () => {
 
                   {/* Gender */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Gender</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Gender
+                    </Form.Label>
                     <Form.Select
                       value={filters.gender}
-                      onChange={(e) => handleFilterChange("gender", e.target.value)}
+                      onChange={(e) =>
+                        handleFilterChange("gender", e.target.value)
+                      }
                       className="shadow-sm"
                     >
                       <option value="">All Genders</option>
@@ -403,24 +459,32 @@ const BrowsePetsPage = () => {
 
                   {/* Location */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Location</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Location
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="City or location..."
                       value={filters.location}
-                      onChange={(e) => handleFilterChange("location", e.target.value)}
+                      onChange={(e) =>
+                        handleFilterChange("location", e.target.value)
+                      }
                       className="shadow-sm"
                     />
                   </div>
 
                   {/* Breed */}
                   <div className="mb-4">
-                    <Form.Label className="fw-semibold text-dark">Breed</Form.Label>
+                    <Form.Label className="fw-semibold text-dark">
+                      Breed
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Breed name..."
                       value={filters.breed}
-                      onChange={(e) => handleFilterChange("breed", e.target.value)}
+                      onChange={(e) =>
+                        handleFilterChange("breed", e.target.value)
+                      }
                       className="shadow-sm"
                     />
                   </div>
@@ -447,7 +511,8 @@ const BrowsePetsPage = () => {
                     </div>
                     <h3 className="text-muted mb-3">No pets found</h3>
                     <p className="text-muted mb-4">
-                      Try adjusting your filters or search terms to find more pets.
+                      Try adjusting your filters or search terms to find more
+                      pets.
                     </p>
                     <Button variant="primary" onClick={clearFilters}>
                       Clear Filters
@@ -457,60 +522,7 @@ const BrowsePetsPage = () => {
                   <Row className="g-3 px-3">
                     {filteredPets.map((pet) => (
                       <Col lg={4} xl={3} xxl={2} key={pet.id}>
-                        <Card className="browse-pet-card h-100 shadow-sm border-0">
-                          <div className="browse-pet-image-container">
-                            <Card.Img
-                              variant="top"
-                              src={`http://localhost:5217/images/${pet.imageFileName}`}
-                              alt={pet.name}
-                              className="browse-pet-image"
-                              onError={(e) => {
-                                e.target.src = "/images/placeholder-pet.jpg";
-                              }}
-                            />
-                            <div className="browse-pet-status-badge">
-                              <Badge bg="success" className="browse-status-badge">
-                                Available
-                              </Badge>
-                            </div>
-                          </div>
-                          
-                          <Card.Body className="d-flex flex-column browse-pet-body">
-                            <div className="flex-grow-1">
-                              <Card.Title className="browse-pet-title">
-                                {pet.name}
-                              </Card.Title>
-                              
-                              <div className="browse-pet-details">
-                                <div className="browse-detail-item">
-                                  <span className="browse-pet-breed">{pet.breed}</span>
-                                </div>
-                                <div className="browse-detail-item">
-                                  <span className="browse-pet-age-gender">
-                                    {pet.ageGroup || `${pet.age} years old`} • {pet.gender}
-                                  </span>
-                                </div>
-                                <div className="browse-detail-item browse-pet-location">
-                                  <FaMapMarkerAlt size={12} />
-                                  <span>{pet.shelterLocation}</span>
-                                </div>
-                              </div>
-
-                              <Card.Text className="browse-pet-description">
-                                {pet.description}
-                              </Card.Text>
-                            </div>
-
-                            <div className="mt-auto">
-                              <LinkContainer to={`/pets/adopt/${pet.id}`}>
-                                <Button variant="primary" className="w-100 browse-pet-button">
-                                  <FaHeart size={14} />
-                                  Adopt Me
-                                </Button>
-                              </LinkContainer>
-                            </div>
-                          </Card.Body>
-                        </Card>
+                        <PetCard pet={pet} className="browse-variant" />
                       </Col>
                     ))}
                   </Row>
@@ -533,7 +545,8 @@ const BrowsePetsPage = () => {
                   </div>
                   <h3 className="text-muted mb-3">No pets found</h3>
                   <p className="text-muted mb-4">
-                    Try adjusting your filters or search terms to find more pets.
+                    Try adjusting your filters or search terms to find more
+                    pets.
                   </p>
                   <Button variant="primary" onClick={clearFilters}>
                     Clear Filters
@@ -543,60 +556,7 @@ const BrowsePetsPage = () => {
                 <Row className="g-4">
                   {filteredPets.map((pet) => (
                     <Col xs={12} sm={6} key={pet.id}>
-                      <Card className="browse-pet-card h-100 shadow-sm border-0">
-                        <div className="browse-pet-image-container">
-                          <Card.Img
-                            variant="top"
-                            src={`http://localhost:5217/images/${pet.imageFileName}`}
-                            alt={pet.name}
-                            className="browse-pet-image"
-                            onError={(e) => {
-                              e.target.src = "/images/placeholder-pet.jpg";
-                            }}
-                          />
-                          <div className="browse-pet-status-badge">
-                            <Badge bg="success" className="browse-status-badge">
-                              Available
-                            </Badge>
-                          </div>
-                        </div>
-                        
-                        <Card.Body className="d-flex flex-column browse-pet-body">
-                          <div className="flex-grow-1">
-                            <Card.Title className="browse-pet-title">
-                              {pet.name}
-                            </Card.Title>
-                            
-                            <div className="browse-pet-details">
-                              <div className="browse-detail-item">
-                                <span className="browse-pet-breed">{pet.breed}</span>
-                              </div>
-                              <div className="browse-detail-item">
-                                <span className="browse-pet-age-gender">
-                                  {pet.ageGroup || `${pet.age} years old`} • {pet.gender}
-                                </span>
-                              </div>
-                              <div className="browse-detail-item browse-pet-location">
-                                <FaMapMarkerAlt size={12} />
-                                <span>{pet.shelterLocation}</span>
-                              </div>
-                            </div>
-
-                            <Card.Text className="browse-pet-description">
-                              {pet.description}
-                            </Card.Text>
-                          </div>
-
-                          <div className="mt-auto">
-                            <LinkContainer to={`/pets/adopt/${pet.id}`}>
-                              <Button variant="primary" className="w-100 browse-pet-button">
-                                <FaHeart size={14} />
-                                Adopt Me
-                              </Button>
-                            </LinkContainer>
-                          </div>
-                        </Card.Body>
-                      </Card>
+                      <PetCard pet={pet} />
                     </Col>
                   ))}
                 </Row>
