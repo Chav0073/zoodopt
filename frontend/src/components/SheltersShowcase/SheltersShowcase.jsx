@@ -61,6 +61,5 @@ const SheltersShowcase = ({
     </div>
   );
 };
-};
 
 export default SheltersShowcase;
