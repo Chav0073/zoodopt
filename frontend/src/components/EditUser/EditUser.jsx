@@ -3,9 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const EditUser = ({ user, userId }) => {
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [role, setRole] = useState(user.role);
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
+  const [role, setRole] = useState(user.role || "Public");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,16 +27,19 @@ const EditUser = ({ user, userId }) => {
         body: JSON.stringify(updatedUser),
       });
 
+      const responseText = await res.text();
+      const responseData = responseText ? JSON.parse(responseText) : {};
+
       if (res.ok) {
         alert("User updated!");
         navigate("/admin/users");
       } else {
-        const err = await res.json();
-        alert("Failed: " + err.message);
+        console.error("Server validation error:", responseData);
+        alert("Failed: " + (responseData.message || responseData.title || "Unknown error"));
       }
     } catch (err) {
-      console.error(err);
-      alert("An error occurred");
+      console.error("Request error:", err);
+      alert("An unexpected error occurred.");
     }
   };
 
@@ -55,6 +58,15 @@ const EditUser = ({ user, userId }) => {
 
       <div className="container-fluid bg-white rounded shadow-sm p-4">
         <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label className="fw-semibold">Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label className="fw-semibold">Email</Form.Label>
@@ -73,8 +85,9 @@ const EditUser = ({ user, userId }) => {
               onChange={(e) => setRole(e.target.value)}
               required
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="Public">Public</option>
+              <option value="ShelterStaff">Shelter Staff</option>
+              <option value="Admin">Admin</option>
             </Form.Select>
           </Form.Group>
 
