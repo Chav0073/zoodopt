@@ -59,7 +59,6 @@ const ManageUsersTable = ({ users, onUserDeleted }) => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
-    { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     !isMobile && { field: "role", headerName: "Role", width: 120 },
     {
