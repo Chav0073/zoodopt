@@ -1,5 +1,3 @@
-// components/UsersCarousel/UsersCarousel.jsx
-
 import { Carousel, Card, Stack, Button, Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -7,11 +5,13 @@ import useWindowSize from "../../hooks/useWindowSize";
 import chunkArray from "../../helpers/chunkArray";
 import fetchUsers from "../../helpers/fetchUsers";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom"; // <-- Add this
 import "./UsersCarousel.css";
 
 const UsersCarousel = () => {
   const { token } = useAuth();
   const screenWidth = useWindowSize();
+  const navigate = useNavigate(); // <-- Add this
 
   const [users, setUsers] = useState([]);
   const [index, setIndex] = useState(0);
@@ -40,9 +40,7 @@ const UsersCarousel = () => {
     setIndex((prev) => (prev === chunkedUsers.length - 1 ? 0 : prev + 1));
   };
 
-  const usersPerSlide =
-    screenWidth < 576 ? 1 : screenWidth < 992 ? 2 : 3;
-
+  const usersPerSlide = screenWidth < 576 ? 1 : screenWidth < 992 ? 2 : 3;
   const chunkedUsers = chunkArray(users, usersPerSlide);
 
   const carouselKey =
@@ -97,7 +95,12 @@ const UsersCarousel = () => {
                         <Card.Title>{user.name}</Card.Title>
                         <Card.Text className="card-text">{user.email}</Card.Text>
                         <Card.Text className="card-text">{user.role}</Card.Text>
-                        <Button variant="primary">Edit</Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => navigate(`/admin/users/edit/${user.id}`)} // <-- Navigate to edit page
+                        >
+                          Edit
+                        </Button>
                       </Card.Body>
                     </Card>
                   ))}
