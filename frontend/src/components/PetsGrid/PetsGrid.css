@@ -1,0 +1,83 @@
+/* Pets Grid Styles */
+.pets-grid {
+  width: 100%;
+}
+
+.pets-grid .text-center svg {
+  opacity: 0.4;
+}
+
+/* Remove Bootstrap's default column stretching for homepage */
+.pets-grid.homepage-5-cols .col {
+  height: auto !important;
+  min-height: auto !important;
+  align-self: flex-start !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+/* Base responsive grid - focus on good image size */
+.pets-grid.homepage-5-cols .col {
+  flex: 1 1 200px; /* Flexible with minimum 200px */
+  max-width: 300px; /* Maximum width for images */
+  min-width: 200px; /* Minimum width for images */
+}
+
+/* Extra large screens - 5+ columns */
+@media (min-width: 1400px) {
+  .pets-grid.homepage-5-cols .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pets-grid.homepage-5-cols .col {
+    flex: 0 0 220px;
+    max-width: 220px;
+    padding: 0.75rem;
+  }
+}
+
+/* Large screens - 4-5 columns */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .pets-grid.homepage-5-cols .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pets-grid.homepage-5-cols .col {
+    flex: 0 0 240px;
+    max-width: 240px;
+    padding: 0.75rem;
+  }
+}
+
+/* Medium screens - 3 columns */
+@media (min-width: 768px) and (max-width: 991px) {
+  .pets-grid.homepage-5-cols .col {
+    flex: 0 0 250px;
+    max-width: 250px;
+    padding: 0.75rem;
+  }
+}
+
+/* Small screens - 2 columns */
+@media (min-width: 576px) and (max-width: 767px) {
+  .pets-grid.homepage-5-cols .col {
+    flex: 0 0 280px;
+    max-width: 280px;
+    padding: 0.75rem;
+  }
+}
+
+/* Extra small screens - 1 column */
+@media (max-width: 575px) {
+  .pets-grid.homepage-5-cols .col {
+    flex: 0 0 100%;
+    max-width: 320px;
+    padding: 0.5rem;
+  }
+}
