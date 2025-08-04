@@ -7,7 +7,6 @@ const fetchPet = async (petId) => {
         }
 
         const data = await response.json();
-        console.log("Pet data: ", data);
         return data;
     } catch(error) {
         console.log("Failed to fetch pet data: ", error.message);

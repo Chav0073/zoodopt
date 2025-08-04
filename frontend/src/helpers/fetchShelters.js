@@ -13,7 +13,6 @@ const fetchShelters = async (token) => {
         }
 
         const data = await response.json();
-        console.log("Protected data:", data)
         return data;
     } catch (error) {
         console.log("Failed to fetch protected data: ", error.message);

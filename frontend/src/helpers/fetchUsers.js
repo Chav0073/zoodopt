@@ -1,14 +1,14 @@
-const fetchShelter = async (token, shelterId) => {
+const fetchUsers = async (token) => {
     try {
-        const response = await fetch(`http://localhost:5217/shelters/${shelterId}`, {
+        const response = await fetch("http://localhost:5217/users", {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": 'application/json',
                 Authorization: `Bearer ${token}`
             },
         });
 
-        if(!response.ok){
+        if(!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
@@ -19,4 +19,4 @@ const fetchShelter = async (token, shelterId) => {
     }
 }
 
-export default fetchShelter;
+export default fetchUsers;

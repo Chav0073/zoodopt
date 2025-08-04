@@ -1,0 +1,132 @@
+.shelter-card {
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 0.075);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel-btn {
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure all cards have a fixed size */
+.shelter-card {
+  min-height: 350px;
+  max-height: 350px;
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+/* Image handling */
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Flexible card body that pushes the button down */
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Truncate long descriptions */
+.card-text {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.2rem;
+  margin-bottom: 1rem;
+  flex-shrink: 1;
+}
+
+/* Optional: make buttons always stick to the bottom of card */
+.card-body .btn {
+  margin-top: auto;
+}
+
+/* Carousel icons with white color (dark background support) */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+.shelter-card {
+  min-height: 350px;
+  max-height: 350px;
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  flex-shrink: 1;
+}
+
+.carousel-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.carousel-btn {
+  min-width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+@media (max-width: 576px) {
+  .carousel-btn {
+    width: 100%;
+  }
+
+  .carousel-btn-group {
+    flex-direction: column;
+  }
+
+  .shelter-card {
+    margin-bottom: 1rem;
+  }
+}
