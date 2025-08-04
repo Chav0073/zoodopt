@@ -1,6 +1,6 @@
 .my-applications-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #383bf0ff);
+  /* background: linear-gradient(135deg, #667eea, #383bf0ff); */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .page-header h1 {
-  color: white;
+  color:rgb(59, 59, 59);
   font-size: 3rem;
   font-weight: bold;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -17,7 +17,7 @@
 }
 
 .page-header p {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(124, 117, 117, 0.9);
   font-size: 1.5rem;
   margin-bottom: 0;
 }
@@ -107,7 +107,7 @@ textarea.form-control:focus {
 }
 
 .edit-btn {
-  background: linear-gradient(45deg, #ff6b6b, #ffa726);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
   color: white !important;
   border-radius: 12px;
   padding: 0.7rem 1rem;
@@ -162,7 +162,7 @@ textarea.form-control:focus {
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #667eea, #383bf0ff);
+  background: linear-gradient(135deg, #f2f2f3, rgb(208, 209, 235));
 }
 
 .status-box {
@@ -176,9 +176,9 @@ textarea.form-control:focus {
 
 .alert-box {
   border-radius: 20px;
-  background: linear-gradient(45deg, #ff6b6b, #ff8a80);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
   color: white;
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 10px 30px rgba(46, 46, 46, 0.3);
   padding: 2rem;
   text-align: center;
 }

@@ -38,18 +38,16 @@ function App() {
           <UsersContext.Provider value={users}>
             <BrowserRouter>
               <Routes>
-                {/* Auth routes */}
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="login" element={<LoginUserPage />} />
-                <Route path="logout" element={<Logout />} />
-
-                {/* Pet adoption route */}
-                <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
-
                 {/* Main app layout */}
                 <Route path="/" element={<Layout />}>
                   <Route index element={<HomePage />} />
-                
+                  {/* Auth routes */}
+                  <Route path="register" element={<RegisterPage />} />
+                  <Route path="login" element={<LoginUserPage />} />
+                  <Route path="logout" element={<Logout />} />
+
+                  {/* Pet adoption route */}
+                  <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
                   <Route path="pets/my-applications" element={<MyApplicationsPage />} />
 
                   {/* Admin nested routes */}
