@@ -8,6 +8,7 @@ import './AuthForm.css';
 import Spinner from "react-bootstrap/Spinner";
 
 const RegisterForm = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -62,9 +63,10 @@ const RegisterForm = () => {
           role: 'Public',
         }),
       });
-
+      
       const data = await res.json();
-
+      //console.log('Data:', data);
+      
       if (!res.ok) {
         if (res.status === 400 && data.errors) {
           const serverErrors = {};
@@ -73,7 +75,7 @@ const RegisterForm = () => {
           }
           setErrors(serverErrors);
         } else {
-          setSubmitError(data.title || 'Registration failed.');
+          setSubmitError(data.title || data?.message || data?.error || 'Registration failed.');
         }
         return;
       }
