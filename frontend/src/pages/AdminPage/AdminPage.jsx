@@ -12,7 +12,6 @@ const AdminPage = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log(role);
         if (role !== "Admin") {
             navigate("/");
         }
