@@ -495,9 +495,11 @@ const HomePage = () => {
                 companions through ZooDopt
               </p>
               <div className="d-flex justify-content-center gap-3 flex-wrap">
-                <Button variant="warning" size="lg" className="px-5 mb-2">
-                  Start Browsing
-                </Button>
+                <LinkContainer to="/browse-pets">
+                  <Button variant="warning" size="lg" className="px-5 mb-2">
+                    Start Browsing
+                  </Button>
+                </LinkContainer>
                 <LinkContainer to="/register">
                   <Button
                     variant="outline-light"

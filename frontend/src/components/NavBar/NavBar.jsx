@@ -35,7 +35,7 @@ const NavBar = () => {
 
             {/* Pets Section */}
             <NavDropdown title="Pets" id="pets-dropdown">
-              <LinkContainer to="/">
+              <LinkContainer to="/browse-pets">
                 <NavDropdown.Item>Browse All Pets</NavDropdown.Item>
               </LinkContainer>
               {token && (
