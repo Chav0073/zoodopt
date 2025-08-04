@@ -1,12 +1,12 @@
-// components/PetsCarouselResponsive.jsx
-
 import { Carousel, Card, Stack, Button } from "react-bootstrap";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./PetsCarouselResponsive.css";
+import { useNavigate } from "react-router-dom";
 
 const PetsCarouselResponsive = ({ pets }) => {
   const [index, setIndex] = useState(0);
+  let navigate = useNavigate();
 
   const handlePrev = () => {
     setIndex((prev) => (prev === 0 ? pets.length - 1 : prev - 1));
@@ -15,6 +15,11 @@ const PetsCarouselResponsive = ({ pets }) => {
   const handleNext = () => {
     setIndex((prev) => (prev === pets.length - 1 ? 0 : prev + 1));
   };
+
+  const handleRedirect = (e, id) => {
+    e.preventDefault();
+    navigate(`/admin/pets/edit/${id}`);
+  }
 
   return (
     <div className="container-fluid">
@@ -50,7 +55,7 @@ const PetsCarouselResponsive = ({ pets }) => {
                     <Card.Text className="card-text">{pet.shelterId}</Card.Text>
                     <Card.Text className="card-text">{pet.description}</Card.Text>
                     <Card.Text className="card-text">{pet.status}</Card.Text>
-                    <Button variant="primary">Edit</Button>
+                    <Button variant="primary" onClick={(e) => handleRedirect(e, pet.id)}>Edit</Button>
                   </Card.Body>
                 </Card>
               ))}
