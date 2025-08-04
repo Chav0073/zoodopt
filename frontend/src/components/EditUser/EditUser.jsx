@@ -1,20 +1,38 @@
-import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import fetchShelters from "../../helpers/fetchShelters";
 
 const EditUser = ({ user, userId }) => {
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [role, setRole] = useState(user.role);
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
+  const [role, setRole] = useState(user.role || "Public");
+  const [shelterId, setShelterId] = useState(user.shelterId || "");
+  const [shelters, setShelters] = useState([]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (role === "ShelterStaff") {
+      const token = localStorage.getItem("token");
+      fetchShelters(token).then((data) => {
+        if (data) {
+          setShelters(data);
+          if (!shelterId) setShelterId(data[0]?.id || "");
+        }
+      });
+    }
+  }, [role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     const updatedUser = {
-      name,
+      name, // still required by backend
       email,
       role,
+      ...(role === "ShelterStaff" && shelterId ? { shelterId: parseInt(shelterId) } : {}),
     };
 
     try {
@@ -27,16 +45,20 @@ const EditUser = ({ user, userId }) => {
         body: JSON.stringify(updatedUser),
       });
 
-      if (res.ok) {
-        alert("User updated!");
-        navigate("/admin/users");
-      } else {
-        const err = await res.json();
-        alert("Failed: " + err.message);
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+
+      if (!res.ok) {
+        console.error("Server validation error:", data);
+        setError(data.message || data.title || "Failed to update user.");
+        return;
       }
+
+      alert("User updated!");
+      navigate("/admin/users");
     } catch (err) {
-      console.error(err);
-      alert("An error occurred");
+      console.error("Request error:", err);
+      setError("An unexpected error occurred.");
     }
   };
 
@@ -55,13 +77,15 @@ const EditUser = ({ user, userId }) => {
 
       <div className="container-fluid bg-white rounded shadow-sm p-4">
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          <Form.Group className="mb-3 d-none">
             <Form.Label className="fw-semibold">Name</Form.Label>
             <Form.Control
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
+              readOnly
+              plaintext
             />
           </Form.Group>
 
@@ -75,17 +99,31 @@ const EditUser = ({ user, userId }) => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-4">
+          <Form.Group className="mb-3">
             <Form.Label className="fw-semibold">Role</Form.Label>
-            <Form.Select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
+            <Form.Select value={role} onChange={(e) => setRole(e.target.value)} required>
+              <option value="Public">Public</option>
+              <option value="ShelterStaff">Shelter Staff</option>
+              <option value="Admin">Admin</option>
             </Form.Select>
           </Form.Group>
+
+          {role === "ShelterStaff" && (
+            <Form.Group className="mb-4">
+              <Form.Label className="fw-semibold">Shelter</Form.Label>
+              <Form.Select
+                value={shelterId}
+                onChange={(e) => setShelterId(e.target.value)}
+                required
+              >
+                {shelters.map((shelter) => (
+                  <option key={shelter.id} value={shelter.id}>
+                    {shelter.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          )}
 
           <Button type="submit" variant="primary" className="fw-semibold px-4 py-2">
             Save Changes

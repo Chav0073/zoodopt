@@ -1,5 +1,3 @@
-// components/UsersCarousel/UsersCarousel.jsx
-
 import { Carousel, Card, Stack, Button, Spinner } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -7,11 +5,14 @@ import useWindowSize from "../../hooks/useWindowSize";
 import chunkArray from "../../helpers/chunkArray";
 import fetchUsers from "../../helpers/fetchUsers";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom"; // <-- Add this
 import "./UsersCarousel.css";
+import CreateUserBtn from "../CreateUserBtn/CreateUserBtn";
 
 const UsersCarousel = () => {
   const { token } = useAuth();
   const screenWidth = useWindowSize();
+  const navigate = useNavigate(); // <-- Add this
 
   const [users, setUsers] = useState([]);
   const [index, setIndex] = useState(0);
@@ -40,9 +41,7 @@ const UsersCarousel = () => {
     setIndex((prev) => (prev === chunkedUsers.length - 1 ? 0 : prev + 1));
   };
 
-  const usersPerSlide =
-    screenWidth < 576 ? 1 : screenWidth < 992 ? 2 : 3;
-
+  const usersPerSlide = screenWidth < 576 ? 1 : screenWidth < 992 ? 2 : 3;
   const chunkedUsers = chunkArray(users, usersPerSlide);
 
   const carouselKey =
@@ -58,9 +57,18 @@ const UsersCarousel = () => {
     <>
       <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
         <h2 className="mb-0 fw-bold text-primary">Users</h2>
-        <Button variant="outline-primary" className="fw-semibold px-4 py-2">
-          Users List
-        </Button>
+         <div className="d-flex flex-wrap gap-2 justify-content-md-end">
+          <div className="w-auto">
+            <CreateUserBtn />
+          </div>
+          <Button
+            variant="outline-primary"
+            className="fw-semibold px-4 py-2 w-auto"
+            onClick={() => navigate("/admin/users")}
+          >
+            Users List
+          </Button>
+        </div>
       </div>
 
       <div className="container-fluid">
@@ -97,7 +105,12 @@ const UsersCarousel = () => {
                         <Card.Title>{user.name}</Card.Title>
                         <Card.Text className="card-text">{user.email}</Card.Text>
                         <Card.Text className="card-text">{user.role}</Card.Text>
-                        <Button variant="primary">Edit</Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => navigate(`/admin/users/edit/${user.id}`)} // <-- Navigate to edit page
+                        >
+                          Edit
+                        </Button>
                       </Card.Body>
                     </Card>
                   ))}

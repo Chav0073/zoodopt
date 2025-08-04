@@ -32,6 +32,7 @@ import "./App.css";
 import CreateShelterPage from "./pages/CreateShelter/CreateShelterPage";
 import CreatePetPage from "./pages/CreatePet/CreatePetPage";
 import EditUserPage from "./pages/EditUserPage/EditUserPage";
+import CreateUserPage from "./pages/CreateUserPage/CreateUserPage";
 
 function App() {
   const [user, setUser] = useState(currentUser);
@@ -40,44 +41,30 @@ function App() {
   const [shelters, setShelters] = useState(mockShelters);
 
   return (
-    <PetsContext.Provider value={pets}>
-      <SheltersContext.Provider value={shelters}>
-        <UsersContext.Provider value={users}>
+    <PetsContext.Provider value={{ pets, setPets }}>
+      <SheltersContext.Provider value={{ shelters, setShelters }}>
+        <UsersContext.Provider value={{ users, setUsers }}>
           <BrowserRouter>
             <Routes>
-              {/* Main app layout */}
               <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                {/* Browse pets route */}
                 <Route path="browse-pets" element={<BrowsePetsPage />} />
-                {/* Auth routes */}
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="login" element={<LoginUserPage />} />
                 <Route path="logout" element={<Logout />} />
-
-                {/* Pet adoption route */}
                 <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
-                <Route
-                  path="pets/my-applications"
-                  element={<MyApplicationsPage />}
-                />
+                <Route path="pets/my-applications" element={<MyApplicationsPage />} />
 
-                {/* Admin nested routes */}
                 <Route path="admin" element={<AdminPage />}>
                   <Route path="shelters" element={<ManageShelters />} />
-                  <Route
-                    path="shelters/edit/:shelterId"
-                    element={<EditShelterPage />}
-                  />
-                  <Route
-                    path="shelters/create"
-                    element={<CreateShelterPage />}
-                  />
+                  <Route path="shelters/edit/:shelterId" element={<EditShelterPage />} />
+                  <Route path="shelters/create" element={<CreateShelterPage />} />
                   <Route path="pets" element={<ManagePets />} />
                   <Route path="pets/edit/:petId" element={<EditPetPage />} />
                   <Route path="pets/create" element={<CreatePetPage />} />
                   <Route path="users" element={<ManageUsers />} />
                   <Route path="users/edit/:userId" element={<EditUserPage />} />
+                  <Route path="users/create" element={<CreateUserPage />} />
                 </Route>
               </Route>
             </Routes>
