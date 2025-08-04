@@ -1,68 +1,64 @@
-.navbar {
-  background-color: #2c3e50;
-  padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Custom navbar styling - only what's needed beyond Bootstrap */
+
+/* Navbar toggler (burger menu) custom styling */
+.navbar-toggler {
+  border: 1px solid #2c3e50;
 }
 
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem;
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
 }
 
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ecf0f1;
-  text-decoration: none;
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2844, 62, 80, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.navbar-brand:hover {
+/* Nav link colors for light theme */
+.navbar-light .navbar-nav .nav-link {
+  color: #2c3e50 !important;
+  font-weight: 500;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #3498db !important;
+}
+
+.navbar-light .navbar-nav .dropdown-toggle {
+  color: #2c3e50 !important;
+  font-weight: 500;
+}
+
+.navbar-light .navbar-nav .dropdown-toggle:hover {
+  color: #3498db !important;
+}
+
+/* Dropdown item spacing - this is what you wanted */
+.navbar-light .navbar-nav .dropdown-item {
+  color: #2c3e50;
+  padding-right: 2rem !important;
+}
+
+.navbar-light .navbar-nav .dropdown-item:hover {
+  background-color: #f8f9fa;
   color: #3498db;
-  text-decoration: none;
 }
 
-.navbar-links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.nav-link {
-  color: #ecf0f1;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-  background-color: #34495e;
-  color: #3498db;
-  text-decoration: none;
-}
-
-.nav-link.active {
-  background-color: #3498db;
-  color: white;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    gap: 1rem;
+/* Mobile responsiveness improvements */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    padding-top: 1rem;
   }
-  
-  .navbar-links {
-    gap: 1rem;
+
+  .navbar-nav .dropdown-item {
+    padding: 0.5rem 2rem 0.5rem 1rem !important;
   }
-  
-  .nav-link {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.9rem;
+
+  /* Separate login/logout section on mobile */
+  .navbar-nav.ms-auto {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
   }
 }
