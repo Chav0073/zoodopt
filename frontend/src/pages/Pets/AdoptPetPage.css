@@ -47,16 +47,16 @@
 }
 
 .adopt-header {
-  background: linear-gradient(45deg, #ff6b6b, #ffa726);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
   color: white;
   text-align: center;
-  padding: 1rem;
+  padding: 0.6rem;
   position: relative;
   overflow: hidden;
 }
 
 .adopt-header h2 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: bold;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -73,7 +73,7 @@
 }
 
 .adopt-image {
-  max-height: 400px;
+  max-height: 300px;
   width: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
@@ -98,8 +98,7 @@
 }
 
 .adopt-form-container {
-  background: linear-gradient(135deg, #667eea, #383bf0ff);
-  background: linear-gradient(135deg, #667eea, #383bf0ff);
+  background: linear-gradient(135deg, #667eea, #383bf0ff);  
   color: white;
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
   padding: 2rem;
@@ -139,7 +138,7 @@
 .adopt-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(45deg, #ff5252, #ff9800);
+  background: linear-gradient(45deg, #ff5252, #f34e38);
   color: white;
 }
 

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  background: linear-gradient(135deg, #667eea, #383bf0ff);
+  /* background: linear-gradient(135deg, #667eea, #383bf0ff); */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -21,7 +21,7 @@
   text-align: center;
   color: white;
   padding: 1.5rem;
-  background: linear-gradient(45deg, #ff6b6b, #ffa726);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
 }
 
 .login-title, .register-title {
@@ -117,7 +117,7 @@
 }
 
 .login-button,.submit-btn {
-  background: linear-gradient(45deg, #ff6b6b, #ffa726);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
   border: none;
   border-radius: 25px;
   padding: 1rem 2rem;
@@ -130,7 +130,7 @@
 }
 
 .login-button:hover, .submit-btn:hover {
-  background: linear-gradient(45deg, #ff5252, #ff9800);
+  background: linear-gradient(45deg, #516de9, rgb(48, 51, 240));
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
