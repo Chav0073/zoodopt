@@ -12,14 +12,11 @@ const AdminPage = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (role !== null && role !== "admin") {
+        console.log(role);
+        if (role !== "Admin") {
             navigate("/");
         }
     }, [role, navigate]);
-
-    if(role != "admin" || role == null){
-        return <AccessDenied />
-    }
 
     const isIndexRoute = location.pathname === "/admin";
 
