@@ -1,32 +1,22 @@
-import { useContext } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import UserContext from "../../../context/UserContext";
-import PetsContext from "../../../context/PetsContext";
-import SheltersContext from "../../../context/SheltersContext";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AccessDenied from "../../components/AccessDenied/AccessDenied";
 import SheltersCarousel from "../../components/SheltersCarousel/SheltersCarousel";
 import PetsCarousel from "../../components/PetsCarousel/PetsCarousel";
-import UsersContext from "../../../context/UsersContext";
 import UsersCarousel from "../../components/UsersCarousel/UsersCarousel";
+import { useAuth } from "../../../context/AuthContext";
+import { useEffect } from "react";
 
 const AdminPage = () => {
-    const user = useContext(UserContext);
-    const pets = useContext(PetsContext);
-    const shelters = useContext(SheltersContext);
-    const users = useContext(UsersContext);
+    const { role } = useAuth();
+    const navigate = useNavigate();
     const location = useLocation();
 
-    if (user == null) {
-        return (
-            <p className="text-center mt-5 fs-5 text-secondary px-3">
-                Please, sign in.
-            </p>
-        );
-    }
-
-    if (user.role !== "admin") {
-        return <AccessDenied />;
-    }
+    useEffect(() => {
+        console.log(role);
+        if (role !== "Admin") {
+            navigate("/");
+        }
+    }, [role, navigate]);
 
     const isIndexRoute = location.pathname === "/admin";
 

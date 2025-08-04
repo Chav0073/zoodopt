@@ -3,11 +3,10 @@ import Layout from "./pages/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 
 import { currentUser, mockPets, mockShelters, mockUsers } from "../data/mockup_data";
-
-import UserContext from "../context/UserContext";
 import UsersContext from "../context/UsersContext";
 import PetsContext from "../context/PetsContext";
 import SheltersContext from "../context/SheltersContext";
+import Logout from "./pages/Logout/Logout";
 
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ManagePets from "./components/ManagePets/ManagePets";
@@ -42,6 +41,7 @@ function App() {
                 {/* Auth routes */}
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="login" element={<LoginUserPage />} />
+                <Route path="logout" element={<Logout />} />
 
                 {/* Pet adoption route */}
                 <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
