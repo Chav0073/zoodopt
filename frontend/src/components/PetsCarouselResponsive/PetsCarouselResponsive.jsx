@@ -1,12 +1,12 @@
 import { Carousel, Card, Stack, Button } from "react-bootstrap";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import useWindowSize from "../../hooks/useWindowSize";
 import "./PetsCarouselResponsive.css";
-import { useNavigate } from "react-router-dom";
 
 const PetsCarouselResponsive = ({ pets }) => {
   const [index, setIndex] = useState(0);
-  let navigate = useNavigate();
+  const screenWidth = useWindowSize();
 
   const handlePrev = () => {
     setIndex((prev) => (prev === 0 ? pets.length - 1 : prev - 1));
@@ -16,10 +16,15 @@ const PetsCarouselResponsive = ({ pets }) => {
     setIndex((prev) => (prev === pets.length - 1 ? 0 : prev + 1));
   };
 
-  const handleRedirect = (e, id) => {
-    e.preventDefault();
-    navigate(`/admin/pets/edit/${id}`);
-  }
+  // Use a key that changes based on screen size breakpoints
+  const carouselKey =
+    screenWidth < 576
+      ? "xs"
+      : screenWidth < 768
+      ? "sm"
+      : screenWidth < 992
+      ? "md"
+      : "lg";
 
   return (
     <div className="container-fluid">
@@ -35,7 +40,7 @@ const PetsCarouselResponsive = ({ pets }) => {
       </div>
 
 
-      <Carousel indicators={false} controls={false} activeIndex={index} onSelect={setIndex}>
+      <Carousel indicators={false} controls={false} activeIndex={index} onSelect={setIndex} key={carouselKey}>
         {pets.map((chunk, idx) => (
           <Carousel.Item key={idx} style={{ height: 500 }}>
             <Stack
