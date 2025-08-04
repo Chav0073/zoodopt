@@ -7,6 +7,7 @@ import fetchUsers from "../../helpers/fetchUsers";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom"; // <-- Add this
 import "./UsersCarousel.css";
+import CreateUserBtn from "../CreateUserBtn/CreateUserBtn";
 
 const UsersCarousel = () => {
   const { token } = useAuth();
@@ -56,9 +57,18 @@ const UsersCarousel = () => {
     <>
       <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
         <h2 className="mb-0 fw-bold text-primary">Users</h2>
-        <Button variant="outline-primary" className="fw-semibold px-4 py-2">
-          Users List
-        </Button>
+         <div className="d-flex flex-wrap gap-2 justify-content-md-end">
+          <div className="w-auto">
+            <CreateUserBtn />
+          </div>
+          <Button
+            variant="outline-primary"
+            className="fw-semibold px-4 py-2 w-auto"
+            onClick={() => navigate("/admin/users")}
+          >
+            Users List
+          </Button>
+        </div>
       </div>
 
       <div className="container-fluid">
