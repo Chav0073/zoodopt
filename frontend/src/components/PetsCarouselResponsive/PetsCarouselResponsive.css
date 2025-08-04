@@ -34,3 +34,50 @@ flex-shrink: 1;
 .carousel-control-next-icon{
 filter: invert(1)
 }
+
+.carousel-btn {
+  min-width: 40px;
+  max-width: 40px;
+  flex: 0 0 auto;
+}
+
+/* Ensure the button container stays inline on small screens */
+@media (max-width: 576px) {
+  .carousel-btn {
+    width: 40px !important;
+  }
+
+  .carousel-btn + .carousel-btn {
+    margin-left: 0.5rem;
+  }
+
+  /* Optional: ensure container doesn't stack them */
+  .carousel-btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+}
+
+.carousel-btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem; /* consistent spacing on all sizes */
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+
+.carousel-btn {
+  min-width: 40px;
+  max-width: 40px;
+  flex: 0 0 auto;
+}
+
+/* Optional: extra styling on small screens (if needed) */
+@media (max-width: 576px) {
+  .carousel-btn {
+    width: 40px !important;
+  }
+}

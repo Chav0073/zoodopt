@@ -18,14 +18,17 @@ const PetsCarouselResponsive = ({ pets }) => {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex flex-wrap justify-content-end mb-3 gap-2">
-        <Button variant="primary" className="w-auto" onClick={handlePrev}>
-          <FaChevronLeft />
-        </Button>
-        <Button variant="primary" className="w-auto" onClick={handleNext}>
-          <FaChevronRight />
-        </Button>
+      <div className="d-flex flex-nowrap justify-content-end align-items-center mb-3 gap-2">
+          <div className="carousel-btn-group mb-3">
+            <Button variant="primary" className="carousel-btn" onClick={handlePrev}>
+              <FaChevronLeft />
+            </Button>
+            <Button variant="primary" className="carousel-btn" onClick={handleNext}>
+              <FaChevronRight />
+            </Button>
+          </div>
       </div>
+
 
       <Carousel indicators={false} controls={false} activeIndex={index} onSelect={setIndex}>
         {pets.map((chunk, idx) => (
