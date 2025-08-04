@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [role, setRole] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       setRole(storedRole);
     }
+    setLoadingAuth(false);
   }, []);
 
   const login = (newToken, newRole, rememberMe) => {
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider value={{ token, role, login, logout, loadingAuth }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './MyApplicationsPage.css';
 
 const MyApplicationsPage = () => {
-  const { token } = useAuth();
+  const { token, loadingAuth } = useAuth();
   const [applications, setApplications] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editedMessage, setEditedMessage] = useState('');
@@ -16,15 +16,18 @@ const MyApplicationsPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (loadingAuth || !token) return;
+
     const fetchApplications = async () => {
       try {
         const res = await fetch('http://localhost:5217/applications/my-applications', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
+
         if (!res.ok) {
           throw new Error(`Failed to load applications: ${res.status} response`);
         }
+
         const apps = await res.json();
 
         const enrichedApps = await Promise.all(
@@ -59,7 +62,7 @@ const MyApplicationsPage = () => {
     };
 
     fetchApplications();
-  }, [token]);
+  }, [token, loadingAuth]);
 
   const handleEditClick = (app) => {
     setEditingId(app.id);
@@ -156,7 +159,17 @@ const MyApplicationsPage = () => {
       </div>
     );
   }
-
+  if (loadingAuth) {
+    return (
+      <div className="full-page-wrapper bg-gradient-primary">
+        <div className="status-box fade-in">
+          <div className="spinner">⏳</div>
+          <h3 className="status-text">Initializing session...</h3>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="my-applications-page">
       <div className="container py-5">
