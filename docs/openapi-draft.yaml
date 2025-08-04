@@ -101,6 +101,74 @@ components:
           type: string
           nullable: true
 
+    UserResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [Public, ShelterStaff, Admin]
+        shelterId:
+          type: integer
+          nullable: true
+        shelterName:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    UserUpdateDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "newemail@example.com"
+        role:
+          type: string
+          enum: [Public, ShelterStaff, Admin]
+          example: "ShelterStaff"
+        shelterId:
+          type: integer
+          nullable: true
+          example: 2
+
+    UserPasswordUpdateDto:
+      type: object
+      required:
+        - newPassword
+      properties:
+        newPassword:
+          type: string
+          minLength: 8
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$"
+          description: Must contain uppercase, lowercase, and digit
+          example: "NewSecurePass123!"
+
+    UserStatsDto:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+          example: 150
+        publicUsers:
+          type: integer
+          example: 120
+        shelterStaff:
+          type: integer
+          example: 25
+        admins:
+          type: integer
+          example: 5
+        usersCreatedThisMonth:
+          type: integer
+          example: 12
+
     # Pet DTOs
     PetCreateDto:
       type: object
@@ -491,6 +559,291 @@ paths:
                 $ref: "#/components/schemas/UserProfileDto"
         "401":
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users:
+    get:
+      tags:
+        - Users (Admin)
+      summary: Get all users
+      description: Get all users in the system (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: pageSize
+          in: query
+          description: Number of users per page
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+        - name: role
+          in: query
+          description: Filter by user role
+          schema:
+            type: string
+            enum: [Public, ShelterStaff, Admin]
+        - name: shelterId
+          in: query
+          description: Filter by shelter ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserResponseDto"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{id}:
+    get:
+      tags:
+        - Users (Admin)
+      summary: Get user by ID
+      description: Get a specific user by ID (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      tags:
+        - Users (Admin)
+      summary: Update user
+      description: Update user details (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateDto"
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        "400":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      tags:
+        - Users (Admin)
+      summary: Delete user
+      description: Delete a user from the system (Admin only). Cannot delete users with active applications.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deleted successfully"
+        "400":
+          description: Cannot delete user with active applications
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{id}/password:
+    put:
+      tags:
+        - Users (Admin)
+      summary: Update user password
+      description: Update user password (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPasswordUpdateDto"
+      responses:
+        "200":
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Password updated successfully"
+        "400":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/stats:
+    get:
+      tags:
+        - Users (Admin)
+      summary: Get user statistics
+      description: Get user statistics and metrics (Admin only)
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStatsDto"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Admin access required
           content:
             application/json:
               schema:

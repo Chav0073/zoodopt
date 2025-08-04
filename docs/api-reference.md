@@ -13,6 +13,12 @@ The Zoodopt API provides endpoints for managing pet adoption applications, shelt
 | /auth/register                | POST   | No\* | Register a user (public self-reg, admin for privileged) |
 | /auth/login                   | POST   | No   | Authenticate and get token                              |
 | /users/me                     | GET    | Yes  | Get current user's profile                              |
+| /users                        | GET    | Yes  | Get all users (admin only)                              |
+| /users/{id}                   | GET    | Yes  | Get specific user by ID (admin only)                    |
+| /users/{id}                   | PUT    | Yes  | Update user details (admin only)                        |
+| /users/{id}/password          | PUT    | Yes  | Update user password (admin only)                       |
+| /users/{id}                   | DELETE | Yes  | Delete user (admin only)                                |
+| /users/stats                  | GET    | Yes  | Get user statistics (admin only)                        |
 | /pets                         | GET    | No   | List all pets (with filters)                            |
 | /pets/{id}                    | GET    | No   | Get specific pet details                                |
 | /pets                         | POST   | Yes  | Add new pet (shelter staff/admin)                       |
@@ -232,6 +238,95 @@ Common HTTP status codes:
     "role": "Public",
     "shelterId": 1,
     "shelterName": "Happy Paws Shelter"
+  }
+  ```
+
+---
+
+#### `/users` — `GET` (Admin Only)
+
+- **Description**: Get all users in the system
+- **Auth Required**: Yes (Admin role only)
+- **Query Parameters** (optional):
+  - `page`: integer (default: 1)
+  - `pageSize`: integer (default: 10, max: 100)
+  - `role`: string (filter by role: "Public", "ShelterStaff", "Admin")
+  - `shelterId`: integer (filter by shelter ID)
+- **Response**: Array of user objects
+  ```json
+  [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "role": "Admin",
+      "shelterId": null,
+      "shelterName": null,
+      "createdAt": "2025-08-04T00:00:00Z"
+    }
+  ]
+  ```
+
+---
+
+#### `/users/{id}` — `GET` (Admin Only)
+
+- **Description**: Get a specific user by ID
+- **Auth Required**: Yes (Admin role only)
+- **Response**: User object with full details
+
+---
+
+#### `/users/{id}` — `PUT` (Admin Only)
+
+- **Description**: Update user details
+- **Auth Required**: Yes (Admin role only)
+- **Request Body**:
+  ```json
+  {
+    "email": "newemail@example.com",
+    "role": "ShelterStaff",
+    "shelterId": 2
+  }
+  ```
+- **Response**: Updated user object
+
+---
+
+#### `/users/{id}/password` — `PUT` (Admin Only)
+
+- **Description**: Update user password
+- **Auth Required**: Yes (Admin role only)
+- **Request Body**:
+  ```json
+  {
+    "newPassword": "NewSecurePass123!"
+  }
+  ```
+- **Response**: `200 OK` with success message
+
+---
+
+#### `/users/{id}` — `DELETE` (Admin Only)
+
+- **Description**: Delete a user from the system
+- **Auth Required**: Yes (Admin role only)
+- **Validation**: Cannot delete users who have active adoption applications
+- **Response**: `200 OK` with success message or `400 Bad Request` if user has applications
+
+---
+
+#### `/users/stats` — `GET` (Admin Only)
+
+- **Description**: Get user statistics
+- **Auth Required**: Yes (Admin role only)
+- **Response**: Statistics object
+  ```json
+  {
+    "totalUsers": 150,
+    "publicUsers": 120,
+    "shelterStaff": 25,
+    "admins": 5,
+    "usersCreatedThisMonth": 12
   }
   ```
 
