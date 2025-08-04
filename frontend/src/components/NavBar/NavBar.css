@@ -4,7 +4,6 @@
 .navbar-toggler {
   border: 1px solid #2c3e50;
 }
-
 .navbar-toggler:focus {
   box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
 }
