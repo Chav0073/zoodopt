@@ -18,6 +18,8 @@ namespace backend.Models
         public int? ShelterId { get; set; }
         public Shelter? Shelter { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         public List<AdoptionApplication>? Applications { get; set; }
     }
 }
