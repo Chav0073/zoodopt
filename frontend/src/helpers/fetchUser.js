@@ -4,19 +4,20 @@ const fetchUser = async (token, userId) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
         });
 
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.log("Failed to fetch protected data: ", error.message);
+        console.error("Failed to fetch user data:", error.message);
+        return null;
     }
-}
+};
 
 export default fetchUser;
