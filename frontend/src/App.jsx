@@ -33,6 +33,7 @@ import CreateShelterPage from "./pages/CreateShelter/CreateShelterPage";
 import CreatePetPage from "./pages/CreatePet/CreatePetPage";
 import EditUserPage from "./pages/EditUserPage/EditUserPage";
 import CreateUserPage from "./pages/CreateUserPage/CreateUserPage";
+import ShelterDashboardPage from "./pages/ShelterDashboardPage/ShelterDashboardPage";
 
 function App() {
   const [user, setUser] = useState(currentUser);
@@ -65,6 +66,9 @@ function App() {
                   <Route path="users" element={<ManageUsers />} />
                   <Route path="users/edit/:userId" element={<EditUserPage />} />
                   <Route path="users/create" element={<CreateUserPage />} />
+                </Route>
+                
+                <Route path="shelter/:shelterId" element={<ShelterDashboardPage />}>
                 </Route>
               </Route>
             </Routes>
