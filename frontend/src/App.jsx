@@ -34,6 +34,7 @@ import CreatePetPage from "./pages/CreatePet/CreatePetPage";
 import EditUserPage from "./pages/EditUserPage/EditUserPage";
 import CreateUserPage from "./pages/CreateUserPage/CreateUserPage";
 import ShelterDashboardPage from "./pages/ShelterDashboardPage/ShelterDashboardPage";
+import CreatePetInShelter from "./pages/CreatePetInShelter/CreatePetInShelter";
 
 function App() {
   const [user, setUser] = useState(currentUser);
@@ -68,8 +69,8 @@ function App() {
                   <Route path="users/create" element={<CreateUserPage />} />
                 </Route>
                 
-                <Route path="shelter/:shelterId" element={<ShelterDashboardPage />}>
-                </Route>
+                <Route path="shelter/:shelterId" element={<ShelterDashboardPage />}/>
+                <Route path="shelter/:shelterId/create" element={<CreatePetInShelter />}/>
               </Route>
             </Routes>
           </BrowserRouter>

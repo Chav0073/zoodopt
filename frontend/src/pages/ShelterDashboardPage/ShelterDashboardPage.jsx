@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ManagePetsTable from "../../components/ManagePetsTable/ManagePetsTable";
+import ManagePetsInShelter from "../../components/ManagePetsInShelter/ManagePetsInShelter";
+import { Button } from "react-bootstrap";
+import CreatePetInShelterBtn from "../../components/CreatePetInShelterBtn/CreatePetInShelterBtn";
 
 const ShelterDashboardPage = () => {
-  const { shelterId } = useParams(); // Get from URL
-  const [pets, setPets] = useState(null);
+  const { shelterId } = useParams();
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,14 +33,48 @@ const ShelterDashboardPage = () => {
         setPets(filteredPets);
       } catch (err) {
         console.error("Error fetching pets:", err);
-        // Optional: navigate("/access-denied");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [shelterId, navigate]);
 
-  return <>{pets ? <ManagePetsTable pets={pets} /> : <p>Loading...</p>}</>;
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
+  const handlePetDeleted = (deletedId) => {
+    setPets((prevPets) => prevPets.filter((pet) => pet.id !== deletedId));
+  };
+
+  return (
+    <>
+      <div className="container-fluid px-3 px-md-4 py-4">
+        <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
+          <h2 className="mb-0 fw-bold text-primary">Pets</h2>
+          <div>
+            <CreatePetInShelterBtn id={shelterId}/>
+            <Button
+              variant="outline-primary"
+              className="fw-semibold px-4 py-2"
+              onClick={handleClick}
+            >
+              Back to Home Page
+            </Button>
+          </div>
+        </div>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <ManagePetsInShelter pets={pets} onPetDeleted={handlePetDeleted} />
+        )}
+      </div>
+    </>
+  );
 };
 
 export default ShelterDashboardPage;
