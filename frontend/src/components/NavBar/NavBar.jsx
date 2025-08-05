@@ -3,9 +3,37 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useAuth } from "../../../context/AuthContext";
 import logo from "../../../public/images/logo.svg";
 import "./NavBar.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const NavBar = () => {
   const { token, role } = useAuth();
+  const [shelterId, setShelterId] = useState();
+
+   useEffect(() => {
+    const fetchShelterInfo = async () => {
+      if (role === "ShelterStaff" && token) {
+        try {
+          const response = await fetch("http://localhost:5217/users/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) throw new Error("Failed to fetch shelter info");
+
+          const data = await response.json();
+          setShelterId(data.shelterId);
+        } catch (error) {
+          console.error("Error fetching shelter info:", error);
+        }
+      }
+    };
+
+    fetchShelterInfo();
+  }, [token, role]);
+
+
   return (
     <Navbar
       bg="light"
@@ -70,6 +98,14 @@ const NavBar = () => {
                   <NavDropdown.Item>Manage Users</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
+            )}
+
+            {/* Shelter Staff Section */}
+            {role === "ShelterStaff" && (
+
+              <LinkContainer to={`/shelter/${shelterId}`}>
+                <Nav.Link>Shelter Dashboard</Nav.Link>
+              </LinkContainer>
             )}
           </Nav>
 
