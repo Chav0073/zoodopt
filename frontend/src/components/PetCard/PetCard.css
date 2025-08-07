@@ -88,7 +88,7 @@
 }
 
 .pet-breed {
-  color: #0d6efd !important;
+  color: #667eea !important;
   font-weight: 600 !important;
   font-size: 0.9rem !important;
 }
@@ -134,7 +134,7 @@
   font-weight: 600 !important;
   font-size: 0.9rem !important;
   padding: 0.6rem 1rem !important;
-  background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+  background: linear-gradient(45deg, #667eea, #383bf0ff) !important;
   border: none !important;
   transition: all 0.2s ease;
   display: flex;
@@ -145,8 +145,8 @@
 
 .pet-button:hover {
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3) !important;
-  background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+  background: linear-gradient(45deg, #516de9, rgb(48, 51, 240)) !important;
 }
 
 /* Responsive Design */
@@ -202,7 +202,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  max-width: 300px;
+  max-width: 400px; /* Increased from 300px */
   height: auto !important;
   min-height: auto !important;
   flex: none !important;
@@ -317,7 +317,7 @@
 }
 
 .pet-card.homepage-variant .pet-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(45deg, #667eea, #383bf0ff) !important;
   border: none !important;
   border-radius: 25px !important;
   padding: 12px !important;

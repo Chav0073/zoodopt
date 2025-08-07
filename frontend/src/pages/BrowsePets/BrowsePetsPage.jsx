@@ -81,40 +81,44 @@ const BrowsePetsPage = () => {
 
   // Filter pets whenever filters change
   useEffect(() => {
-    let filtered = pets;
+    try {
+      // Guard against filtering before pets are loaded
+      if (!pets || pets.length === 0) {
+        setFilteredPets([]);
+        return;
+      }
+
+      let filtered = pets;
 
     // Search filter (name, breed, description)
     if (filters.search.trim()) {
       const searchTerm = filters.search.toLowerCase();
       filtered = filtered.filter(
         (pet) =>
-          pet.name.toLowerCase().includes(searchTerm) ||
-          pet.breed.toLowerCase().includes(searchTerm) ||
-          pet.description.toLowerCase().includes(searchTerm)
+          (pet.name && pet.name.toLowerCase().includes(searchTerm)) ||
+          (pet.breed && pet.breed.toLowerCase().includes(searchTerm)) ||
+          (pet.description && pet.description.toLowerCase().includes(searchTerm))
       );
     }
 
     // Pet type filter
     if (filters.petType) {
       filtered = filtered.filter(
-        (pet) => pet.type.toLowerCase() === filters.petType.toLowerCase()
+        (pet) => pet.type && pet.type.toLowerCase() === filters.petType.toLowerCase()
       );
     }
 
     // Age group filter
     if (filters.ageGroup) {
       filtered = filtered.filter((pet) => {
-        const age = parseInt(pet.ageGroup) || 0;
         switch (filters.ageGroup) {
           case "Puppy":
-          case "Kitten":
-            return (
-              age === 0 || pet.ageGroup === "Puppy" || pet.ageGroup === "Kitten"
-            );
+            // When "Puppy/Kitten" is selected, match both Puppy and Kitten
+            return pet.ageGroup === "Puppy" || pet.ageGroup === "Kitten";
           case "Adult":
-            return (age >= 1 && age <= 7) || pet.ageGroup === "Adult";
+            return pet.ageGroup === "Adult";
           case "Senior":
-            return age > 7 || pet.ageGroup === "Senior";
+            return pet.ageGroup === "Senior";
           default:
             return true;
         }
@@ -125,14 +129,14 @@ const BrowsePetsPage = () => {
     if (filters.location.trim()) {
       const locationTerm = filters.location.toLowerCase();
       filtered = filtered.filter((pet) =>
-        pet.shelterLocation.toLowerCase().includes(locationTerm)
+        pet.shelterLocation && pet.shelterLocation.toLowerCase().includes(locationTerm)
       );
     }
 
     // Gender filter
     if (filters.gender) {
       filtered = filtered.filter(
-        (pet) => pet.gender.toLowerCase() === filters.gender.toLowerCase()
+        (pet) => pet.gender && pet.gender.toLowerCase() === filters.gender.toLowerCase()
       );
     }
 
@@ -140,11 +144,16 @@ const BrowsePetsPage = () => {
     if (filters.breed.trim()) {
       const breedTerm = filters.breed.toLowerCase();
       filtered = filtered.filter((pet) =>
-        pet.breed.toLowerCase().includes(breedTerm)
+        pet.breed && pet.breed.toLowerCase().includes(breedTerm)
       );
     }
 
     setFilteredPets(filtered);
+    } catch (error) {
+      console.error("Error filtering pets:", error);
+      // Fallback to showing all pets if filtering fails
+      setFilteredPets(pets || []);
+    }
   }, [filters, pets]);
 
   const handleFilterChange = (key, value) => {

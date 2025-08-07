@@ -20,12 +20,12 @@
 
 /* Base responsive grid - focus on good image size */
 .pets-grid.homepage-5-cols .col {
-  flex: 1 1 200px; /* Flexible with minimum 200px */
-  max-width: 300px; /* Maximum width for images */
-  min-width: 200px; /* Minimum width for images */
+  flex: 1 1 280px; /* Flexible with minimum 280px - increased from 200px */
+  max-width: 400px; /* Maximum width for images - increased from 300px */
+  min-width: 280px; /* Minimum width for images - increased from 200px */
 }
 
-/* Extra large screens - 5+ columns */
+/* Extra large screens - 3 columns instead of 5+ */
 @media (min-width: 1400px) {
   .pets-grid.homepage-5-cols .row {
     display: flex;
@@ -34,13 +34,13 @@
   }
 
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 220px;
-    max-width: 220px;
+    flex: 0 0 300px; /* Increased from 220px */
+    max-width: 300px; /* Increased from 220px */
     padding: 0.75rem;
   }
 }
 
-/* Large screens - 4-5 columns */
+/* Large screens - 3 columns instead of 4-5 */
 @media (min-width: 992px) and (max-width: 1399px) {
   .pets-grid.homepage-5-cols .row {
     display: flex;
@@ -49,23 +49,27 @@
   }
 
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 240px;
-    max-width: 240px;
+    flex: 0 0 280px; /* Increased from 240px */
+    max-width: 280px; /* Increased from 240px */
     padding: 0.75rem;
   }
 }
 
-/* Medium screens - 3 columns */
+/* Medium screens - 2 columns instead of 3 */
 @media (min-width: 768px) and (max-width: 991px) {
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 250px;
-    max-width: 250px;
+    flex: 0 0 300px; /* Increased from 250px */
+    max-width: 300px; /* Increased from 250px */
     padding: 0.75rem;
   }
 }
 
 /* Small screens - 2 columns */
 @media (min-width: 576px) and (max-width: 767px) {
+  .pets-grid.homepage-5-cols .row {
+    justify-content: center;
+  }
+  
   .pets-grid.homepage-5-cols .col {
     flex: 0 0 280px;
     max-width: 280px;
@@ -75,9 +79,16 @@
 
 /* Extra small screens - 1 column */
 @media (max-width: 575px) {
+  .pets-grid.homepage-5-cols .row {
+    justify-content: center;
+  }
+  
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 100%;
+    flex: 0 0 auto;
     max-width: 320px;
+    width: 100%;
     padding: 0.5rem;
+    display: flex;
+    justify-content: center;
   }
 }

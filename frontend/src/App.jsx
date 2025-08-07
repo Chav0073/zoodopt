@@ -2,12 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 
-import {
-  currentUser,
-  mockPets,
-  mockShelters,
-  mockUsers,
-} from "../data/mockup_data";
+import { mockPets, mockShelters, mockUsers } from "../data/mockup_data";
 import UsersContext from "../context/UsersContext";
 import PetsContext from "../context/PetsContext";
 import SheltersContext from "../context/SheltersContext";
@@ -29,6 +24,7 @@ import BrowsePetsPage from "./pages/BrowsePets/BrowsePetsPage";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "./styles/primary-override.css";
 import CreateShelterPage from "./pages/CreateShelter/CreateShelterPage";
 import CreatePetPage from "./pages/CreatePet/CreatePetPage";
 import EditUserPage from "./pages/EditUserPage/EditUserPage";
@@ -37,7 +33,6 @@ import ShelterDashboardPage from "./pages/ShelterDashboardPage/ShelterDashboardP
 import CreatePetInShelter from "./pages/CreatePetInShelter/CreatePetInShelter";
 
 function App() {
-  const [user, setUser] = useState(currentUser);
   const [users, setUsers] = useState(mockUsers);
   const [pets, setPets] = useState(mockPets);
   const [shelters, setShelters] = useState(mockShelters);
@@ -55,12 +50,21 @@ function App() {
                 <Route path="login" element={<LoginUserPage />} />
                 <Route path="logout" element={<Logout />} />
                 <Route path="pets/adopt/:id" element={<AdoptPetPage />} />
-                <Route path="pets/my-applications" element={<MyApplicationsPage />} />
+                <Route
+                  path="pets/my-applications"
+                  element={<MyApplicationsPage />}
+                />
 
                 <Route path="admin" element={<AdminPage />}>
                   <Route path="shelters" element={<ManageShelters />} />
-                  <Route path="shelters/edit/:shelterId" element={<EditShelterPage />} />
-                  <Route path="shelters/create" element={<CreateShelterPage />} />
+                  <Route
+                    path="shelters/edit/:shelterId"
+                    element={<EditShelterPage />}
+                  />
+                  <Route
+                    path="shelters/create"
+                    element={<CreateShelterPage />}
+                  />
                   <Route path="pets" element={<ManagePets />} />
                   <Route path="pets/edit/:petId" element={<EditPetPage />} />
                   <Route path="pets/create" element={<CreatePetPage />} />
@@ -68,9 +72,15 @@ function App() {
                   <Route path="users/edit/:userId" element={<EditUserPage />} />
                   <Route path="users/create" element={<CreateUserPage />} />
                 </Route>
-                
-                <Route path="shelter/:shelterId" element={<ShelterDashboardPage />}/>
-                <Route path="shelter/:shelterId/create" element={<CreatePetInShelter />}/>
+
+                <Route
+                  path="shelter/:shelterId"
+                  element={<ShelterDashboardPage />}
+                />
+                <Route
+                  path="shelter/:shelterId/create"
+                  element={<CreatePetInShelter />}
+                />
               </Route>
             </Routes>
           </BrowserRouter>

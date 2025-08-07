@@ -15,7 +15,7 @@ const PetsGrid = ({
 
   const columnProps =
     variant === "homepage"
-      ? { xs: 6, sm: 4, md: 3, lg: 2, xl: 2, xxl: 2 }
+      ? { xs: 12, sm: 6, md: 4, lg: 3, xl: 3, xxl: 3 }
       : variant === "browse"
       ? { lg: 4, xl: 3, xxl: 2 }
       : { xs: 12, sm: 6, md: 4, lg: 3 };
@@ -55,7 +55,7 @@ const PetsGrid = ({
         </div>
       ) : (
         <>
-          <Row className={variant === "homepage" ? "" : "g-4"}>
+          <Row className={variant === "homepage" ? "justify-content-center" : "g-4"}>
             {displayPets.map((pet) => (
               <Col
                 key={pet.id}
