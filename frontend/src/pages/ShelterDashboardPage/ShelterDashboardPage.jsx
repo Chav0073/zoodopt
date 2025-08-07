@@ -4,6 +4,7 @@ import ManagePetsInShelter from "../../components/ManagePetsInShelter/ManagePets
 import { Button } from "react-bootstrap";
 import CreatePetInShelterBtn from "../../components/CreatePetInShelterBtn/CreatePetInShelterBtn";
 import { useAuth } from "../../../context/AuthContext";
+import ManageApplications from "../../components/ManageApplications/ManageApplications";
 
 const ShelterDashboardPage = () => {
   const { shelterId } = useParams();
@@ -106,7 +107,10 @@ const ShelterDashboardPage = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ManagePetsInShelter pets={pets} onPetDeleted={handlePetDeleted} />
+        <>
+          <ManagePetsInShelter pets={pets} onPetDeleted={handlePetDeleted} />
+          <ManageApplications shelterId={shelterId} />
+        </>
       )}
     </div>
   );
