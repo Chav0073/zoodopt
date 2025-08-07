@@ -10,7 +10,7 @@ const NavBar = () => {
   const { token, role } = useAuth();
   const [shelterId, setShelterId] = useState();
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchShelterInfo = async () => {
       if (role === "ShelterStaff" && token) {
         try {
@@ -33,7 +33,6 @@ const NavBar = () => {
     fetchShelterInfo();
   }, [token, role]);
 
-
   return (
     <Navbar
       bg="light"
@@ -42,7 +41,7 @@ const NavBar = () => {
       sticky="top"
       className="shadow-sm"
     >
-      <Container fluid style={{ maxWidth: "1400px" }}>
+      <Container fluid style={{ maxWidth: "1600px" }}>
         <LinkContainer to="/">
           <Navbar.Brand>
             <img
@@ -102,7 +101,6 @@ const NavBar = () => {
 
             {/* Shelter Staff Section */}
             {role === "ShelterStaff" && (
-
               <LinkContainer to={`/shelter/${shelterId}`}>
                 <Nav.Link>Shelter Dashboard</Nav.Link>
               </LinkContainer>

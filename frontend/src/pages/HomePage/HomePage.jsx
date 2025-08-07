@@ -153,7 +153,11 @@ const HomePage = () => {
           style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         ></div>
 
-        <Container className="position-relative" fluid>
+        <Container
+          className="position-relative"
+          fluid
+          style={{ maxWidth: "1600px" }}
+        >
           <Row className="justify-content-center text-center">
             <Col xs={10} sm={10} md={8} lg={8} xl={6}>
               <h1 className="display-2 fw-bold mb-4">Find, Love, Adopt</h1>
@@ -319,7 +323,7 @@ const HomePage = () => {
 
       {/* Pets to Adopt Section */}
       <section className="py-5">
-        <Container fluid>
+        <Container fluid style={{ maxWidth: "1600px" }}>
           <Row className="justify-content-center">
             <Col xs={11} sm={10} md={9} lg={8} xl={7}>
               <div className="text-center mb-5">
@@ -350,6 +354,11 @@ const HomePage = () => {
                   </Button>
                 )}
               </div>
+            </Col>
+          </Row>
+          {/* Full width for PetsGrid */}
+          <Row>
+            <Col xs={12}>
               <PetsGrid
                 pets={filteredPets}
                 maxPets={10}
@@ -363,7 +372,7 @@ const HomePage = () => {
 
       {/* Zoodopt in numbers Section */}
       <section className="py-5">
-        <Container fluid>
+        <Container fluid style={{ maxWidth: "1600px" }}>
           <Row className="justify-content-center">
             <Col xs={11} sm={10} md={9} lg={8} xl={7}>
               <div className="text-center mb-5">
@@ -470,7 +479,7 @@ const HomePage = () => {
 
       {/* Partner Shelters Section */}
       <section className="py-5 bg-light">
-        <Container fluid>
+        <Container fluid style={{ maxWidth: "1600px" }}>
           <Row className="justify-content-center">
             <Col xs={11} sm={10} md={9} lg={8} xl={7}>
               <div className="text-center mb-5">
@@ -481,6 +490,11 @@ const HomePage = () => {
                   Working with trusted organizations to help pets find homes
                 </p>
               </div>
+            </Col>
+          </Row>
+          {/* Full width for SheltersShowcase */}
+          <Row>
+            <Col xs={12}>
               <SheltersShowcase />
             </Col>
           </Row>
@@ -488,10 +502,22 @@ const HomePage = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-5 bg-primary text-white">
-        <Container fluid>
+      <section
+        className="py-5"
+        style={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        }}
+      >
+        <Container fluid style={{ maxWidth: "1600px" }}>
           <Row className="justify-content-center">
-            <Col xs={11} sm={10} md={8} lg={6} xl={5} className="text-center">
+            <Col
+              xs={11}
+              sm={10}
+              md={8}
+              lg={6}
+              xl={5}
+              className="text-center text-white"
+            >
               <h2 className="display-5 fw-bold mb-4">
                 Ready to Make a Difference?
               </h2>
@@ -501,7 +527,11 @@ const HomePage = () => {
               </p>
               <div className="d-flex justify-content-center gap-3 flex-wrap">
                 <LinkContainer to="/browse-pets">
-                  <Button variant="warning" size="lg" className="px-5 mb-2">
+                  <Button
+                    variant="warning"
+                    size="lg"
+                    className="px-5 mb-2 fw-semibold"
+                  >
                     Start Browsing
                   </Button>
                 </LinkContainer>
@@ -509,7 +539,8 @@ const HomePage = () => {
                   <Button
                     variant="outline-light"
                     size="lg"
-                    className="px-5 mb-2"
+                    className="px-5 mb-2 fw-semibold"
+                    style={{ borderWidth: "2px" }}
                   >
                     Register Today
                   </Button>

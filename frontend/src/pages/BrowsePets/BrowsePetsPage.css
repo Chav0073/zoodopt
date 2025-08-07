@@ -2,6 +2,7 @@
 .browse-pets-page {
   background-color: #f0f0f0;
   min-height: 100vh;
+  padding-bottom: 3rem; /* Add bottom padding to prevent footer interference */
 }
 
 .browse-header {
@@ -130,6 +131,8 @@
 /* Override PetCard styles for Browse page */
 .browse-pets-page .pet-card.browse-variant {
   margin-bottom: 0 !important;
+  height: auto !important;
+  min-height: 300px;
 }
 
 .browse-pets-page .pet-card.browse-variant .pet-image {
@@ -139,6 +142,8 @@
 .browse-pets-page .pet-card.browse-variant .pet-body {
   padding: 1rem !important;
   min-height: 200px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .browse-pets-page .pet-card.browse-variant .pet-title {
@@ -147,9 +152,50 @@
 
 .browse-pets-page .pet-card.browse-variant .pet-description {
   font-size: 0.8rem !important;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  max-height: 2.4rem;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  max-height: 2.4rem !important;
+  flex-grow: 1;
+  margin-bottom: 0.75rem !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  text-overflow: ellipsis !important;
+}
+
+.browse-pets-page .pet-card.browse-variant .pet-button {
+  font-size: 0.9rem !important;
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  margin: 0.5rem 0 0 0 !important;
+  position: static !important;
+  min-height: 44px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+  border: 1px solid #0d6efd !important;
+  border-radius: 8px !important;
+  color: white !important;
+  z-index: 10 !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+}
+
+.browse-pets-page .pet-card.browse-variant {
+  position: static !important;
+}
+
+.browse-pets-page .pet-card.browse-variant .pet-body {
+  padding: 1rem !important;
+  min-height: auto !important;
+  display: block !important;
+}
+
+.browse-pets-page .pet-card.browse-variant .mt-auto {
+  margin-top: 1rem !important;
+  display: block !important;
+  position: static !important;
 }
 
 /* Form Styling */
@@ -217,6 +263,7 @@
 @media (min-width: 1400px) {
   .browse-pets-content {
     padding: 2rem !important;
+    padding-bottom: 4rem !important; /* Extra bottom padding */
   }
 
   .browse-pets-page .pet-card.browse-variant .pet-image {
@@ -242,6 +289,217 @@
   .browse-pets-page .pet-card.browse-variant .pet-button {
     font-size: 0.8rem !important;
     padding: 0.5rem 0.75rem !important;
+  }
+}
+
+/* Add responsive padding for browse pets content */
+@media (max-width: 1399px) {
+  .browse-pets-content {
+    padding: 1.5rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
+@media (max-width: 992px) {
+  /* Medium screens - ensure good card proportions */
+  .browse-pets-page .pet-card.browse-variant {
+    min-height: 280px;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-body {
+    min-height: 150px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-description {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.75rem !important;
+    flex-grow: 1;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    max-height: 2.4rem !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-button {
+    font-size: 0.9rem !important;
+    padding: 0.7rem 1rem !important;
+    width: 100% !important;
+    margin: 0.5rem 0 0 0 !important;
+    position: static !important;
+    min-height: 42px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+    border: 1px solid #0d6efd !important;
+    border-radius: 8px !important;
+    color: white !important;
+    z-index: 10 !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-body {
+    min-height: auto !important;
+    display: block !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .mt-auto {
+    margin-top: 1rem !important;
+    display: block !important;
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .browse-pets-content {
+    padding: 1rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  
+  /* Fix browse variant layout and button visibility on tablets */
+  .browse-pets-page .pet-card.browse-variant {
+    min-height: 400px !important;
+    height: auto !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-image {
+    height: 180px !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-body {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 0.875rem !important;
+    min-height: 200px !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .flex-grow-1 {
+    flex-grow: 1 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-title {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-description {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.75rem !important;
+    flex-grow: 1;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    max-height: 2.4rem !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-button {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.8rem !important;
+    width: 100% !important;
+    margin: 0.5rem 0 0 0 !important;
+    position: static !important;
+    min-height: 40px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+    border: 1px solid #0d6efd !important;
+    border-radius: 8px !important;
+    color: white !important;
+    z-index: 10 !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .mt-auto {
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+    width: 100% !important;
+    display: block !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .browse-pets-content {
+    padding: 0.75rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Fix browse variant layout and button visibility on phones */
+  .browse-pets-page .pet-card.browse-variant {
+    min-height: 220px;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-image {
+    height: 160px !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-body {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0.75rem !important;
+    min-height: 120px !important;
+    padding-bottom: 3rem !important; /* Make space for absolute button */
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-title {
+    font-size: 0.9rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-description {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.6rem !important;
+    flex-grow: 1;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    max-height: 2rem !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .pet-button {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 0.7rem !important;
+    width: calc(100% - 1.5rem) !important;
+    margin: 0 !important;
+    position: absolute !important;
+    bottom: 0.75rem !important;
+    left: 0.75rem !important;
+    min-height: 36px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+    border: none !important;
+    color: white !important;
+    z-index: 10 !important;
+    text-align: center !important;
+  }
+  
+  .browse-pets-page .pet-card.browse-variant .mt-auto {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0.75rem !important;
   }
 }
 

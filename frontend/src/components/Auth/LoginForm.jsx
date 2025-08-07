@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Eye, EyeSlashFill, PersonFill, KeyFill } from "react-bootstrap-icons";
-import './AuthForm.css'; 
+import "./AuthForm.css";
 import Spinner from "react-bootstrap/Spinner";
 
 const LoginForm = () => {
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     rememberMe: false,
   });
 
   const [errors, setErrors] = useState({});
-  const [submitError, setSubmitError] = useState('');
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -26,20 +28,20 @@ const LoginForm = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) newErrors.password = 'Password is required';
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitError('');
+    setSubmitError("");
     setErrors({});
 
     const validationErrors = validate();
@@ -51,10 +53,10 @@ const LoginForm = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('http://localhost:5217/auth/login', {
-        method: 'POST',
+      const res = await fetch("http://localhost:5217/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: formData.email,
@@ -68,22 +70,28 @@ const LoginForm = () => {
         if (res.status === 400 && data.errors) {
           const serverErrors = {};
           for (const field in data.errors) {
-            serverErrors[field.toLowerCase()] = data.errors[field].join(' ');
+            serverErrors[field.toLowerCase()] = data.errors[field].join(" ");
           }
           setErrors(serverErrors);
         } else if (res.status === 401) {
-          setErrors({ password: data.title || data.message || 'Invalid email or password.' });
+          setErrors({
+            password:
+              data.title || data.message || "Invalid email or password.",
+          });
         } else {
-          setSubmitError(data.title || 'Login failed.');
+          setSubmitError(data.title || "Login failed.");
         }
         return;
       }
 
       login(data.token, data.role, formData.rememberMe);
-      navigate('/');
+
+      // Redirect to the intended page or default to home
+      const destination = redirectTo || "/";
+      navigate(destination);
     } catch (err) {
-      console.error('Network or unexpected error:', err);
-      setSubmitError('An unexpected error occurred. Please try again later.');
+      console.error("Network or unexpected error:", err);
+      setSubmitError("An unexpected error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -110,8 +118,10 @@ const LoginForm = () => {
                 <Form onSubmit={handleSubmit} noValidate>
                   {/* Email */}
                   <div className="mb-4">
-                    <Form.Label className="login-label">Email Address</Form.Label>
-                    <InputGroup className={errors.email ? 'has-error' : ''}>
+                    <Form.Label className="login-label">
+                      Email Address
+                    </Form.Label>
+                    <InputGroup className={errors.email ? "has-error" : ""}>
                       <InputGroup.Text className="login-icon">
                         <PersonFill />
                       </InputGroup.Text>
@@ -133,12 +143,12 @@ const LoginForm = () => {
                   {/* Password */}
                   <div className="mb-4">
                     <Form.Label className="login-label">Password</Form.Label>
-                    <InputGroup className={errors.password ? 'has-error' : ''}>
+                    <InputGroup className={errors.password ? "has-error" : ""}>
                       <InputGroup.Text className="login-icon">
                         <KeyFill />
                       </InputGroup.Text>
                       <Form.Control
-                        type={showPassword ? 'text' : 'password'}
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
@@ -166,7 +176,9 @@ const LoginForm = () => {
                       name="rememberMe"
                       checked={formData.rememberMe}
                       onChange={handleChange}
-                      label={<span className="remember-label">Remember me</span>}
+                      label={
+                        <span className="remember-label">Remember me</span>
+                      }
                     />
 
                     <Link to="/forgot-password" className="forgot-link">
@@ -176,14 +188,22 @@ const LoginForm = () => {
 
                   {/* Submit Button */}
                   <div className="mb-4">
-                    <button type="submit" className="login-button" disabled={isSubmitting}>
+                    <button
+                      type="submit"
+                      className="login-button"
+                      disabled={isSubmitting}
+                    >
                       {isSubmitting ? (
                         <>
-                          <Spinner animation="border" size="sm" className="me-2" />
+                          <Spinner
+                            animation="border"
+                            size="sm"
+                            className="me-2"
+                          />
                           Signing In...
                         </>
                       ) : (
-                        'Sign In'
+                        "Sign In"
                       )}
                     </button>
                   </div>
@@ -191,7 +211,7 @@ const LoginForm = () => {
                   {/* Register Link */}
                   <div className="text-center">
                     <p className="register-text">
-                      Don't have an account?{' '}
+                      Don't have an account?{" "}
                       <Link to="/register" className="register-link">
                         Create account
                       </Link>

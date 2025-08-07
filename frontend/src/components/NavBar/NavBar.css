@@ -1,45 +1,112 @@
-/* Custom navbar styling - only what's needed beyond Bootstrap */
+/* Custom navbar styling - Enhanced professional look */
+
+/* Navbar container styling */
+.navbar {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+  border-bottom: 2px solid #e9ecef;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* Brand styling */
+.navbar-brand {
+  font-weight: 800 !important;
+  font-size: 1.5rem !important;
+  color: #2c3e50 !important;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif !important;
+  letter-spacing: -0.025em;
+}
+
+.navbar-brand:hover {
+  color: #3498db !important;
+  transform: scale(1.02);
+}
 
 /* Navbar toggler (burger menu) custom styling */
 .navbar-toggler {
-  border: 1px solid #2c3e50;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.3s ease;
 }
+
 .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.navbar-toggler:hover {
+  background-color: rgba(52, 152, 219, 0.1);
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2844, 62, 80, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2852, 152, 219, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* Nav link colors for light theme */
 .navbar-light .navbar-nav .nav-link {
   color: #2c3e50 !important;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: 0.025em;
+  margin: 0 0.25rem;
+  transition: all 0.3s ease;
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
   color: #3498db !important;
+  background-color: rgba(52, 152, 219, 0.1);
+  transform: translateY(-1px);
 }
 
 .navbar-light .navbar-nav .dropdown-toggle {
   color: #2c3e50 !important;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px;
+  margin: 0 0.25rem;
+  transition: all 0.3s ease;
 }
 
 .navbar-light .navbar-nav .dropdown-toggle:hover {
   color: #3498db !important;
+  background-color: rgba(52, 152, 219, 0.1);
+  transform: translateY(-1px);
 }
 
-/* Dropdown item spacing - this is what you wanted */
+/* Dropdown menu styling */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+}
+
+/* Dropdown item spacing and styling */
 .navbar-light .navbar-nav .dropdown-item {
   color: #2c3e50;
-  padding-right: 2rem !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0.25rem 0.5rem;
 }
 
 .navbar-light .navbar-nav .dropdown-item:hover {
-  background-color: #f8f9fa;
+  background-color: rgba(52, 152, 219, 0.1);
   color: #3498db;
+  transform: translateX(5px);
+}
+
+/* Active nav link styling */
+.navbar-light .navbar-nav .nav-link.active {
+  color: #3498db !important;
+  background-color: rgba(52, 152, 219, 0.1);
 }
 
 /* Mobile responsiveness improvements */

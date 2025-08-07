@@ -105,16 +105,24 @@ const BrowsePetsPage = () => {
     if (filters.ageGroup) {
       filtered = filtered.filter((pet) => {
         const age = parseInt(pet.ageGroup) || 0;
+        const petAgeGroup = pet.ageGroup.toLowerCase();
+
         switch (filters.ageGroup) {
           case "Puppy":
-          case "Kitten":
+          case "Young":
+          case "Puppy/Kitten":
             return (
-              age === 0 || pet.ageGroup === "Puppy" || pet.ageGroup === "Kitten"
+              age === 0 ||
+              petAgeGroup === "puppy" ||
+              petAgeGroup === "kitten" ||
+              petAgeGroup === "young" ||
+              petAgeGroup === "baby" ||
+              (age >= 0 && age <= 1)
             );
           case "Adult":
-            return (age >= 1 && age <= 7) || pet.ageGroup === "Adult";
+            return petAgeGroup === "adult" || (age >= 1 && age <= 7);
           case "Senior":
-            return age > 7 || pet.ageGroup === "Senior";
+            return petAgeGroup === "senior" || age > 7;
           default:
             return true;
         }
@@ -288,7 +296,7 @@ const BrowsePetsPage = () => {
                           }
                         >
                           <option value="">All Ages</option>
-                          <option value="Puppy">Puppy/Kitten</option>
+                          <option value="Puppy/Kitten">Puppy/Kitten</option>
                           <option value="Adult">Adult</option>
                           <option value="Senior">Senior</option>
                         </Form.Select>
@@ -433,7 +441,7 @@ const BrowsePetsPage = () => {
                       className="shadow-sm"
                     >
                       <option value="">All Ages</option>
-                      <option value="Puppy">Puppy/Kitten</option>
+                      <option value="Puppy/Kitten">Puppy/Kitten</option>
                       <option value="Adult">Adult</option>
                       <option value="Senior">Senior</option>
                     </Form.Select>
@@ -521,7 +529,15 @@ const BrowsePetsPage = () => {
                 ) : (
                   <Row className="g-3 px-3">
                     {filteredPets.map((pet) => (
-                      <Col lg={4} xl={3} xxl={2} key={pet.id}>
+                      <Col
+                        xs={12}
+                        sm={6}
+                        md={6}
+                        lg={4}
+                        xl={3}
+                        xxl={2}
+                        key={pet.id}
+                      >
                         <PetCard pet={pet} className="browse-variant" />
                       </Col>
                     ))}
@@ -555,8 +571,8 @@ const BrowsePetsPage = () => {
               ) : (
                 <Row className="g-4">
                   {filteredPets.map((pet) => (
-                    <Col xs={12} sm={6} key={pet.id}>
-                      <PetCard pet={pet} />
+                    <Col xs={12} sm={12} md={6} lg={4} xl={4} key={pet.id}>
+                      <PetCard pet={pet} className="browse-variant" />
                     </Col>
                   ))}
                 </Row>

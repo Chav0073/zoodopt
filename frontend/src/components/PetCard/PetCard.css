@@ -1,86 +1,105 @@
 /* Pet Card Styles - Reusable component */
 .pet-card {
-  transition: all 0.3s ease !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
   cursor: pointer;
-  border-radius: 16px !important;
+  border-radius: 20px !important;
   overflow: hidden;
   background: white !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
   display: flex !important;
   flex-direction: column !important;
   width: 100% !important;
   height: 100% !important;
+  position: relative;
 }
 
 .pet-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-8px) !important;
+  box-shadow: 0 12px 40px rgba(0, 123, 255, 0.15) !important;
+}
+
+.pet-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #007bff, #0056b3, #007bff);
+  z-index: 1;
 }
 
 .pet-image-container {
   position: relative;
   overflow: hidden;
   background: #f8f9fa;
+  border-radius: 20px 20px 0 0;
 }
 
 .pet-image {
-  height: 240px !important;
+  height: 300px !important;
   width: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   background: #f8f9fa;
 }
 
 .pet-card:hover .pet-image {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .pet-status-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
+  top: 15px;
+  right: 15px;
+  z-index: 3;
 }
 
 .status-badge {
   font-size: 0.7rem !important;
-  padding: 0.4rem 0.7rem !important;
-  border-radius: 20px !important;
+  padding: 0.5rem 0.8rem !important;
+  border-radius: 25px !important;
   font-weight: 700 !important;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: #28a745 !important;
+  background: linear-gradient(135deg, #28a745, #20c997) !important;
   border: 2px solid white !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
 
 /* Pet Card Body */
 .pet-body {
-  padding: 1.25rem !important;
-  min-height: 200px !important;
+  padding: 2.25rem !important;
+  min-height: 220px !important;
   display: flex !important;
   flex-direction: column !important;
   flex: 1 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
 }
 
 .pet-title {
-  font-size: 1.1rem !important;
+  font-size: 1.25rem !important;
   font-weight: 700 !important;
-  color: #212529 !important;
+  color: #111827 !important;
   margin-bottom: 0.75rem !important;
   line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 /* Pet Details */
 .pet-details {
   font-size: 0.9rem;
   margin-bottom: 1rem !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 .detail-item {
-  margin-bottom: 0.4rem !important;
-  line-height: 1.4;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.5;
+  color: #374151 !important;
+  font-weight: 500;
 }
 
 .detail-item:last-child {
@@ -88,9 +107,13 @@
 }
 
 .pet-breed {
-  color: #0d6efd !important;
+  color: #007bff !important;
   font-weight: 600 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .pet-age-gender {
@@ -130,44 +153,62 @@
 
 /* Pet Button */
 .pet-button {
-  border-radius: 8px !important;
+  border-radius: 12px !important;
   font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  padding: 0.6rem 1rem !important;
+  font-size: 1rem !important;
+  padding: 0.875rem 1.5rem !important;
   background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
   border: none !important;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -4rem;
+  margin-top: auto;
+  margin-bottom: 0.75rem;
+  width: calc(100% - 1rem);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 48px;
 }
 
 .pet-button:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.4) !important;
   background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .pet-image {
-    height: 220px !important;
+    height: 280px !important;
   }
 
   .pet-body {
-    padding: 1rem !important;
+    padding: 1.5rem !important;
     min-height: 180px !important;
   }
 
   .pet-title {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
+  }
+  
+  .pet-button {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
+    min-height: 44px;
+    width: 100% !important;
+    margin: 0 !important;
   }
 }
 
 @media (max-width: 576px) {
   .pet-image {
-    height: 200px !important;
+    height: 260px !important;
   }
 
   .pet-description {
@@ -177,17 +218,31 @@
   }
 
   .pet-body {
-    padding: 0.875rem !important;
+    padding: 1.25rem !important;
     min-height: 160px !important;
   }
 
   .pet-details {
     margin-bottom: 0.75rem !important;
   }
+  
+  .pet-button {
+    padding: 0.65rem 0.9rem !important;
+    font-size: 0.85rem !important;
+    min-height: 40px;
+    width: 100% !important;
+    margin: 0 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
 
   /* Mobile homepage variant - show info by default since hover doesn't work well on mobile */
   .pet-card.homepage-variant .pet-body {
     min-height: 140px !important;
+  }
+  
+  .pet-card.homepage-variant .pet-image {
+    height: 240px !important;
   }
 }
 
@@ -195,36 +250,51 @@
 .pet-card.homepage-variant {
   position: relative;
   display: inline-block;
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   margin: 0;
   padding: 0;
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
   height: auto !important;
   min-height: auto !important;
   flex: none !important;
+  background: white;
+}
+
+.pet-card.homepage-variant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #007bff, #0056b3, #007bff);
+  z-index: 3;
 }
 
 .pet-card.homepage-variant:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(0, 123, 255, 0.2);
 }
 
 .pet-card.homepage-variant .pet-image-container {
   position: relative;
   margin: 0;
   padding: 0;
+  background: #f8f9fa;
 }
 
 .pet-card.homepage-variant .pet-image {
   width: 100%;
-  height: auto;
+  height: 280px;
+  object-fit: cover;
   display: block;
-  border-radius: 15px;
-  transition: transform 0.3s ease;
+  border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: #f8f9fa;
 }
 
 .pet-card.homepage-variant .pet-name-overlay {
@@ -232,17 +302,19 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  padding: 30px 15px 15px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 40px 20px 20px;
   z-index: 2;
 }
 
 .pet-card.homepage-variant .pet-name-text {
-  color: white;
+  color: white !important;
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.01em;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .pet-card.homepage-variant .pet-hover-overlay {
@@ -252,16 +324,16 @@
   right: 0;
   bottom: 0;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
+  padding: 1.5rem;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 10;
-  border-radius: 15px;
+  border-radius: 20px;
 }
 
 .pet-card.homepage-variant:hover .pet-hover-overlay {
@@ -319,18 +391,21 @@
 .pet-card.homepage-variant .pet-button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   border: none !important;
-  border-radius: 25px !important;
-  padding: 12px !important;
+  border-radius: 15px !important;
+  padding: 1rem 1.75rem !important;
   font-weight: 600 !important;
+  font-size: 0.95rem !important;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3) !important;
   transition: all 0.3s ease !important;
+  width: 100%;
+  min-height: 48px;
 }
 
 .pet-card.homepage-variant .pet-button:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5) !important;
 }
 
 /* Variant for browse page - compact */
@@ -379,5 +454,191 @@
   .pet-card.browse-variant .pet-button {
     font-size: 0.8rem !important;
     padding: 0.5rem 0.75rem !important;
+  }
+}
+
+/* Browse variant responsive design for smaller screens */
+@media (max-width: 768px) {
+  .pet-card.browse-variant .pet-image {
+    height: 180px !important;
+  }
+
+  .pet-card.browse-variant .pet-body {
+    padding: 0.875rem !important;
+    min-height: 160px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .pet-card.browse-variant .pet-title {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .pet-card.browse-variant .pet-description {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.75rem !important;
+    flex-grow: 1;
+  }
+
+  .pet-card.browse-variant .pet-button {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.8rem !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-height: 40px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .pet-card.browse-variant .pet-image {
+    height: 160px !important;
+  }
+
+  .pet-card.browse-variant .pet-body {
+    padding: 0.75rem !important;
+    min-height: 140px !important;
+  }
+
+  .pet-card.browse-variant .pet-title {
+    font-size: 0.9rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .pet-card.browse-variant .pet-description {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.6rem !important;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-height: 2rem;
+  }
+
+  .pet-card.browse-variant .pet-button {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 0.7rem !important;
+    min-height: 36px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Homepage variant responsive design */
+@media (max-width: 768px) {
+  .pet-card.homepage-variant {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .pet-card.homepage-variant .pet-image {
+    height: 260px;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay h5 {
+    font-size: 1.1rem;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay .pet-location {
+    font-size: 0.85rem;
+  }
+
+  /* Fix hover overlay and button positioning on tablets */
+  .pet-card.homepage-variant .pet-hover-overlay {
+    padding: 1.25rem;
+  }
+
+  .pet-card.homepage-variant .pet-actions {
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .pet-card.homepage-variant .pet-button {
+    font-size: 0.9rem !important;
+    padding: 0.75rem 1rem !important;
+    min-height: 44px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .pet-card.homepage-variant {
+    max-width: 280px;
+    margin: 0 auto 1rem;
+  }
+  
+  .pet-card.homepage-variant .pet-image {
+    height: 240px;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay {
+    padding: 30px 15px 15px;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay h5 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay .pet-location {
+    font-size: 0.8rem;
+  }
+
+  /* Better mobile button positioning */
+  .pet-card.homepage-variant .pet-hover-overlay {
+    padding: 1rem;
+  }
+
+  .pet-card.homepage-variant .pet-info-content {
+    gap: 10px;
+  }
+
+  .pet-card.homepage-variant .pet-actions {
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  .pet-card.homepage-variant .pet-button {
+    font-size: 0.85rem !important;
+    padding: 0.65rem 0.9rem !important;
+    min-height: 40px !important;
+  }
+}
+
+/* Extra small screens - even more compact */
+@media (max-width: 400px) {
+  .pet-card.homepage-variant {
+    max-width: 260px;
+  }
+  
+  .pet-card.homepage-variant .pet-image {
+    height: 220px;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay {
+    padding: 25px 12px 12px;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay h5 {
+    font-size: 0.95rem;
+  }
+  
+  .pet-card.homepage-variant .pet-name-overlay .pet-location {
+    font-size: 0.75rem;
+  }
+
+  /* Ultra compact mobile button */
+  .pet-card.homepage-variant .pet-hover-overlay {
+    padding: 0.75rem;
+  }
+
+  .pet-card.homepage-variant .pet-actions {
+    padding-top: 4px;
+  }
+
+  .pet-card.homepage-variant .pet-button {
+    font-size: 0.8rem !important;
+    padding: 0.6rem 0.8rem !important;
+    min-height: 36px !important;
   }
 }

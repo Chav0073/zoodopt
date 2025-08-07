@@ -1,10 +1,39 @@
 /* Pets Grid Styles */
 .pets-grid {
   width: 100%;
+  padding: 2rem 0;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.08);
+  margin: 2rem 0;
 }
 
 .pets-grid .text-center svg {
   opacity: 0.4;
+}
+
+/* Container for better spacing and alignment */
+.pets-grid.homepage-5-cols {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 123, 255, 0.12);
+  margin: 3rem auto;
+  max-width: 1600px;
+  width: 95%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pets-grid.homepage-5-cols::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #0056b3, #007bff);
+  border-radius: 24px 24px 0 0;
 }
 
 /* Remove Bootstrap's default column stretching for homepage */
@@ -15,69 +44,110 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
-/* Base responsive grid - focus on good image size */
+/* Base responsive grid - focus on good image size and consistent spacing */
 .pets-grid.homepage-5-cols .col {
-  flex: 1 1 200px; /* Flexible with minimum 200px */
-  max-width: 300px; /* Maximum width for images */
-  min-width: 200px; /* Minimum width for images */
+  flex: 1 1 320px; /* Increased minimum size for larger cards */
+  max-width: 380px; /* Increased maximum width */
+  min-width: 300px; /* Increased minimum width */
 }
 
-/* Extra large screens - 5+ columns */
+.pets-grid.homepage-5-cols .row {
+  margin: 0 -1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Extra large screens - 4-5 columns with better spacing */
 @media (min-width: 1400px) {
   .pets-grid.homepage-5-cols .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1.5rem;
   }
 
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 220px;
-    max-width: 220px;
+    flex: 0 0 300px;
+    max-width: 340px;
     padding: 0.75rem;
   }
 }
 
-/* Large screens - 4-5 columns */
+/* Large screens - 3-4 columns with better spacing */
 @media (min-width: 992px) and (max-width: 1399px) {
   .pets-grid.homepage-5-cols .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1.25rem;
   }
 
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 240px;
-    max-width: 240px;
-    padding: 0.75rem;
+    flex: 0 0 280px;
+    max-width: 320px;
+    padding: 1rem;
   }
 }
 
 /* Medium screens - 3 columns */
 @media (min-width: 768px) and (max-width: 991px) {
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 250px;
-    max-width: 250px;
-    padding: 0.75rem;
+    flex: 0 0 280px;
+    max-width: 320px;
+    padding: 1rem;
+  }
+  
+  .pets-grid.homepage-5-cols {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .pets-grid.homepage-5-cols .row {
+    gap: 1rem;
   }
 }
 
 /* Small screens - 2 columns */
 @media (min-width: 576px) and (max-width: 767px) {
   .pets-grid.homepage-5-cols .col {
-    flex: 0 0 280px;
-    max-width: 280px;
-    padding: 0.75rem;
+    flex: 0 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+    padding: 0.5rem;
+    min-width: 140px;
+  }
+  
+  .pets-grid.homepage-5-cols {
+    padding: 1.5rem 1rem;
+  }
+  
+  .pets-grid.homepage-5-cols .row {
+    gap: 1rem;
+    justify-content: center;
   }
 }
 
-/* Extra small screens - 1 column */
+/* Extra small screens - 1 column centered */
 @media (max-width: 575px) {
   .pets-grid.homepage-5-cols .col {
     flex: 0 0 100%;
-    max-width: 320px;
+    max-width: 300px;
     padding: 0.5rem;
+    margin: 0 auto;
+  }
+  
+  .pets-grid.homepage-5-cols {
+    padding: 1.5rem 1rem;
+    margin: 2rem 0;
+  }
+  
+  .pets-grid.homepage-5-cols .row {
+    gap: 1rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 }

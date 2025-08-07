@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { Eye, EyeSlashFill, PersonFill, KeyFill, ShieldLockFill } from "react-bootstrap-icons";
-import './AuthForm.css';
+import {
+  Eye,
+  EyeSlashFill,
+  PersonFill,
+  KeyFill,
+  ShieldLockFill,
+} from "react-bootstrap-icons";
+import "./AuthForm.css";
 import Spinner from "react-bootstrap/Spinner";
 
 const RegisterForm = () => {
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
-  const [submitError, setSubmitError] = useState('');
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -32,17 +41,17 @@ const RegisterForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) newErrors.password = 'Password is required';
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitError('');
+    setSubmitError("");
     setErrors({});
 
     const validationErrors = validate();
@@ -54,38 +63,43 @@ const RegisterForm = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('http://localhost:5217/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("http://localhost:5217/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
-          role: 'Public',
+          role: "Public",
         }),
       });
-      
+
       const data = await res.json();
       //console.log('Data:', data);
-      
+
       if (!res.ok) {
         if (res.status === 400 && data.errors) {
           const serverErrors = {};
           for (const field in data.errors) {
-            serverErrors[field.toLowerCase()] = data.errors[field].join(' ');
+            serverErrors[field.toLowerCase()] = data.errors[field].join(" ");
           }
           setErrors(serverErrors);
         } else {
-          setSubmitError(data.title || data?.message || data?.error || 'Registration failed.');
+          setSubmitError(
+            data.title || data?.message || data?.error || "Registration failed."
+          );
         }
         return;
       }
 
-      console.log('Registration success:', data);
+      console.log("Registration success:", data);
       login(data.token, data.role);
-      navigate('/');
+
+      // Redirect to the intended page or default to home
+      const destination = redirectTo || "/";
+      navigate(destination);
     } catch (err) {
-      console.error('Error:', err);
-      setSubmitError('An unexpected error occurred. Please try again later.');
+      console.error("Error:", err);
+      setSubmitError("An unexpected error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -99,7 +113,9 @@ const RegisterForm = () => {
             <div className="register-card">
               <div className="register-header text-center text-white p-4 position-relative">
                 <h2 className="mb-2 fw-bold register-title">Join Us Today</h2>
-                <p className="mb-0 opacity-90 register-subtitle">Create your new account</p>
+                <p className="mb-0 opacity-90 register-subtitle">
+                  Create your new account
+                </p>
               </div>
 
               <div className="card-body p-5">
@@ -114,8 +130,10 @@ const RegisterForm = () => {
                   {/* Email */}
                   <div className="mb-4">
                     <Form.Label className="label">Email Address</Form.Label>
-                    <InputGroup className={errors.email ? 'has-error' : ''}>
-                      <InputGroup.Text className="input-icon"><PersonFill /></InputGroup.Text>
+                    <InputGroup className={errors.email ? "has-error" : ""}>
+                      <InputGroup.Text className="input-icon">
+                        <PersonFill />
+                      </InputGroup.Text>
                       <Form.Control
                         type="email"
                         name="email"
@@ -134,10 +152,12 @@ const RegisterForm = () => {
                   {/* Password */}
                   <div className="mb-4">
                     <Form.Label className="label">Password</Form.Label>
-                    <InputGroup className={errors.password ? 'has-error' : ''}>
-                      <InputGroup.Text className="input-icon"><KeyFill /></InputGroup.Text>
+                    <InputGroup className={errors.password ? "has-error" : ""}>
+                      <InputGroup.Text className="input-icon">
+                        <KeyFill />
+                      </InputGroup.Text>
                       <Form.Control
-                        type={showPassword ? 'text' : 'password'}
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
@@ -160,10 +180,14 @@ const RegisterForm = () => {
                   {/* Confirm Password */}
                   <div className="mb-4">
                     <Form.Label className="label">Confirm Password</Form.Label>
-                    <InputGroup className={errors.confirmPassword ? 'has-error' : ''}>
-                      <InputGroup.Text className="input-icon"><ShieldLockFill /></InputGroup.Text>
+                    <InputGroup
+                      className={errors.confirmPassword ? "has-error" : ""}
+                    >
+                      <InputGroup.Text className="input-icon">
+                        <ShieldLockFill />
+                      </InputGroup.Text>
                       <Form.Control
-                        type={showConfirmPassword ? 'text' : 'password'}
+                        type={showConfirmPassword ? "text" : "password"}
                         name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleChange}
@@ -173,7 +197,9 @@ const RegisterForm = () => {
                       />
                       <InputGroup.Text
                         className="input-icon icon-right"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                       >
                         {showConfirmPassword ? <EyeSlashFill /> : <Eye />}
                       </InputGroup.Text>
@@ -194,10 +220,15 @@ const RegisterForm = () => {
                     >
                       {isSubmitting ? (
                         <>
-                          <Spinner animation="border" size="sm" className="me-2" /> Creating Account...
+                          <Spinner
+                            animation="border"
+                            size="sm"
+                            className="me-2"
+                          />{" "}
+                          Creating Account...
                         </>
                       ) : (
-                        'Create Account'
+                        "Create Account"
                       )}
                     </button>
                   </div>
@@ -205,7 +236,7 @@ const RegisterForm = () => {
                   {/* Link */}
                   <div className="text-center">
                     <p className="login-link">
-                      Already have an account?{' '}
+                      Already have an account?{" "}
                       <Link to="/login" className="login-anchor">
                         Sign in here
                       </Link>

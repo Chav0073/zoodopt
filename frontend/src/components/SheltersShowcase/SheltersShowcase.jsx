@@ -4,9 +4,7 @@ import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import fetchShelters from "../../helpers/fetchShelters";
 import "./SheltersShowcase.css";
 
-const SheltersShowcase = ({
-  title = "Our Partner Shelters",
-}) => {
+const SheltersShowcase = ({ title = "Our Partner Shelters" }) => {
   const [shelters, setShelters] = useState([]);
 
   useEffect(() => {
@@ -30,13 +28,32 @@ const SheltersShowcase = ({
       {shelters.length > 0 && (
         <Row className="shelters-grid">
           {shelters.map((shelter) => (
-            <Col key={shelter.id} xs={12} sm={6} md={4} lg={3} className="shelter-col">
+            <Col
+              key={shelter.id}
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              xl={4}
+              className="shelter-col"
+            >
               <Card className="shelter-showcase-card">
-                <Card.Body className="shelter-card-body">
-                  <Card.Title className="shelter-name">
-                    {shelter.name}
-                  </Card.Title>
+                {/* Shelter Logo */}
+                <div className="shelter-logo-container">
+                  <img
+                    src={`http://localhost:5217/images/${shelter.logo}`}
+                    alt={`${shelter.name} logo`}
+                    className="shelter-logo"
+                    onError={(e) => {
+                      e.target.src = "/images/placeholder-shelter.jpg";
+                    }}
+                  />
+                  <div className="shelter-logo-overlay">
+                    <div className="shelter-name-badge">{shelter.name}</div>
+                  </div>
+                </div>
 
+                <Card.Body className="shelter-card-body">
                   <div className="shelter-details">
                     <div className="shelter-detail-item">
                       <FaMapMarkerAlt className="detail-icon" />

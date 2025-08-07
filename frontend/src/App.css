@@ -1,3 +1,250 @@
-body {
-    background-color: #F0F0F0;
+/* Global Typography and Font Improvements */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  
+  /* Font Sizes */
+  --fs-xs: 0.75rem;      /* 12px */
+  --fs-sm: 0.875rem;     /* 14px */
+  --fs-base: 1rem;       /* 16px */
+  --fs-lg: 1.125rem;     /* 18px */
+  --fs-xl: 1.25rem;      /* 20px */
+  --fs-2xl: 1.5rem;      /* 24px */
+  --fs-3xl: 1.875rem;    /* 30px */
+  --fs-4xl: 2.25rem;     /* 36px */
+  --fs-5xl: 3rem;        /* 48px */
+  
+  /* Line Heights */
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.625;
+  
+  /* Letter Spacing */
+  --ls-tight: -0.025em;
+  --ls-normal: 0;
+  --ls-wide: 0.025em;
+  
+  /* Colors */
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --text-light: #a0aec0;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8fafc;
+  font-family: var(--font-primary);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text-primary);
+  font-feature-settings: 'cv11', 'ss01';
+  font-variant-ligatures: contextual;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  line-height: var(--lh-tight) !important;
+  letter-spacing: var(--ls-tight) !important;
+  color: var(--text-primary) !important;
+}
+
+h1, .h1, .display-1 { font-size: var(--fs-5xl) !important; }
+h2, .h2, .display-2 { font-size: var(--fs-4xl) !important; }
+h3, .h3, .display-3 { font-size: var(--fs-3xl) !important; }
+h4, .h4, .display-4 { font-size: var(--fs-2xl) !important; }
+h5, .h5, .display-5 { font-size: var(--fs-xl) !important; }
+h6, .h6, .display-6 { font-size: var(--fs-lg) !important; }
+
+/* Responsive heading sizes */
+@media (max-width: 768px) {
+  h1, .h1, .display-1 { font-size: var(--fs-4xl) !important; }
+  h2, .h2, .display-2 { font-size: var(--fs-3xl) !important; }
+  h3, .h3, .display-3 { font-size: var(--fs-2xl) !important; }
+  h4, .h4, .display-4 { font-size: var(--fs-xl) !important; }
+  h5, .h5, .display-5 { font-size: var(--fs-lg) !important; }
+  h6, .h6, .display-6 { font-size: var(--fs-base) !important; }
+}
+
+/* Body text improvements */
+p, .lead {
+  font-family: var(--font-primary) !important;
+  line-height: var(--lh-relaxed) !important;
+  color: var(--text-secondary) !important;
+}
+
+.lead {
+  font-size: var(--fs-lg) !important;
+  font-weight: 400 !important;
+  color: var(--text-muted) !important;
+}
+
+/* Text color utilities */
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
+/* Text color overrides for light text on dark backgrounds */
+.text-white { color: #ffffff !important; }
+.text-light { color: #f8f9fa !important; }
+
+/* Ensure headings on dark backgrounds are white */
+[class*="bg-primary"] h1, [class*="bg-primary"] h2, [class*="bg-primary"] h3, 
+[class*="bg-primary"] h4, [class*="bg-primary"] h5, [class*="bg-primary"] h6,
+[class*="bg-dark"] h1, [class*="bg-dark"] h2, [class*="bg-dark"] h3, 
+[class*="bg-dark"] h4, [class*="bg-dark"] h5, [class*="bg-dark"] h6,
+.text-white h1, .text-white h2, .text-white h3, 
+.text-white h4, .text-white h5, .text-white h6,
+.text-white .h1, .text-white .h2, .text-white .h3, 
+.text-white .h4, .text-white .h5, .text-white .h6,
+.text-white .display-1, .text-white .display-2, .text-white .display-3, 
+.text-white .display-4, .text-white .display-5, .text-white .display-6 {
+  color: #ffffff !important;
+}
+
+/* Ensure paragraphs and text on dark backgrounds are white */
+[class*="bg-primary"] p, [class*="bg-primary"] .lead,
+[class*="bg-dark"] p, [class*="bg-dark"] .lead,
+.text-white p, .text-white .lead {
+  color: #ffffff !important;
+}
+
+/* Special handling for gradient backgrounds and hero sections */
+.hero-section h1, .hero-section h2, .hero-section h3, 
+.hero-section h4, .hero-section h5, .hero-section h6,
+.hero-section .display-1, .hero-section .display-2, .hero-section .display-3, 
+.hero-section .display-4, .hero-section .display-5, .hero-section .display-6,
+.hero-section p, .hero-section .lead {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* CTA sections with gradients */
+section[style*="gradient"] h1, section[style*="gradient"] h2, section[style*="gradient"] h3,
+section[style*="gradient"] h4, section[style*="gradient"] h5, section[style*="gradient"] h6,
+section[style*="gradient"] .display-1, section[style*="gradient"] .display-2, section[style*="gradient"] .display-3,
+section[style*="gradient"] .display-4, section[style*="gradient"] .display-5, section[style*="gradient"] .display-6,
+section[style*="gradient"] p, section[style*="gradient"] .lead {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Font weight utilities */
+.fw-light { font-weight: 300 !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+.fw-extrabold { font-weight: 800 !important; }
+.fw-black { font-weight: 900 !important; }
+
+/* Button typography improvements */
+.btn {
+  font-family: var(--font-primary) !important;
+  font-weight: 600 !important;
+  letter-spacing: var(--ls-wide) !important;
+  text-transform: none !important;
+}
+
+.btn-lg {
+  font-size: var(--fs-lg) !important;
+  font-weight: 700 !important;
+}
+
+.btn-sm {
+  font-size: var(--fs-sm) !important;
+  font-weight: 600 !important;
+}
+
+/* Form elements */
+.form-control, .form-select {
+  font-family: var(--font-primary) !important;
+  font-size: var(--fs-base) !important;
+  line-height: var(--lh-normal) !important;
+}
+
+.form-label {
+  font-family: var(--font-primary) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  font-size: var(--fs-sm) !important;
+}
+
+/* Navigation improvements */
+.navbar-brand {
+  font-family: var(--font-heading) !important;
+  font-weight: 800 !important;
+  letter-spacing: var(--ls-tight) !important;
+}
+
+.nav-link {
+  font-family: var(--font-primary) !important;
+  font-weight: 500 !important;
+  font-size: var(--fs-base) !important;
+}
+
+/* Card improvements */
+.card-title {
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+}
+
+.card-text {
+  font-family: var(--font-primary) !important;
+  color: var(--text-secondary) !important;
+  line-height: var(--lh-relaxed) !important;
+}
+
+/* Alert improvements */
+.alert {
+  font-family: var(--font-primary) !important;
+  line-height: var(--lh-normal) !important;
+}
+
+.alert-heading {
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
+}
+
+/* Badge improvements */
+.badge {
+  font-family: var(--font-primary) !important;
+  font-weight: 600 !important;
+  letter-spacing: var(--ls-wide) !important;
+}
+
+/* Dark background text fixes for Bootstrap components */
+.bg-primary .card-title, .bg-primary .card-text,
+.bg-dark .card-title, .bg-dark .card-text,
+.text-white .card-title, .text-white .card-text {
+  color: #ffffff !important;
+}
+
+/* Form controls on dark backgrounds */
+.bg-primary .form-label, .bg-dark .form-label,
+.text-white .form-label {
+  color: #ffffff !important;
+}
+
+/* Footer specific overrides */
+.custom-footer p, .custom-footer .footer-text {
+  color: #e2e8f0 !important;
+}
+
+/* Additional text utilities for better contrast */
+.text-white-75 { color: rgba(255, 255, 255, 0.75) !important; }
+.text-white-50 { color: rgba(255, 255, 255, 0.5) !important; }
