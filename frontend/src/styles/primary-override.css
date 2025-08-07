@@ -1,0 +1,114 @@
+/* Bootstrap Primary Color Override */
+/* This file overrides Bootstrap's default primary blue to match the Zoodopt theme */
+
+:root {
+  --bs-primary: #383bf0ff;
+  --bs-primary-rgb: 56, 59, 240;
+}
+
+/* Primary Button Styles */
+.btn-primary {
+  background: #383bf0ff !important;
+  border-color: #383bf0ff !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background: #2d32c7 !important;
+  border-color: #2d32c7 !important;
+  color: white !important;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  background: #2d32c7 !important;
+  border-color: #2d32c7 !important;
+  box-shadow: 0 0 0 0.2rem rgba(56, 59, 240, 0.25) !important;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+  background: #2d32c7 !important;
+  border-color: #2d32c7 !important;
+}
+
+/* Primary Background Styles */
+.bg-primary {
+  background: #383bf0ff !important;
+}
+
+/* Primary Text Color */
+.text-primary {
+  color: #667eea !important;
+}
+
+/* Primary Link Color */
+.link-primary {
+  color: #667eea !important;
+}
+
+.link-primary:hover,
+.link-primary:focus {
+  color: #516de9 !important;
+}
+
+/* Badge Primary */
+.badge.bg-primary {
+  background: #383bf0ff !important;
+}
+
+/* Alert Primary */
+.alert-primary {
+  color: #667eea;
+  background-color: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+/* Primary Border */
+.border-primary {
+  border-color: #667eea !important;
+}
+
+/* Form Controls Focus */
+.form-control:focus,
+.form-select:focus {
+  border-color: #383bf0ff !important;
+  box-shadow: 0 0 0 0.2rem rgba(56, 59, 240, 0.25) !important;
+}
+
+/* Navbar Brand and Links if using primary theme */
+.navbar-light .navbar-brand {
+  color: #667eea !important;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  color: #667eea !important;
+}
+
+/* Outline Light Button Styles - Keep gradient effect for Call to Action */
+.btn-outline-light {
+  background: linear-gradient(45deg, #667eea, #383bf0ff) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+.btn-outline-light:hover {
+  background: linear-gradient(45deg, #516de9, rgb(48, 51, 240)) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}
+
+.btn-outline-light:focus,
+.btn-outline-light.focus {
+  background: linear-gradient(45deg, #516de9, rgb(48, 51, 240)) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+}
+
+.btn-outline-light:active,
+.btn-outline-light.active {
+  background: linear-gradient(45deg, #516de9, rgb(48, 51, 240)) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}

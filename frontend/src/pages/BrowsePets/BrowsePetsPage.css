@@ -5,7 +5,7 @@
 }
 
 .browse-header {
-  background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
+  background: linear-gradient(45deg, #667eea, #383bf0ff);
 }
 
 /* Desktop Sidebar Styles */
@@ -49,8 +49,8 @@
 
 .browse-sidebar-filters .form-control:focus,
 .browse-sidebar-filters .form-select:focus {
-  border-color: #0d6efd !important;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15) !important;
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15) !important;
 }
 
 .browse-sidebar-filters .input-group-text {
@@ -155,8 +155,8 @@
 /* Form Styling */
 .form-control:focus,
 .form-select:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
 }
 
 /* Search Bar */

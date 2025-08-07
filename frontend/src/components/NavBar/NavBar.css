@@ -19,7 +19,7 @@
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
-  color: #3498db !important;
+  color: #667eea !important;
 }
 
 .navbar-light .navbar-nav .dropdown-toggle {
@@ -28,7 +28,7 @@
 }
 
 .navbar-light .navbar-nav .dropdown-toggle:hover {
-  color: #3498db !important;
+  color: #667eea !important;
 }
 
 /* Dropdown item spacing - this is what you wanted */
@@ -39,7 +39,7 @@
 
 .navbar-light .navbar-nav .dropdown-item:hover {
   background-color: #f8f9fa;
-  color: #3498db;
+  color: #667eea;
 }
 
 /* Mobile responsiveness improvements */

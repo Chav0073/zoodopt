@@ -1,6 +1,6 @@
 import { Card, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { FaMapMarkerAlt, FaHeart } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import "./PetCard.css";
 
 const PetCard = ({ pet, showFullDescription = false, className = "" }) => {
@@ -57,7 +57,6 @@ const PetCard = ({ pet, showFullDescription = false, className = "" }) => {
               <div className="pet-actions">
                 <LinkContainer to={`/pets/adopt/${id}`}>
                   <Button variant="primary" className="w-100 pet-button">
-                    <FaHeart size={14} />
                     Adopt Me
                   </Button>
                 </LinkContainer>
@@ -123,7 +122,6 @@ const PetCard = ({ pet, showFullDescription = false, className = "" }) => {
         <div className="mt-auto">
           <LinkContainer to={`/pets/adopt/${id}`}>
             <Button variant="primary" className="w-100 pet-button">
-              <FaHeart size={14} />
               Adopt Me
             </Button>
           </LinkContainer>

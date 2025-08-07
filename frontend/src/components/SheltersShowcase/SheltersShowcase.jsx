@@ -4,9 +4,7 @@ import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import fetchShelters from "../../helpers/fetchShelters";
 import "./SheltersShowcase.css";
 
-const SheltersShowcase = ({
-  title = "Our Partner Shelters",
-}) => {
+const SheltersShowcase = ({ title = "Our Partner Shelters" }) => {
   const [shelters, setShelters] = useState([]);
 
   useEffect(() => {
@@ -28,9 +26,17 @@ const SheltersShowcase = ({
       </div>
 
       {shelters.length > 0 && (
-        <Row className="shelters-grid">
+        <Row className="shelters-grid justify-content-center">
           {shelters.map((shelter) => (
-            <Col key={shelter.id} xs={12} sm={6} md={4} lg={3} className="shelter-col">
+            <Col
+              key={shelter.id}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={4}
+              xl={3}
+              className="shelter-col"
+            >
               <Card className="shelter-showcase-card">
                 <Card.Body className="shelter-card-body">
                   <Card.Title className="shelter-name">
