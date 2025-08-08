@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import fetchShelters from "../../helpers/fetchShelters";
+import {useAuth} from "../../../context/AuthContext";
 
 const CreateUserPage = () => {
   const navigate = useNavigate();
@@ -12,10 +13,10 @@ const CreateUserPage = () => {
   const [shelterId, setShelterId] = useState("");
   const [shelters, setShelters] = useState([]);
   const [error, setError] = useState("");
+  const {token} = useAuth();
 
   useEffect(() => {
     const loadShelters = async () => {
-      const token = localStorage.getItem("token"); // Only required to fetch shelters
       const data = await fetchShelters(token);
       if (data) {
         setShelters(data);
@@ -73,7 +74,7 @@ const CreateUserPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // required for privileged accounts
+          Authorization: `Bearer ${token}`, // required for privileged accounts
         },
         body: JSON.stringify(payload),
       });

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import fetchShelters from "../../helpers/fetchShelters";
+import { useAuth } from "../../../context/AuthContext";
 
 const EditUser = ({ user, userId }) => {
   const [name, setName] = useState(user.name || "");
@@ -11,10 +12,10 @@ const EditUser = ({ user, userId }) => {
   const [shelters, setShelters] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const {token} = useAuth();
 
   useEffect(() => {
     if (role === "ShelterStaff") {
-      const token = localStorage.getItem("token");
       fetchShelters(token).then((data) => {
         if (data) {
           setShelters(data);
@@ -40,7 +41,7 @@ const EditUser = ({ user, userId }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedUser),
       });
