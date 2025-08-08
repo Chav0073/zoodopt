@@ -4,15 +4,16 @@ import { useNavigate } from "react-router";
 import fetchUsers from "../../helpers/fetchUsers";
 import ManageUsersTable from "../ManageUsersTable/ManageUsersTable";
 import CreateUserBtn from "../CreateUserBtn/CreateUserBtn";
+import { useAuth } from "../../../context/AuthContext";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const token = localStorage.getItem("token");
         const data = await fetchUsers(token);
         setUsers(data);
       } catch (err) {

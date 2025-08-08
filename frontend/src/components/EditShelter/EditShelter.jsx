@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 const EditShelter = ({ shelter, shelterId }) => {
     const [name, setName] = useState(shelter.name);
     const [location, setLocation] = useState(shelter.location);
+    const [email, setEmail] = useState(shelter.email || "");
+    const [phone, setPhone] = useState(shelter.phone || "");
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const updatedShelter = {
             ...shelter,
-            "name": name,
-            "location": location
+            name,
+            location,
+            email,
+            phone,
         };
 
         try {
@@ -21,7 +27,7 @@ const EditShelter = ({ shelter, shelterId }) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(updatedShelter),
             });
@@ -64,12 +70,33 @@ const EditShelter = ({ shelter, shelterId }) => {
                         />
                     </Form.Group>
 
-                    <Form.Group className="mb-4">
+                    <Form.Group className="mb-3">
                         <Form.Label className="fw-semibold">Location</Form.Label>
                         <Form.Control
                             type="text"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="fw-semibold">Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-4">
+                        <Form.Label className="fw-semibold">Phone</Form.Label>
+                        <Form.Control
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            pattern="^[0-9+\s()\-]*$"
                             required
                         />
                     </Form.Group>

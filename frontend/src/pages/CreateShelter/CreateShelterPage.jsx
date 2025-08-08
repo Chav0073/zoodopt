@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import getToken from "../../helpers/getToken";
+import { useAuth } from "../../../context/AuthContext";
 
 
 const CreateShelterPage = () => {
@@ -11,6 +12,7 @@ const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const {token} = useAuth();
 
   const handleBack = () => {
     navigate("/admin");
@@ -28,7 +30,7 @@ const [name, setName] = useState("");
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ name, location, phone, email }),
       });
