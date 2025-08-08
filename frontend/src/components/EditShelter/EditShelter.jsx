@@ -11,6 +11,7 @@ const EditShelter = ({ shelter, shelterId }) => {
         e.preventDefault();
 
         const updatedShelter = {
+            ...shelter,
             "name": name,
             "location": location
         };

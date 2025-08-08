@@ -6,6 +6,7 @@ import Alert from "@mui/material/Alert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
   const [sortConfig, setSortConfig] = useState({});
@@ -14,6 +15,7 @@ const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const handleEdit = (id) => {
     navigate(`/admin/shelters/edit/${id}`);
@@ -28,7 +30,7 @@ const ManageSheltersTable = ({ shelters, onShelterDeleted }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
