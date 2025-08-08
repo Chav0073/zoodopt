@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import getToken from "../../helpers/getToken";
 import fetchPet from "../../helpers/fetchPet";
 import EditPet from "../../components/EditPet/EditPet";
 
