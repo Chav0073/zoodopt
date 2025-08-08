@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 const isValidImageFile = (file) => {
   const allowedTypes = [
@@ -24,6 +25,7 @@ const EditPet = ({ pet, petId }) => {
     pet.imageUrl ? `http://localhost:5217${pet.imageUrl}` : ""
   );
   const navigate = useNavigate();
+  const {token} = useAuth();
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -61,7 +63,7 @@ const EditPet = ({ pet, petId }) => {
       const res = await fetch(`http://localhost:5217/pets/${petId}`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
           // DO NOT set Content-Type manually when using FormData
         },
         body: formData,
