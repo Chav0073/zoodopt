@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import fetchShelters from "../../helpers/fetchShelters";
+import { useAuth } from "../../../context/AuthContext";
 
 const CreatePetPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const CreatePetPage = () => {
   const [shelters, setShelters] = useState([]);
   const [error, setError] = useState("");
 
-  const token = localStorage.getItem("token");
+  const {token} = useAuth();
 
   useEffect(() => {
     const loadShelters = async () => {
