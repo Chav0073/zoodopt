@@ -13,7 +13,6 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -23,10 +22,10 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
   };
 
@@ -79,7 +78,7 @@ const LoginForm = () => {
         return;
       }
 
-      login(data.token, data.role, formData.rememberMe);
+      login(data.token, data.role);
       navigate('/');
     } catch (err) {
       console.error('Network or unexpected error:', err);
@@ -156,22 +155,6 @@ const LoginForm = () => {
                     {errors.password && (
                       <div className="login-feedback">{errors.password}</div>
                     )}
-                  </div>
-
-                  {/* Remember Me */}
-                  <div className="mb-4 d-flex justify-content-between align-items-center login-options">
-                    <Form.Check
-                      type="checkbox"
-                      id="rememberMe"
-                      name="rememberMe"
-                      checked={formData.rememberMe}
-                      onChange={handleChange}
-                      label={<span className="remember-label">Remember me</span>}
-                    />
-
-                    <Link to="/forgot-password" className="forgot-link">
-                      Forgot Password?
-                    </Link>
                   </div>
 
                   {/* Submit Button */}
