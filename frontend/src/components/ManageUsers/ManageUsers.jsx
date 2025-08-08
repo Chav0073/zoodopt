@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import fetchUsers from "../../helpers/fetchUsers";
 import ManageUsersTable from "../ManageUsersTable/ManageUsersTable";
+import CreateUserBtn from "../CreateUserBtn/CreateUserBtn";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -30,13 +31,16 @@ const ManageUsers = () => {
     <div className="bg-light rounded p-4 pb-5">
       <div className="container-fluid py-4 px-3 mb-4 d-flex align-items-center justify-content-between bg-white rounded shadow-sm">
         <h2 className="mb-0 fw-bold text-primary">Users</h2>
-        <Button
-          variant="outline-primary"
-          className="fw-semibold px-4 py-2"
-          onClick={() => navigate("/admin")}
-        >
-          Back to Admin Dashboard
-        </Button>
+        <div>
+            <CreateUserBtn />
+            <Button
+              variant="outline-primary"
+              className="fw-semibold px-4 py-2"
+              onClick={() => navigate("/admin")}
+            >
+              Back to Admin Dashboard
+            </Button>
+        </div>
       </div>
 
       <ManageUsersTable users={users} onUserDeleted={handleUserDeleted} />
