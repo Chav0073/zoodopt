@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import fetchShelters from "../../helpers/fetchShelters";
+import { useAuth } from "../../../context/AuthContext";
 
 const CreatePetInShelter = () => {
   const { shelterId: shelterIdFromParams } = useParams(); // ✅ use shelterId from URL
@@ -14,7 +15,7 @@ const CreatePetInShelter = () => {
   const [shelterName, setShelterName] = useState("");
   const [error, setError] = useState("");
 
-  const token = localStorage.getItem("token");
+  const { token } = useAuth();
 
   useEffect(() => {
     const loadShelterName = async () => {
@@ -161,3 +162,4 @@ const CreatePetInShelter = () => {
 };
 
 export default CreatePetInShelter;
+
