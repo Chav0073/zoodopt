@@ -66,3 +66,12 @@ appsettings.*.json
 
 # System-wide files
 .env*
+
+# Images - ignore all except seeded pet images
+backend/wwwroot/images/*
+!backend/wwwroot/images/.gitkeep
+!backend/wwwroot/images/bella.jpg
+!backend/wwwroot/images/whiskers.jpg
+!backend/wwwroot/images/buddy.jpg
+!backend/wwwroot/images/luna.jpg
+!backend/wwwroot/images/charlie.jpg
