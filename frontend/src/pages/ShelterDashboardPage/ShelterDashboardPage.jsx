@@ -108,7 +108,7 @@ const ShelterDashboardPage = () => {
         <p>Loading...</p>
       ) : (
         <>
-          <ManagePetsInShelter pets={pets} onPetDeleted={handlePetDeleted} />
+          <ManagePetsInShelter pets={pets} onPetDeleted={handlePetDeleted} shelterId={shelterId}/>
           <ManageApplications shelterId={shelterId} />
         </>
       )}

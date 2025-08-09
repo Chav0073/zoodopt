@@ -107,7 +107,6 @@ const ManageApplications = () => {
               <th>Submitted</th>
               <th>Message</th>
               <th>Update</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -129,16 +128,6 @@ const ManageApplications = () => {
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Rejected</option>
                   </Form.Select>
-                </td>
-                <td>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => handleDelete(app.id)}
-                    disabled={updatingId === app.id}
-                  >
-                    Delete
-                  </Button>
                 </td>
               </tr>
             ))}

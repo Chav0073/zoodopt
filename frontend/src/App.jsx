@@ -31,6 +31,7 @@ import EditUserPage from "./pages/EditUserPage/EditUserPage";
 import CreateUserPage from "./pages/CreateUserPage/CreateUserPage";
 import ShelterDashboardPage from "./pages/ShelterDashboardPage/ShelterDashboardPage";
 import CreatePetInShelter from "./pages/CreatePetInShelter/CreatePetInShelter";
+import EditPetInShelter from "./components/EditPetInShelter/EditPetInShelter";
 
 function App() {
   const [users, setUsers] = useState(mockUsers);
@@ -80,6 +81,10 @@ function App() {
                 <Route
                   path="shelter/:shelterId/create"
                   element={<CreatePetInShelter />}
+                />
+                <Route
+                  path="shelter/pets/edit/:petId"
+                  element={<EditPetInShelter/>}
                 />
               </Route>
             </Routes>

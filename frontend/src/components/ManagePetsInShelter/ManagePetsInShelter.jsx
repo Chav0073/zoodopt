@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
-const ManagePetsInShelter = ({ pets, onPetDeleted }) => {
+const ManagePetsInShelter = ({ pets, onPetDeleted, shelterId }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const theme = useTheme();
@@ -17,7 +17,7 @@ const ManagePetsInShelter = ({ pets, onPetDeleted }) => {
   const {token} = useAuth();
 
   const handleEdit = (id) => {
-    navigate(`/admin/pets/edit/${id}`);
+    navigate(`/shelter/pets/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
